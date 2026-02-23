@@ -14,6 +14,19 @@ typub 是一个以 Typst 为优先、支持多平台的发布工具。
 
 ## 用户基础
 
+### 前置要求
+
+**重要：** typub 依赖 [typst CLI](https://github.com/typst/typst)。你必须先安装 `typst` 并确保它在 PATH 中可用。
+
+安装 typst CLI：
+
+```bash
+# 通过 cargo 安装
+cargo install typst
+
+# 或通过其他包管理器安装（详见 https://github.com/typst/typst）
+```
+
 ### 安装
 
 ```bash

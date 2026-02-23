@@ -14,6 +14,19 @@ typub is a Typst-first, multi-platform publishing tool.
 
 ## User Basics
 
+### Prerequisites
+
+**Important:** typub depends on [typst CLI](https://github.com/typst/typst). You must have `typst` installed and available in your PATH.
+
+Install typst CLI:
+
+```bash
+# Via cargo
+cargo install typst
+
+# Or via other package managers (see https://github.com/typst/typst for more options)
+```
+
 ### Install
 
 ```bash
