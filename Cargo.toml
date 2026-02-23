@@ -14,7 +14,6 @@ members = [
     "crates/typub-log",
     "crates/typub-ui",
     "crates/typub-theme",
-    "crates/typub-project",
     "crates/typub-assets-ast",
     # Adapter subcrates (per RFC-0007:C-WORKSPACE-LAYOUT)
     "crates/adapters/typub-adapter-ghost",
@@ -107,7 +106,6 @@ typub-ui = { path = "crates/typub-ui", version = "0.1.0" }
 typub-theme = { path = "crates/typub-theme", version = "0.1.0" }
 typub-engine = { path = "crates/typub-engine", version = "0.1.0" }
 typub-tui = { path = "crates/typub-tui", version = "0.1.0" }
-typub-project = { path = "crates/typub-project", version = "0.1.0" }
 typub-assets-ast = { path = "crates/typub-assets-ast", version = "0.1.0" }
 
 # Adapter subcrates (per RFC-0007:C-WORKSPACE-LAYOUT)

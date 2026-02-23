@@ -8,9 +8,9 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
+use typub_config::project::validate_within_project;
 use typub_core::AssetStrategy;
 use typub_ir::{Asset, AssetSource, AssetVariant, Document, Url};
-use typub_project::validate_within_project;
 use typub_storage::{
     PendingAsset, PendingAssetList, build_pending_asset_list, resolve_image_reference_url,
 };

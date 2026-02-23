@@ -8,6 +8,8 @@
 //! Extracted per [[RFC-0007:C-SHARED-TYPES]] to enable adapter subcrates
 //! to depend on configuration without circular dependencies.
 
+pub mod project;
+
 use anyhow::{Context, Result};
 use serde::Deserialize;
 use sha2::{Digest, Sha256};

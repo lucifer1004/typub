@@ -18,7 +18,6 @@ serde.workspace = true
 sha2.workspace = true
 typub-config.workspace = true
 typub-core.workspace = true
-typub-project.workspace = true
 typub-log.workspace = true
 mime_guess.workspace = true
 

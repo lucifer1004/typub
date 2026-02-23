@@ -40,7 +40,7 @@ typub-core.workspace = true
 typub-html.workspace = true
 typub-ir.workspace = true
 typub-passes.workspace = true
-typub-project.workspace = true
+
 typub-storage.workspace = true
 typub-theme.workspace = true
 typub-ui.workspace = true

@@ -5177,9 +5177,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "tempfile",
+ "typub-config",
  "typub-core",
  "typub-ir",
- "typub-project",
  "typub-storage",
 ]
 
@@ -5250,7 +5250,6 @@ dependencies = [
  "typub-html",
  "typub-ir",
  "typub-passes",
- "typub-project",
  "typub-storage",
  "typub-theme",
  "typub-ui",
@@ -5331,14 +5330,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "typub-project"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "tempfile",
-]
-
-[[package]]
 name = "typub-storage"
 version = "0.1.0"
 dependencies = [
@@ -5355,7 +5346,6 @@ dependencies = [
  "typub-config",
  "typub-core",
  "typub-log",
- "typub-project",
 ]
 
 [[package]]

@@ -570,7 +570,7 @@ ORDER BY uploaded_at DESC
 }
 
 fn normalize_to_relative(path: &Path, project_root: &Path) -> Result<String> {
-    let normalized = typub_project::normalize_to_relative(path, project_root)?;
+    let normalized = typub_config::project::normalize_to_relative(path, project_root)?;
     Ok(normalized
         .strip_prefix("./")
         .unwrap_or(&normalized)
