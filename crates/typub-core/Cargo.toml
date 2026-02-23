@@ -6,7 +6,6 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Shared capability types and content model for typub"
-publish = false
 include = [
     "src/**/*",
     "Cargo.toml",

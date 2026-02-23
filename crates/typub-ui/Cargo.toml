@@ -6,7 +6,6 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "CLI output utilities for typub"
-publish = false
 
 [dependencies]
 comfy-table.workspace = true

@@ -1,7 +1,6 @@
 [package]
 name = "typub-adapter-static"
 description = "Static HTML adapter for typub - generates standalone deployable HTML files"
-publish = false
 version = "0.1.0"
 edition.workspace = true
 license.workspace = true

@@ -6,7 +6,6 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Terminal UI for typub"
-publish = false
 
 [dependencies]
 anyhow.workspace = true

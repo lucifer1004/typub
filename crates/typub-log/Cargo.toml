@@ -6,7 +6,6 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Logging foundation for typub based on tracing"
-publish = false
 
 [dependencies]
 owo-colors.workspace = true

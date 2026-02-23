@@ -6,7 +6,6 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Dev.to platform adapter for typub"
-publish = false
 include = [
     "src/**/*",
     "Cargo.toml",
