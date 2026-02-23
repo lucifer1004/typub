@@ -231,4 +231,4 @@ preamble = """
 - [Getting Started](./getting-started.md)
 - [Adapters](./adapters.md)
 - [Advanced Customization](./advanced-customization.md)
-- [Platforms Overview](./platforms/README.md)
+- [Platforms Overview](./platforms/)

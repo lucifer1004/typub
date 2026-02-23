@@ -12,18 +12,18 @@ Choose platform docs by publishing workflow.
 
 ### API Adapters
 
-- [Confluence](./confluence/README.md)
-- [Dev.to](./devto/README.md)
-- [Ghost](./ghost/README.md)
-- [Hashnode](./hashnode/README.md)
-- [Notion](./notion/README.md)
-- [WordPress](./wordpress/README.md)
+- [Confluence](./confluence/)
+- [Dev.to](./devto/)
+- [Ghost](./ghost/)
+- [Hashnode](./hashnode/)
+- [Notion](./notion/)
+- [WordPress](./wordpress/)
 
 ### Local Output
 
-- [Astro](./astro/README.md)
-- [Static](./static/README.md)
-- [小红书 (Xiaohongshu)](./xiaohongshu/README.md)
+- [Astro](./astro/)
+- [Static](./static/)
+- [小红书 (Xiaohongshu)](./xiaohongshu/)
 
 ### Copy-paste
 

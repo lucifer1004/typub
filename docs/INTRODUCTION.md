@@ -6,19 +6,19 @@
 
 ### User Path (publishing content)
 
-- Start here: [Guide Overview](./guide/README.md)
+- Start here: [Guide Overview](./guide/)
 - [Getting Started](./guide/getting-started.md) for first publish
 - [Adapters](./guide/adapters.md) for platform setup
 - [Asset Handling](./guide/assets.md) for image strategy
 - [Theme Customization](./guide/theme-customization.md) for custom CSS and overrides
 - [Copy-paste Profiles](./guide/profiles.md) for manual publishing targets
-- [Platforms Overview](./guide/platforms/README.md) for per-platform instructions
+- [Platforms Overview](./guide/platforms/) for per-platform instructions
 - [Advanced Customization](./guide/advanced-customization.md) for layered config and advanced overrides
 
 ### Developer Path (contributing to typub)
 
-- RFC specs: [RFC Index](./rfc/README.md)
-- ADR decisions: [ADR Index](./adr/README.md)
+- RFC specs: [RFC Index](./rfc/)
+- ADR decisions: [ADR Index](./adr/)
 - Governance history and execution trace: `docs/work/` entries
 
 ## At a Glance
@@ -60,7 +60,7 @@
 - Local-output adapters (generated local artifacts)
 - Copy-paste profiles (manual publish via prepared content)
 
-See [Adapters](./guide/adapters.md) for setup model and [Platforms](./guide/platforms/README.md) for concrete per-platform instructions.
+See [Adapters](./guide/adapters.md) for setup model and [Platforms](./guide/platforms/) for concrete per-platform instructions.
 
 ## Quick Start
 

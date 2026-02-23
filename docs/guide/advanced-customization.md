@@ -37,7 +37,7 @@ url_prefix = "https://cdn.example.com"
 
 Use environment variables for secrets.
 
-See [External Storage](./storage/README.md) and [RFC-0004](../rfc/RFC-0004.md).
+See [External Storage](./storage/) and [RFC-0004](../rfc/RFC-0004.md).
 
 ## 3. Node Policy Override
 

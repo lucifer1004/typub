@@ -13,11 +13,11 @@ This section is for users who publish content with typub.
 ## Configuration and Advanced Topics
 
 - [Advanced Customization](./advanced-customization.md)
-- [External Storage Configuration](./storage/README.md)
+- [External Storage Configuration](./storage/)
 
 ## Platform-Specific References
 
-- [Platforms Overview](./platforms/README.md)
+- [Platforms Overview](./platforms/)
 - [Direct Publish (API Adapters)](./platforms/api-adapters.md)
 - [Local Output Adapters](./platforms/local-output-adapters.md)
 - [Copy-paste Platforms](./platforms/copy-paste-platforms.md)

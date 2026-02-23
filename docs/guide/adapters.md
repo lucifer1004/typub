@@ -5,7 +5,7 @@ Adapters are platform-specific components that transform and publish your conten
 ## Audience
 
 - This page is a **platform-agnostic user guide**.
-- For platform-specific values and screenshots, use [Platforms Overview](./platforms/README.md).
+- For platform-specific values and screenshots, use [Platforms Overview](./platforms/).
 
 ## Basic Setup
 
@@ -42,7 +42,7 @@ typub publish posts/my-post -p devto
 - Local-output adapters: generate local files/artifacts
 - Copy-paste profiles: generate content for manual paste workflow
 
-See [Platforms Overview](./platforms/README.md) for concrete platform entries.
+See [Platforms Overview](./platforms/) for concrete platform entries.
 
 ## Common Platform Fields
 
@@ -86,6 +86,6 @@ If a variable is not found and no default is provided, the raw value is kept unc
 
 ## Related Docs
 
-- Platform details: [Platforms Overview](./platforms/README.md)
+- Platform details: [Platforms Overview](./platforms/)
 - Theme customization: [Theme Customization](./theme-customization.md)
 - Pipeline contract: [RFC-0002](../rfc/RFC-0002.md)

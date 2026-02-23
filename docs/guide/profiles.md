@@ -5,7 +5,7 @@ For platforms without public APIs, typub generates formatted content that you co
 ## Audience
 
 - This page is user-facing and platform-agnostic.
-- For per-platform operation steps, see [Platforms Overview](./platforms/README.md).
+- For per-platform operation steps, see [Platforms Overview](./platforms/).
 
 ## Basic Usage
 
@@ -96,5 +96,5 @@ To add a new compat function, implement it in `crates/adapters/typub-adapter-cop
 
 ## Related Docs
 
-- Platform pages: [Platforms Overview](./platforms/README.md)
+- Platform pages: [Platforms Overview](./platforms/)
 - Advanced user customization: [Advanced Customization](./advanced-customization.md)

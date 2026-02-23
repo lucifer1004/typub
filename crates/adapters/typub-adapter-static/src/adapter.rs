@@ -249,7 +249,11 @@ impl PlatformAdapter for StaticAdapter {
         std::fs::write(&html_path, &payload.themed_html)?;
 
         Ok(PublishResult {
-            url: Some(format!("file://{}", html_path.display())),
+            // Convert path separators to forward slashes for URL compatibility
+            url: Some(format!(
+                "file://{}",
+                html_path.to_string_lossy().replace('\\', "/")
+            )),
             platform_id: Some(payload.slug),
             published_at: Utc::now(),
         })

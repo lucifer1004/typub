@@ -187,7 +187,11 @@ impl PlatformAdapter for XiaohongshuAdapter {
         info!("Upload these images manually to 小红书");
 
         Ok(PublishResult {
-            url: Some(format!("file://{}", dest_dir.display())),
+            // Convert path separators to forward slashes for URL compatibility
+            url: Some(format!(
+                "file://{}",
+                dest_dir.to_string_lossy().replace('\\', "/")
+            )),
             platform_id: Some(payload.slug),
             published_at: Utc::now(),
         })

@@ -220,5 +220,5 @@ Each platform can have dedicated storage credentials:
 
 ## Related Documentation
 
-- [Platform Guides](../platforms/README.md) — See which platforms require external storage
+- [Platform Guides](../platforms/) — See which platforms require external storage
 - [Asset Handling](../assets.md) — Understanding how different platforms handle images

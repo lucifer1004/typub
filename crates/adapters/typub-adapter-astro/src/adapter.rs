@@ -301,7 +301,10 @@ impl PlatformAdapter for AstroAdapter {
         std::fs::write(&md_path, &content)?;
 
         Ok(PublishResult {
-            url: Some(format!("file://{}", md_path.display())),
+            url: Some(format!(
+                "file://{}",
+                md_path.to_string_lossy().replace('\\', "/")
+            )),
             platform_id: Some(payload.slug),
             published_at: Utc::now(),
         })

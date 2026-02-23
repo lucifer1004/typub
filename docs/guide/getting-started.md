@@ -112,4 +112,4 @@ typub status posts/hello-world
 ### Advanced path
 
 - [Advanced Customization](./advanced-customization.md) — layered overrides and advanced config
-- [External Storage](./storage/README.md) — S3-compatible setup and operations
+- [External Storage](./storage/) — S3-compatible setup and operations

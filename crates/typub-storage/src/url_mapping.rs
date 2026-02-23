@@ -132,7 +132,9 @@ pub fn build_preview_file_url_map(
         } else {
             content_root.join(asset)
         };
-        map.insert(asset.clone(), format!("file://{}", absolute.display()));
+        // Convert path separators to forward slashes for URL compatibility
+        let path_str = normalize_separators(&absolute.to_string_lossy());
+        map.insert(asset.clone(), format!("file://{}", path_str));
     }
     map
 }

@@ -5,7 +5,7 @@ typub provides flexible strategies for handling images and other assets in your 
 ## Audience
 
 - This page is platform-agnostic and user-facing.
-- For provider-level details and examples, see [External Storage](./storage/README.md).
+- For provider-level details and examples, see [External Storage](./storage/).
 
 ## Basic Usage
 
@@ -80,6 +80,6 @@ Asset mappings are stored in `.typub/status.db`.
 
 ## Related Docs
 
-- External storage details: [External Storage](./storage/README.md)
+- External storage details: [External Storage](./storage/)
 - Adapter overview: [Adapters](./adapters.md)
 - Spec: [RFC-0004](../rfc/RFC-0004.md)
