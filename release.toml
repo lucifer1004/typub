@@ -46,7 +46,7 @@ allow-branch = ["main"]
 consolidate-commits = true
 
 # Commit message template
-pre-release-commit-message = "chore: release {{version}}"
+pre-release-commit-message = "chore: release components"
 
 # =============================================================================
 # Git Tags

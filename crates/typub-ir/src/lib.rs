@@ -660,6 +660,12 @@ impl RelativePath {
             return Err("absolute path is not allowed".to_string());
         }
 
+        // On Windows, "/path" is not absolute (it's relative to current drive root),
+        // but for portability we reject Unix-style absolute paths everywhere.
+        if path.starts_with('/') {
+            return Err("unix absolute path is not allowed".to_string());
+        }
+
         // Guard against absolute-like Windows forms on non-Windows hosts.
         // Examples: C:\foo, C:/foo, \\server\share\foo
         let bytes = path.as_bytes();

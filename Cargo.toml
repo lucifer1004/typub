@@ -128,7 +128,7 @@ expect_used = "deny"
 
 [package]
 name = "typub"
-version.workspace = true
+version = "0.1.0"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -185,3 +185,6 @@ typub-adapter-wordpress.workspace = true
 typub-adapters-core.workspace = true
 typub-html.workspace = true
 wiremock.workspace = true
+
+[release.package]
+pre-release-commit-message = "chore: release typub {{version}}"
