@@ -89,7 +89,7 @@ To find your App ID and Environment ID:
 
 Alternatively, contact your Confluence administrator or check the app's configuration in **Settings → Apps → Manage apps**.
 
-> **Note**: These values are **required** for LaTeX rendering. If not configured, typub will return an error when publishing with `math_rendering = "latex"`.
+> **Note**: When the app ID and env ID are not provided, the LaTeX rendering backend would fall back to use the traditional ac macros, which are going to be deprecated and may not work as expected.
 
 ### Option 2: PNG Attachments
 
@@ -111,6 +111,8 @@ typub dev posts/my-post -p confluence
 # Publish to Confluence
 typub publish posts/my-post -p confluence
 ```
+
+![Confluence Published](published.png)
 
 ## Post Configuration
 

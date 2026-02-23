@@ -46,6 +46,21 @@ typub dev posts/my-post -p confluence
 
 Themes are configured in `meta.toml` or `typub.toml`, not via command-line arguments.
 
+### 🖥️ Terminal User Interface (TUI)
+
+Interactive terminal dashboard for content management:
+
+- **Post management**: Browse, sort, and manage all your posts
+- **Platform overview**: See publishing status across all platforms at a glance
+- **Preview content**: Preview posts in terminal or browser for selected platform
+- **Publish control**: Selectively publish to individual platforms or all at once
+- **Real-time progress**: Track publishing progress and results
+
+```bash
+# Launch interactive TUI dashboard
+typub tui
+```
+
 ### 📦 4 Asset Strategies
 
 Choose how images and other assets are handled:
@@ -72,6 +87,18 @@ Manage configuration with 5-level resolution priority (highest to lowest):
 3. **Global-platform**: Global platform-specific (`typub.toml` → `[platforms.<id>]`)
 4. **Global**: Global default (`typub.toml` → top level)
 5. Adapter default (fallback)
+
+---
+
+## Showcases
+
+### Preview Examples
+
+![WeChat Preview](./docs/guide/platforms/wechat/preview-page.png)
+
+![Xiaohongshu Preview](./examples/xiaohongshu.png)
+
+![Confluence Published](./docs/guide/platforms/confluence/published.png)
 
 ---
 

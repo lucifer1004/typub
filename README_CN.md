@@ -46,6 +46,21 @@ typub dev posts/my-post -p confluence
 
 主题通过 `meta.toml` 或 `typub.toml` 配置，而非命令行参数。
 
+### 🖥️ 终端用户界面（TUI）
+
+交互式终端仪表盘，用于内容管理：
+
+- **文章管理**：浏览、排序和管理所有文章
+- **平台概览**：一目了然地查看各平台的发布状态
+- **内容预览**：在终端或浏览器中预览选中平台的渲染效果
+- **发布控制**：选择性发布到单个平台或一键发布所有平台
+- **实时进度**：跟踪发布进度和结果
+
+```bash
+# 启动交互式 TUI 仪表盘
+typub tui
+```
+
 ### 📦 四种资源策略
 
 灵活处理图片和其他资源：
@@ -72,6 +87,18 @@ typub dev posts/my-post -p confluence
 3. **全局-平台**：全局的平台特定配置（`typub.toml` → `[platforms.<id>]`）
 4. **全局**：全局默认配置（`typub.toml` → 顶层）
 5. **适配器默认值**：适配器默认配置（兜底）
+
+---
+
+## 效果展示
+
+### 预览效果
+
+![WeChat Preview](./docs/guide/platforms/wechat/preview-page.png)
+
+![Xiaohongshu Preview](./examples/xiaohongshu.png)
+
+![Confluence Published](./docs/guide/platforms/confluence/published.png)
 
 ---
 

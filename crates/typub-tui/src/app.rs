@@ -277,7 +277,7 @@ impl<'a> App<'a> {
         let mut ctx = adapters::PublishContext::new_with_root(self.config, &self.project_root)?;
 
         let platforms = self.selected_platforms();
-        let Some(platform_id) = platforms.first() else {
+        let Some(platform_id) = platforms.get(self.selected_platform_index) else {
             return Ok(());
         };
         let adapter = registry.get(platform_id)?;
@@ -305,7 +305,7 @@ impl<'a> App<'a> {
             let registry = adapters::AdapterRegistry::new(self.config)?;
             let mut ctx = adapters::PublishContext::new_with_root(self.config, &self.project_root)?;
             let platforms = self.selected_platforms();
-            let Some(platform_id) = platforms.first() else {
+            let Some(platform_id) = platforms.get(self.selected_platform_index) else {
                 return Ok(());
             };
             let adapter = registry.get(platform_id)?;

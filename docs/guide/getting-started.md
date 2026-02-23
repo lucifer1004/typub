@@ -93,6 +93,43 @@ typub dev posts/hello-world -p xiaohongshu
 typub dev posts/hello-world -p xiaohongshu --port 3000
 ```
 
+## Interactive Dashboard (TUI)
+
+typub provides an interactive terminal dashboard for content management:
+
+```bash
+# Launch TUI dashboard
+typub tui
+```
+
+The TUI provides three main views:
+
+### Post List
+
+- Browse all your posts with publishing status indicators
+- Sort posts by date, title, or modification time (press `s`)
+- Press `Enter` to view post details
+
+### Post Detail
+
+- View post metadata and publishing status for each platform
+- Use ↑/↓ to select a platform
+- Press `p` to preview the selected platform's rendering
+- Press `P` to publish to the selected platform
+- Press `A` to publish to all enabled platforms
+
+### Preview
+
+- View platform-specific preview in plain text
+- Press `o` to open full HTML preview in browser
+- Scroll with ↑/↓ or PageUp/PageDown
+
+**Keyboard Shortcuts:**
+
+- `q` - Go back or quit
+- `r` - Reload post list
+- `Ctrl+C` - Force quit
+
 ## Check Status
 
 ```bash
