@@ -6,6 +6,7 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Hashnode platform adapter for typub"
+publish = false
 include = [
     "src/**/*",
     "Cargo.toml",

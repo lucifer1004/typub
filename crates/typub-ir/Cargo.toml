@@ -6,6 +6,7 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Semantic IR types for typub"
+publish = false
 
 [dependencies]
 relative-path.workspace = true

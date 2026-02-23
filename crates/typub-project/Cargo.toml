@@ -6,6 +6,7 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Project root and path utilities for typub"
+publish = false
 
 [dependencies]
 anyhow.workspace = true

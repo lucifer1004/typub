@@ -6,6 +6,7 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "HTML processing utilities for typub (AST types, parsing, serialization, SVG handling, link resolution)"
+publish = false
 include = [
     "src/**/*",
     "Cargo.toml",

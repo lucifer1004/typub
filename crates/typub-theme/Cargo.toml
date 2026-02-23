@@ -6,6 +6,7 @@ license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Theme system for typub HTML output styling"
+publish = false
 include = [
     "src/**/*",
     "templates/**/*",
