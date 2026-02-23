@@ -1,0 +1,82 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-003"
+title = "Unified config resolution with ResolvedConfig struct"
+status = "done"
+completed = "2026-02-12"
+created = "2026-02-13"
+started = "2026-02-13"
+refs = ["RFC-0005"]
+
+[content]
+description = """
+Unify fragmented config resolution logic into a single ResolvedConfig struct.
+
+Current state:
+- published: resolved via resolve_published() in config.rs
+- theme: resolved via resolve_theme() in themes.rs
+- internal_link_target: resolved via resolve_internal_link_target() in internal_links.rs
+- storage: has StorageConfig::resolve() but never called; adapters use global only
+- asset_strategy: resolved via resolve_platform_asset_strategy() in adapters/mod.rs
+
+Each uses different patterns and some don't support the full 4-level resolution chain.
+
+Design (Option C - Struct-based):
+```rust
+pub struct ResolvedConfig {
+    pub published: bool,
+    pub theme: Option<String>,
+    pub internal_link_target: Option<String>,
+    pub storage: Option<StorageConfig>,
+    pub asset_strategy: AssetStrategy,
+}
+
+impl ResolvedConfig {
+    pub fn resolve(content: &Content, platform: &str, config: &Config) -> Self;
+}
+```
+
+Benefits:
+- All resolution logic in one struct
+- Single point of truth - compute once per (content, platform), reuse throughout pipeline
+- No magic - plain Rust, easy to debug
+- Full IDE support
+- Consistent 4-level resolution for all fields
+"""
+
+[[content.acceptance_criteria]]
+text = "ResolvedConfig struct with all resolvable fields"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "ResolvedConfig::resolve() implements 4-level chain for all fields"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "StorageConfig correctly merges global and per-platform config"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Remove standalone `resolve_*` functions, use `ResolvedConfig`"
+status = "done"
+notes = "Pipeline and adapters use ResolvedConfig. Added themes::load_theme for theme ID + registry lookup."
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Pipeline and adapters use ResolvedConfig instead of ad-hoc resolution"
+status = "done"
+notes = "PublishContext now has resolved: ResolvedConfig, set by pipeline at Stage 1. Adapters access via ctx.resolved()."
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Unit tests for ResolvedConfig resolution"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

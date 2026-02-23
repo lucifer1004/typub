@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-IDEMPOTENCY",
+  "title": "Republish Idempotency",
+  "kind": "normative",
+  "status": "active",
+  "text": "Repeated publish attempts for the same post+platform key and same logical content state MUST be idempotent from the perspective of local status and SHOULD avoid creating duplicate remote objects.\n\nRequirements:\n- The system MUST maintain at most one final successful status record per post+platform key.\n- A retried attempt MUST update the existing status record instead of creating duplicate successful records.\n- Republish of changed content MAY result in a different remote revision/version, but local status MUST continue to represent one current successful published state for the key.\n- If a duplicate remote object cannot be avoided due to target-platform limitations, the adapter MUST surface reconciliation guidance and retain one canonical local status record.\n\nCallers MAY retry failed operations, but retries MUST preserve these idempotent status semantics.",
+  "since": "0.1.0"
+}

@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-007"
+title = "materialize stage-4 payload for local adapters"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Continue RFC-0002 strict landing by moving local adapter stage-4 shaping into non-empty finalize_payload structures."
+
+[[content.acceptance_criteria]]
+text = "Astro finalize_payload performs stage-4 shaping (assets+themed body)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "WeChat and Xiaohongshu finalize_payload are non-empty and carry publish-ready payload"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check/tests and govctl check pass"
+status = "done"
+category = "chore"

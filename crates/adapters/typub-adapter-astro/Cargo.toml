@@ -1,0 +1,26 @@
+[package]
+name = "typub-adapter-astro"
+description = "Astro Content Collection adapter for typub - outputs Markdown with YAML frontmatter"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+typub-adapters-core.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt", "macros"] }
+
+[lints]
+workspace = true

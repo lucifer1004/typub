@@ -1,0 +1,37 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-009"
+title = "Implement ADR-0004 logging system architecture"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+refs = ["ADR-0004"]
+
+[content]
+description = "Implement the logging system architecture defined in ADR-0004. Create typub-log crate with tracing-based foundation, implement CliLayer for CLI-formatted output, define ProgressReporter trait, and migrate typub-storage to use typub-log instead of typub-ui."
+
+[[content.acceptance_criteria]]
+text = "Create typub-log crate with tracing foundation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Implement CliLayer for CLI-formatted output"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Define ProgressReporter trait in typub-log"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "typub-storage uses typub-log instead of typub-ui"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-005"
+title = "Complete RFC-0004 materialize_payload integration"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = ["RFC-0004"]
+
+[content]
+description = "Implement unified asset placeholder system for both Upload and External strategies per [[RFC-0004:C-PIPELINE-INTEGRATION]]. Refactor all adapters (HashNode, Dev.to, WordPress, Notion, Confluence) to use shared placeholder token mechanism."
+
+[[content.acceptance_criteria]]
+text = "StorageConfig accessible via PublishContext per [[RFC-0004:C-STORAGE-CONFIG]]"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "materialize_payload uploads External assets to S3 per [[RFC-0004:C-PIPELINE-INTEGRATION]]"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Asset references replaced with remote URLs in payload"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

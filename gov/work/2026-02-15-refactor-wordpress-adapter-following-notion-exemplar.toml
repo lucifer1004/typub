@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-002"
+title = "Refactor WordPress adapter following Notion exemplar"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+
+[content]
+description = "Refactor WordPress adapter to follow the Notion exemplar pattern with clear internal modules (adapter.rs, config.rs, model.rs), comprehensive tests, and strict RFC compliance."
+
+[[content.acceptance_criteria]]
+text = "WordPress adapter reorganized into adapter/config/model modules following Notion exemplar"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Add register() function in config.rs per RFC-0006"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Unit tests for registration, asset strategy, render config, config validation, trait methods"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Preview snapshot integration test for WordPress adapter"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All tests pass and govctl check passes"
+status = "done"
+category = "chore"

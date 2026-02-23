@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-BUILTIN-MIGRATION",
+  "title": "Built-in Adapter Migration",
+  "kind": "normative",
+  "status": "active",
+  "text": "Built-in adapters MUST provide a stable creation and capability surface suitable for centralized registry construction.\n\nAt minimum, each first-party adapter crate MUST expose:\n- a factory entrypoint (`create(config) -> Box<dyn PlatformAdapter>` or equivalent), and\n- a canonical capability declaration (`CAPABILITY` or equivalent).\n\nThe main runtime registry MAY be constructed via:\n1. a centralized built-in factory table, or\n2. a registrar-based assembly path,\nprovided externally observable behavior is equivalent.\n\nBuilt-in adapter registration semantics MUST preserve:\n- API adapters are active only when their config section is present and `enabled = true`.\n- Copy-paste profiles are active unless explicitly disabled.\n- User-defined `type = \"manual\"` platforms are mapped to copy-paste adapters.\n\nIf multiple construction paths exist, tests MUST verify they are behaviorally equivalent for first-party adapters.\n\n**Rationale:**\nThis codifies current behavior while keeping room for future registrar-first consolidation without forcing an intermediate architecture step.",
+  "since": "0.1.0"
+}

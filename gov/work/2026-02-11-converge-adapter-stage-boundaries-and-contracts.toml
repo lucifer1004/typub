@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-010"
+title = "converge adapter stage boundaries and contracts"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Converge remaining adapter leaks under [[RFC-0002]] by collapsing asset handling to stage-4, tightening stage boundaries, and deleting dead fallback paths."
+
+[[content.acceptance_criteria]]
+text = "Remove trait-level process_assets hook and keep stage-4 asset handling inside finalize_payload"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "WordPress taxonomy remote-id shaping is moved into stage-4 finalize payload"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Remove dead internal-link fallback branches in Notion/Confluence when shared rewrite is enabled"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check, targeted tests, and govctl check pass"
+status = "done"
+category = "chore"

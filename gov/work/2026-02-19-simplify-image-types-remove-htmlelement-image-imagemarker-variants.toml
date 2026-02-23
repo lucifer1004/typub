@@ -1,0 +1,37 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-001"
+title = "Simplify image types: remove HtmlElement::Image/ImageMarker variants"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-19"
+refs = ["ADR-0011"]
+
+[content]
+description = "Remove HtmlElement::Image and HtmlElement::ImageMarker variants; images are now always inline (InlineFragment::InlineImage or InlineFragment::ImageMarker). Standalone <img> at block level parses as Paragraph with single image fragment."
+
+[[content.acceptance_criteria]]
+text = "Adapters detect single-image paragraph for block-level rendering"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Remove HtmlElement::Image and HtmlElement::ImageMarker variants"
+status = "done"
+category = "removed"
+
+[[content.acceptance_criteria]]
+text = "Standalone <img> parses as Paragraph with single InlineImage"
+status = "done"
+category = "changed"

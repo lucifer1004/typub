@@ -1,0 +1,45 @@
+[govctl]
+schema = 1
+id = "ADR-0009"
+title = "split local output adapters: astro for markdown, static for html"
+status = "accepted"
+date = "2026-02-17"
+refs = ["RFC-0007"]
+
+[content]
+context = """
+The current `astro` adapter outputs standalone HTML files (`index.html`) to a local directory. However, Astro is a framework that consumes Markdown/MDX source files, not pre-rendered HTML.
+
+This creates a mismatch:
+1. Users cannot use the output with Astro's build system (`astro build`/`astro dev`)
+2. The output is more suitable for static hosting, not Astro Content Collections
+3. Users wanting Markdown output for SSGs have no supported option
+
+Additionally, there is no dedicated adapter for generating standalone HTML files that can be directly deployed to static hosts (GitHub Pages, Netlify, etc.)."""
+decision = """
+Split the local output adapters into two distinct adapters:
+
+1. **astro** - Outputs Markdown files with YAML front-matter
+   - Output: `{slug}/index.md` or `{slug}.md`
+   - Assets: copied to `{slug}/assets/` (relative paths)
+   - Front-matter: title, date, draft, tags, categories
+   - Compatible with Astro Content Collections
+
+2. **static** - Outputs standalone HTML files (current astro behavior)
+   - Output: `{slug}/index.html`
+   - Assets: copied to `{slug}/assets/` or embedded
+   - Theming: applies theme CSS inline
+   - Directly deployable to static hosts"""
+consequences = """
+**Benefits:**
+- Astro users can integrate output into their Astro project
+- Static HTML generation remains available under new `static` adapter
+- Clear separation of concerns
+
+**Risks:**
+- Breaking change for existing `astro` adapter users (need migration guide)
+- Increased maintenance for two adapters with similar functionality
+
+**Migration path:**
+- Users currently using `astro` for HTML output should switch to `static`
+- Users wanting Markdown output can now use the refactored `astro`"""

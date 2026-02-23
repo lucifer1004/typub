@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-CLI-BOOTSTRAP",
+  "title": "CLI Bootstrap Hook",
+  "kind": "normative",
+  "status": "active",
+  "text": "The CLI MUST initialize adapter availability before command dispatch.\n\nBootstrap MUST:\n1. Construct the first-party adapter registry from configured platforms.\n2. Ensure platform capability lookup is available for selected targets.\n3. Pass the resulting registry into pipeline execution.\n\nImplementations MAY support additional extension bootstrap hooks (for example registrar-based extension crates), but such hooks are OPTIONAL in this RFC revision.\n\nWhen extensions are enabled, bootstrap MUST preserve first-party behavior for unchanged platform IDs.\n\nThe CLI MUST operate correctly when only first-party adapters are present.\n\n**Rationale:**\nThis reflects the current production path and keeps extension wiring as an optional, non-blocking capability.",
+  "since": "0.1.0"
+}

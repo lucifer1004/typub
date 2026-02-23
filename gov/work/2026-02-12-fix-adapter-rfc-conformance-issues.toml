@@ -1,0 +1,45 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-009"
+title = "Fix adapter RFC conformance issues"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0004",
+]
+
+[content]
+description = "Fix adapter pipeline stage conformance issues against RFC-0002 and RFC-0004 by enforcing AST-based materialize behavior, fail-fast asset upload semantics, and marker-derived deferred asset collection."
+
+[[content.acceptance_criteria]]
+text = "Confluence materialize rewrites ImageMarker to Image in AST before serialize"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Notion upload materialize rewrites ImageMarker to Image in AST and blocks serialize reads resolved nodes"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Confluence and Notion materialize fail fast on asset upload errors and stop before serialize"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Deferred pending assets are built from AST ImageMarker references for deferred strategies"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Adapter comments/capability docs reflect actual RFC stage mapping and active adapters"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "cargo test and govctl check pass"
+status = "done"
+category = "chore"

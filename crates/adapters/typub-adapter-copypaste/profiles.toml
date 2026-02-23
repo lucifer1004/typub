@@ -1,0 +1,226 @@
+# Built-in copy-paste platform profiles.
+#
+# Adding a new platform = one [[profile]] entry here.
+# No Rust code change needed unless the platform requires special transforms.
+#
+# Fields:
+#   id                               - unique platform identifier (used in typub.toml)
+#   name                             - human-readable display name
+#   short_code                       - 2-3 character code for compact display
+#   editor_url                       - URL to the platform's article editor
+#   format                           - "html" (styled rich text) or "markdown" (plain text)
+#   serialize_rules                  - (optional) list of serialization rules to apply
+#   default_theme                    - (optional) default theme for this profile (layer 5 in resolution)
+#   default_asset_strategy           - (optional) default asset handling: "embed", "external" (defaults to "embed")
+#   math_delimiters                  - (optional) math delimiter syntax: "dollar", "brackets", "brackets_inline_dollar_block"
+#   math_rendering                   - (optional) how to render math: "svg", "png", "latex" (default: html=svg, markdown=latex)
+#   use_inline_html_for_sized_images - (optional) use <img> tags for sized images in Markdown (default: false)
+#
+# Available serialize_rules:
+#   li_span_wrap               - wrap <li> content in <span style="display:inline;">
+#                                (needed for WeChat to prevent text splitting)
+#   blockquote_for_admonition  - use <blockquote> instead of <div> for admonitions
+#                                (needed for WeChat/Weibo which strip <div> tags)
+#   sibling_nested_lists       - use sibling <ul>/<ol> instead of nested children of <li>
+#                                (needed for WeChat which incorrectly transforms nested lists)
+#   definition_list_to_paragraph - convert <dl> to <p><strong>Term</strong>: Definition</p>
+#                                (needed for WeChat/Weibo which don't support <dl> tags)
+#
+# Asset strategies:
+#   embed    - base64 data URIs (works for most platforms)
+#   external - S3/R2 URLs (for platforms that reject base64 or have size limits)
+#
+# Math delimiters (for Markdown platforms):
+#   dollar                        - $...$ for inline, $$...$$ for block (default)
+#   brackets                      - \(...\) for inline, \[...\] for block
+#   brackets_inline_dollar_block  - \(...\) for inline, $$...$$ for block (e.g., SegmentFault)
+#
+# use_inline_html_for_sized_images:
+#   When true, images with width/height attributes are rendered as <img> tags in Markdown.
+#   Standard Markdown doesn't support image dimensions. Enable for platforms that accept inline HTML.
+
+# ---- StyledHtml platforms ----
+
+[[profile]]
+id = "wechat"
+name = "WeChat Official Account"
+short_code = "wx"
+editor_url = "https://mp.weixin.qq.com"
+format = "html"
+serialize_rules = ["li_span_wrap", "blockquote_for_admonition", "sibling_nested_lists", "definition_list_to_paragraph"]
+default_theme = "wechat-green"
+
+[[profile]]
+id = "toutiao"
+name = "Toutiao"
+short_code = "tt"
+editor_url = "https://mp.toutiao.com/profile_v4/graphic/publish"
+format = "html"
+math_rendering = "png"
+
+[[profile]]
+id = "bilibili"
+name = "Bilibili"
+short_code = "bl"
+editor_url = "https://member.bilibili.com/article-text/home"
+format = "html"
+
+[[profile]]
+id = "weibo"
+name = "Weibo"
+short_code = "wb"
+editor_url = "https://card.weibo.com/article/v3/editor"
+format = "html"
+serialize_rules = ["blockquote_for_admonition", "sibling_nested_lists", "definition_list_to_paragraph"]
+
+[[profile]]
+id = "baijiahao"
+name = "Baijiahao"
+short_code = "bjh"
+editor_url = "https://baijiahao.baidu.com/builder/rc/edit?type=news"
+format = "html"
+
+[[profile]]
+id = "wangyihao"
+name = "Wangyihao"
+short_code = "wyh"
+editor_url = "https://mp.163.com/#/article-publish"
+format = "html"
+
+[[profile]]
+id = "sohu"
+name = "Sohu"
+short_code = "sh"
+editor_url = "https://mp.sohu.com/mpfe/v4/contentManagement/news/addarticle?contentStatus=1"
+format = "html"
+
+[[profile]]
+id = "sspai"
+name = "Sspai"
+short_code = "sp"
+editor_url = "https://sspai.com/write"
+format = "html"
+
+[[profile]]
+id = "oschina"
+name = "OSChina"
+short_code = "os"
+editor_url = "https://my.oschina.net/blog/write"
+format = "html"
+
+[[profile]]
+id = "medium"
+name = "Medium"
+short_code = "md"
+editor_url = "https://medium.com/new-story"
+format = "html"
+default_theme = "notion"
+
+[[profile]]
+id = "modelscope"
+name = "ModelScope"
+short_code = "ms"
+editor_url = "https://modelscope.cn/learn/create"
+format = "html"
+math_rendering = "png"
+
+# ---- Markdown platforms ----
+
+[[profile]]
+id = "zhihu"
+name = "Zhihu"
+short_code = "zh"
+editor_url = "https://zhuanlan.zhihu.com/write"
+format = "markdown"
+default_theme = "elegant"
+default_asset_strategy = "external"
+
+[[profile]]
+id = "csdn"
+name = "CSDN"
+short_code = "cs"
+editor_url = "https://editor.csdn.net/md/"
+format = "markdown"
+default_asset_strategy = "external"
+
+[[profile]]
+id = "juejin"
+name = "Juejin"
+short_code = "jj"
+editor_url = "https://juejin.cn/editor/drafts/new"
+format = "markdown"
+default_theme = "github"
+default_asset_strategy = "external"
+
+[[profile]]
+id = "segmentfault"
+name = "SegmentFault"
+short_code = "sf"
+editor_url = "https://segmentfault.com/write"
+format = "markdown"
+math_delimiters = "brackets_inline_dollar_block"
+default_asset_strategy = "external"
+
+[[profile]]
+id = "cnblogs"
+name = "Cnblogs"
+short_code = "cn"
+editor_url = "https://i.cnblogs.com/posts/edit"
+format = "markdown"
+
+[[profile]]
+id = "jianshu"
+name = "Jianshu"
+short_code = "js"
+editor_url = "https://www.jianshu.com/writer"
+format = "markdown"
+default_asset_strategy = "external"
+
+[[profile]]
+id = "infoq"
+name = "InfoQ"
+short_code = "iq"
+editor_url = "https://xie.infoq.cn/draft/write"
+format = "markdown"
+
+[[profile]]
+id = "51cto"
+name = "51CTO"
+short_code = "51"
+editor_url = "https://blog.51cto.com/blogger/publish"
+format = "markdown"
+
+[[profile]]
+id = "tencentcloud"
+name = "Tencent Cloud"
+short_code = "tc"
+editor_url = "https://cloud.tencent.com/developer/article/write-new"
+format = "markdown"
+
+[[profile]]
+id = "aliyun"
+name = "Aliyun"
+short_code = "al"
+editor_url = "https://developer.aliyun.com/article/new#/"
+format = "markdown"
+
+[[profile]]
+id = "huaweicloud"
+name = "Huawei Cloud"
+short_code = "hw"
+editor_url = "https://bbs.huaweicloud.com/blogs/new"
+format = "markdown"
+
+[[profile]]
+id = "elecfans"
+name = "Elecfans"
+short_code = "ef"
+editor_url = "https://www.elecfans.com/d/article/md/"
+format = "markdown"
+
+[[profile]]
+id = "volcengine"
+name = "Volcengine"
+short_code = "ve"
+editor_url = "https://developer.volcengine.com/articles/draft"
+format = "markdown"

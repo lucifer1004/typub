@@ -1,0 +1,41 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-16-002"
+title = "refactor(adapter): migrate adapters to use common asset strategy helpers"
+status = "done"
+created = "2026-02-16"
+started = "2026-02-16"
+completed = "2026-02-16"
+
+[content]
+description = "Migrate Astro, Hashnode, Dev.to, and Ghost adapters to use the newly extracted common asset strategy helpers from typub-adapters-core."
+
+[[content.acceptance_criteria]]
+text = "Update astro adapter to use prepare_deferred_assets"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update astro adapter to use materialize_and_resolve_urls"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update hashnode adapter to use new helpers"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update devto adapter to use new helpers"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update ghost adapter to use new helpers"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests and clippy pass"
+status = "done"
+category = "chore"

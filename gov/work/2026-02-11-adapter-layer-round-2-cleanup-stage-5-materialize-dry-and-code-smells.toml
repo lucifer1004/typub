@@ -1,0 +1,96 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-019"
+title = "adapter layer round-2 cleanup: Stage 5 materialize, DRY, and code smells"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = [
+    "RFC-0002",
+    "RFC-0003",
+]
+
+[content]
+description = """
+Second pass on the adapter layer per [[RFC-0002]] and [[RFC-0003]]. Add \
+Stage 5 materialize_payload to the trait and pipeline; move WordPress remote \
+calls out of finalize_payload; merge create/update into upsert_post; extract \
+shared auth-check helper; fix Notion schema mutation, Confluence check_status, \
+Dev.to upload rejection; extract preview boilerplate; make AdapterRegistry \
+lazy-construct only enabled adapters."""
+
+[[content.acceptance_criteria]]
+text = "add materialize_payload to PlatformAdapter trait with default pass-through (RFC-0002 Stage 5)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "wire Stage 5 materialize call in pipeline.rs between finalize and publish"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "WordPress finalize_payload no longer makes remote API calls; tag/category resolution and asset upload moved to materialize_payload (C1)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "WordPress create_post and update_post merged into upsert_post (N3)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "WordPress auth-check pattern extracted to http_utils::ensure_success_with_auth_hint (N4)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Notion and Confluence `_ctx` parameter renamed to `ctx` where used (N1)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Notion check_status no longer mutates database schema (N2)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Confluence check_status implemented using find_page_by_title (C3)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Dev.to rejects asset_strategy=upload at config time (C4)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Dev.to adds title-based lookup fallback per RFC-0003 (C2)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "WeChat regex compilation uses LazyLock statics (N5)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "preview boilerplate extracted to shared helpers (C5)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "AdapterRegistry only constructs enabled adapters (C6)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check + cargo test + cargo clippy pass with zero regressions"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-006"
+title = "feat(cli): implement true dry-run mode with mock asset upload"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-19"
+
+[content]
+description = "Implement true dry-run mode that copies assets to local temp directory instead of skipping upload. This allows testing the full asset pipeline including image processing and CDN upload logic without actually making remote API calls."
+
+[[content.acceptance_criteria]]
+text = "Dry-run mode copies assets to temp dir instead of skipping upload"
+status = "done"
+category = "added"

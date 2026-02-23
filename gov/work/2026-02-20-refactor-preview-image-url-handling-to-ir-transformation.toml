@@ -1,0 +1,63 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-20-001"
+title = "Refactor preview image URL handling to IR transformation"
+status = "done"
+created = "2026-02-20"
+started = "2026-02-20"
+completed = "2026-02-20"
+refs = [
+    "RFC-0004",
+    "ADR-0011",
+]
+
+[content]
+description = """
+Replace HTML string rewriting with IR-level image path resolution.
+
+Current problem:
+- resolve_asset_urls generates file:// URLs
+- dev_server uses HTML string replacement to convert file:// to paths
+- SVG->PNG conversion in Specialize stage generates ImageMarker with paths
+- Path matching is fragile (key_candidates logic)
+
+Solution:
+- Add resolve_preview_image_paths() transform after Specialize stage
+- ImageMarker -> Image with `/__asset__/` URL and local_path
+- Dev server serves `/__asset__/` paths directly
+- Convert SVG->PNG markers use relative paths"""
+
+[[content.acceptance_criteria]]
+text = "`InlineFragment::Image` has `local_path: Option<PathBuf>` field"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "resolve_preview_image_paths() function in typub-html/transform.rs"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "convert_svg_to_png_markers uses relative paths instead of absolute"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "preview_single_platform calls resolve_preview_image_paths after Specialize"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "dev server serves `/__asset__/*` paths for preview images"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "HTML file:// URL rewriting code from dev_server"
+status = "done"
+category = "removed"
+
+[[content.acceptance_criteria]]
+text = "All existing tests pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,40 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-003"
+title = "fix adapter/core consistency issues"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+refs = [
+    "RFC-0002",
+    "RFC-0007",
+]
+
+[content]
+description = "Fix adapter/core asset strategy handling, render config defaults, and test scaffolding consistency"
+
+[[content.acceptance_criteria]]
+text = "Harmonize asset strategy resolution and error handling across adapters/core"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Normalize render_config defaults and marker behavior"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Standardize adapter test scaffolding (new_for_test)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "just pre-commit passes"
+status = "done"
+category = "chore"

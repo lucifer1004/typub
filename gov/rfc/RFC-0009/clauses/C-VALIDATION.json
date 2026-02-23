@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-VALIDATION",
+  "title": "IR validation invariants",
+  "kind": "normative",
+  "status": "active",
+  "text": "Implementations MUST validate IR invariants before adapter specialization. Validation failures MUST be surfaced as explicit errors and MUST NOT silently degrade core semantics.\n\nAt minimum this validation MUST enforce:\n1. Heading levels are within `1..=6`.\n2. All asset references resolve to existing entries in `Document.assets`.\n3. List nesting is structurally valid for the unified list model.\n4. Math payload validity.\n5. SVG payload validity for explicit SVG nodes.\n\nFor clause (4), the minimum interoperable validity rule is:\n- A math node MUST contain at least one of canonical source or rendered payload.\n- If canonical source is present, source kind MUST be one of the RFC-defined kinds (`Typst` or `LaTeX`).\n- If canonical source is present, source text MUST be non-empty after trimming ASCII whitespace.\n\nFor clause (5), the minimum interoperable validity rule is:\n- An explicit SVG node MUST contain at least one of canonical SVG source or rendered payload.\n\nImplementations MAY add stricter parser-based validation (for example full Typst/LaTeX parse checks), but such strictness MUST be explicitly documented and MUST produce deterministic outcomes for fixed parser version and configuration.",
+  "since": "0.2.0"
+}

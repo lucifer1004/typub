@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-004"
+title = "refactor main crate duplicate logic"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+refs = ["ADR-0005"]
+
+[content]
+description = "Remove duplicated configuration and link-resolution logic in the main crate by centralizing resolution paths and reducing module overlap for maintainability."
+
+[[content.acceptance_criteria]]
+text = "Centralize asset strategy resolution in main crate to a single path"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Eliminate duplicate internal_link_target resolution by routing through ResolvedConfig"
+status = "done"
+category = "changed"

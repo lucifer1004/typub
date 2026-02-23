@@ -1,0 +1,149 @@
+[govctl]
+schema = 1
+id = "ADR-0004"
+title = "Logging System Architecture"
+status = "accepted"
+date = "2026-02-14"
+refs = [
+    "RFC-0007",
+    "ADR-0002",
+]
+
+[content]
+context = """
+`typub-ui` currently provides both CLI output utilities (progress bars, spinners, styled messages) and logging functions (`debug`, `info`, `warn`, `error`). This coupling creates problematic dependencies: `typub-storage` must depend on the entire `typub-ui` crate just to use logging during upload operations, violating separation of concerns.
+
+### Problem Statement
+
+1. **Coupling violation**: `typub-storage` (a service layer) depends on `typub-ui` (a presentation layer) for logging
+2. **No standard logging**: Current implementation uses custom `eprintln!`-based output, incompatible with the Rust logging ecosystem
+3. **Limited debuggability**: No structured logging, no log level filtering, no span tracing for complex operations
+4. **Library use friction**: If typub is used as a library, callers cannot integrate with their own logging infrastructure
+
+### Constraints
+
+- [RFC-0007](../rfc/RFC-0007.md) dependency rules require clean layering
+- Must maintain backward-compatible CLI output (colors, icons, formatting)
+- Async operations (S3 uploads) need progress reporting
+
+### Options Considered
+
+1. Split into `typub-log` (simple) + `typub-ui` with current `eprintln!` approach
+2. Introduce `tracing` crate as logging foundation with custom CLI formatter (recommended)
+3. Use `log` crate facade with `env_logger`
+4. Keep current monolithic `typub-ui`"""
+decision = """
+We will **introduce `tracing` as the logging foundation and create a new `typub-log` crate** that:
+
+1. Provides `tracing`-based logging with re-exported macros (`debug!`, `info!`, `warn!`, `error!`)
+2. Implements a custom `tracing-subscriber` layer for CLI-formatted output (icons, colors)
+3. Exposes a `ProgressReporter` trait for decoupling storage from UI
+
+### Implementation Phases
+
+**Phase 1: Create `typub-log` crate**
+- Add `tracing` and `tracing-subscriber` dependencies
+- Implement `CliLayer` for custom CLI formatting
+- Re-export tracing macros for crate-wide use
+- `typub-log` has zero internal dependencies (Layer 0)
+
+**Phase 2: Define `ProgressReporter` trait in `typub-log`**
+- Create trait in `typub-log` (semantically related to logging/reporting)
+- Provide `()` (null reporter) default implementation
+- `FnReporter` wrapper for simple closures
+
+**Phase 3: Refactor `typub-storage`**
+- Replace `typub-ui` dependency with `typub-log`
+- Accept `&dyn ProgressReporter` in upload functions
+- Use tracing macros for structured logging
+
+**Phase 4: Update `typub-ui`**
+- Implement `ProgressReporter` trait
+- Re-export `typub-log` for convenience
+- Keep indicatif-based progress bars and spinners
+
+### New Dependency Graph
+
+```
+typub-log (Layer 0)
+├── tracing
+├── tracing-subscriber
+├── ProgressReporter trait
+└── (no internal deps)
+
+typub-core (Layer 0)
+└── (no internal deps)
+
+typub-storage (Layer 2)
+├── typub-core
+├── typub-config
+└── typub-log (NOT typub-ui)
+
+typub-ui (Layer 2)
+├── typub-log (re-export)
+├── indicatif
+├── owo-colors
+└── implements ProgressReporter
+```
+
+### RFC-0007 Amendment Required
+
+This ADR requires amending [RFC-0007](../rfc/RFC-0007.md) to add `typub-log` as a Layer 0 crate in the dependency table. The amendment should specify:
+- `typub-log` is Layer 0 (no internal dependencies)
+- All crates MAY depend on `typub-log` for logging
+- `typub-storage` MUST NOT depend on `typub-ui` (use `typub-log` instead)
+
+### Migration Notes
+
+**Macro syntax change**: The `tracing` macros use structured fields instead of format strings:
+
+```rust
+// Before (typub-ui)
+ui::debug(&format!(\"Processing file {}\", path.display()));
+
+// After (tracing)
+tracing::debug!(file = %path.display(), \"Processing file\");
+```
+
+The `%` sigil formats the value with `Display`; `?` uses `Debug`. This change enables structured logging but requires updating call sites.
+
+**RUST_LOG integration**: The custom `CliLayer` works with standard `EnvFilter`:
+
+```rust
+// Enable debug logs for storage operations
+RUST_LOG=typub_storage=debug typub publish
+```"""
+consequences = """
+### Positive
+
+- **Clean layering**: `typub-storage` no longer depends on `typub-ui`, respecting [RFC-0007](../rfc/RFC-0007.md) dependency rules
+- **Ecosystem compatibility**: Standard `tracing` allows `RUST_LOG` filtering (`RUST_LOG=typub::storage=debug`)
+- **Structured logging**: Enables `#[instrument]` for automatic span creation and field extraction
+- **Library-friendly**: Callers can use their own `tracing` subscriber
+- **Better debugging**: Spans track async operation chains (e.g., upload → transform → publish)
+- **Testable**: `ProgressReporter` trait allows mock injection for unit tests
+
+### Negative
+
+- **Additional dependency**: `tracing` + `tracing-subscriber` add ~50KB to compile time (mitigation: these are widely used, likely already in dependency tree via other crates)
+- **Learning curve**: Team needs familiarity with `tracing` macros and spans (mitigation: provide examples in crate docs)
+- **Migration effort**: Existing `ui::debug()` calls need conversion to `tracing::debug!` with syntax changes (mitigation: structured fields enable better filtering and analysis)
+- **Two logging systems temporarily**: During migration, old and new systems coexist (mitigation: Phase-by-phase migration)
+
+### Neutral
+
+- `typub-ui` becomes smaller, focused on indicatif-based progress indicators
+- CLI output appearance remains unchanged (custom formatter preserves icons/colors)
+- May enable future features: JSON logging for CI, trace export for debugging"""
+
+[[content.alternatives]]
+text = "Simple split: Create typub-log with current eprintln approach. Rejected: No ecosystem compatibility, no structured logging, doesn't solve library-use friction."
+status = "considered"
+
+[[content.alternatives]]
+text = "log crate + env_logger: Use log facade with simple env_logger backend. Rejected: No span support, less powerful than tracing for async debugging, env_logger lacks CLI-friendly formatting."
+status = "considered"
+
+[[content.alternatives]]
+text = "Keep monolithic typub-ui: Do nothing, accept the coupling. Rejected: Violates RFC-0007 layering, blocks library use, no path to structured logging."
+status = "considered"

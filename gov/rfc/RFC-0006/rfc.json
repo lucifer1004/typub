@@ -1,0 +1,45 @@
+{
+  "rfc_id": "RFC-0006",
+  "title": "adapter extension API",
+  "version": "0.1.1",
+  "status": "normative",
+  "phase": "impl",
+  "owners": ["@lucifer1004"],
+  "created": "2026-02-14",
+  "updated": "2026-02-22",
+  "sections": [
+    {
+      "title": "Summary",
+      "clauses": ["clauses/C-SUMMARY.json"]
+    },
+    {
+      "title": "Specification",
+      "clauses": [
+        "clauses/C-REGISTRAR-API.json",
+        "clauses/C-CAPABILITY-LOOKUP.json",
+        "clauses/C-EXTERNAL-VARIANT.json",
+        "clauses/C-BUILTIN-MIGRATION.json",
+        "clauses/C-BACKWARD-COMPAT.json",
+        "clauses/C-CLI-BOOTSTRAP.json",
+        "clauses/C-REQUIRED-TESTS.json"
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.1.1",
+      "date": "2026-02-22",
+      "notes": "Align adapter extension clauses with current runtime architecture",
+      "added": [
+        "Replace External-enum and mandatory registrar bootstrap wording with trait-object registry semantics",
+        "Update capability lookup and built-in migration clauses to current implementation model"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-02-14",
+      "notes": "Initial draft"
+    }
+  ],
+  "signature": "70e4a7d32fd997be57090136526b13d71c34e752c2ae75f75a647d47e920f2ce"
+}

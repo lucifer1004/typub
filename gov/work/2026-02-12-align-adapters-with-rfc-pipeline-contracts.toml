@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-014"
+title = "Align adapters with RFC pipeline contracts"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0003",
+    "RFC-0004",
+]
+
+[content]
+description = "Align adapter behavior with RFC-0002/0003/0004 pipeline contracts by removing silent fallback paths, tightening update-or-create decision handling, and normalizing cross-adapter error semantics without breaking existing publish flows."
+
+[[content.acceptance_criteria]]
+text = "Hashnode slug lookup propagates non-not-found errors instead of silently creating duplicates"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Confluence attachment materialization uses server-returned attachment title for rendered references"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Stage 7/8 adapter payload typing failures fail fast instead of defaulting to empty values"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Adapter tests and govctl check pass"
+status = "done"
+category = "chore"

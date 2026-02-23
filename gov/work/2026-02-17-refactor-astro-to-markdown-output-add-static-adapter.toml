@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-17-004"
+title = "refactor astro to markdown output; add static adapter"
+status = "done"
+created = "2026-02-17"
+started = "2026-02-17"
+completed = "2026-02-17"
+refs = ["ADR-0009"]
+
+[content]
+description = "Split local output adapters: astro for Markdown with frontmatter, static for standalone HTML"
+
+[[content.acceptance_criteria]]
+text = "Astro adapter outputs Markdown with front-matter"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "New static adapter generates standalone HTML"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All existing tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

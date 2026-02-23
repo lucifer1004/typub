@@ -1,0 +1,161 @@
+# typub Configuration
+# Copy this file to config.toml and fill in your values
+# See: https://github.com/lucifer1004/typub
+# Adapter capability matrix: docs/adapter-capabilities.md
+#
+# Platform semantics:
+#   Presence of [platforms.X] = included in default publish list.
+#   Use `enabled = false` to temporarily disable a platform.
+
+content_dir = "posts"
+output_dir = "output"
+# internal_link_target = "ghost"  # Preferred platform for internal links in copypaste adapters
+# preamble = """
+# #set text(lang: "zh")
+# """  # Global Typst wrapper preamble (layer 4)
+
+# ---- External Storage (S3-compatible) ----
+# Per [[RFC-0004]]: Configure external object storage for platforms without native upload APIs.
+# Required when using asset_strategy = "external" on any platform.
+
+# [storage]
+# type = "s3"
+# endpoint = "https://xxx.r2.cloudflarestorage.com"
+# bucket = "my-assets"
+# region = "auto"
+# url_prefix = "https://cdn.example.com/assets"
+# access_key_id = "..."
+# secret_access_key = "..."
+
+# Per-platform storage override (optional):
+# [platforms.hashnode.storage]
+# bucket = "hashnode-assets"
+
+# Environment variable precedence (highest to lowest):
+# 1. PLATFORM_S3_BUCKET (e.g., HASHNODE_S3_BUCKET)
+# 2. Platform config (e.g., [platforms.hashnode.storage].bucket)
+# 3. S3_BUCKET (global env var)
+# 4. [storage].bucket (global config)
+
+# Platform configurations
+# asset_strategy options: "copy" | "embed" | "upload" | "external"
+# - copy: keep/copy local assets and rewrite references to local paths
+# - embed: inline local assets as data: URLs
+# - upload: push assets to remote platform storage (adapter-dependent)
+# - external: upload to configured S3-compatible storage (requires [storage] config)
+#
+# math_rendering options: "svg" | "latex" | "png" (platform-dependent)
+# - svg: render math as inline SVG (best quality for web)
+# - latex: render math as LaTeX (requires platform support)
+# - png: render math as PNG images (most compatible but rasterized)
+#
+# math_delimiters options: "dollar" | "brackets"
+# - dollar: use $...$ for inline, $$...$$ for block (default)
+# - brackets: use \[...\] for block math
+
+[platforms.astro]
+output_dir = "output/astro"
+# asset_strategy = "copy"
+# css_file = "templates/blog.css"
+
+[platforms.confluence]
+base_url = "https://your-instance.atlassian.net"
+default_space = "YOUR_SPACE"
+# api_key = "your-api-token"
+# email = "your-email@example.com"
+# asset_strategy = "upload"
+# math_rendering = "latex"
+# latex_math_app_id = "your-app-id"
+# latex_math_env_id = "your-env-id"
+# Notes:
+# - asset_strategy: default is "upload"; only upload is supported.
+# - math_rendering: default is "latex"; supported: latex, png.
+#   - latex: uses ADF extension format (requires latex_math_app_id/env_id)
+#   - png: renders math as PNG and uploads as attachments
+# - latex_math_app_id/env_id: for math_rendering = "latex"; if not configured, will fall back to legacy macro format.
+#   Find your IDs by inspecting an existing page with LaTeX macros; look for
+#   extension-key in format: {app_id}/{env_id}/static/mathblock
+# - Tags in post meta are normalized and synced as Confluence labels (best-effort).
+
+[platforms.devto]
+enabled = false
+# api_key = "your-devto-api-key"
+# base_url = "https://dev.to/api"
+# published = true
+# asset_strategy = "embed"
+# Notes:
+# - asset_strategy: default is "embed"; supported: embed, copy, external.
+# - Dev.to has no native media upload API. Consider using external strategy
+#   with [storage] config for reliable image rendering.
+# - Dev.to supports tags (up to 4 recommended); categories are unsupported.
+
+[platforms.hashnode]
+enabled = false
+# api_key = "your-hashnode-pat"
+# publication_id = "your-publication-id"
+# publication_host = "your-blog.hashnode.dev"
+# base_url = "https://gql.hashnode.com"
+# asset_strategy = "external"
+# Notes:
+# - asset_strategy: default is "external"; supported: embed, copy, external.
+# - HashNode has no native media upload API. Use external (recommended) for
+#   images, or embed (data URIs may not render). Configure [storage] when external.
+# - HashNode supports tags (up to 5); categories are unsupported.
+
+[platforms.notion]
+# api_key = "secret_your-integration-token"
+# data_source_id = "your-data-source-id"
+# tags_property = "Tags"
+# asset_strategy = "upload"
+# Notes:
+# - asset_strategy: default is "upload"; only upload is supported.
+# - tags_property: required as multi_select; auto-created if missing.
+# - Notion title property is enforced as "Title" (renamed/created when possible).
+
+[platforms.wordpress]
+base_url = "https://your-wordpress-site.com"
+# api_key = "your-jwt-token"
+# asset_strategy = "upload"
+# Notes:
+# - asset_strategy: default is "upload".
+# - Tags in post meta are resolved/created in WordPress and attached to posts.
+# - Categories in post meta are resolved/created in WordPress when provided.
+
+# ---- Copy-paste platforms (built-in profiles from profiles.toml) ----
+# These generate styled HTML or Markdown with a local preview + copy button.
+# Built-in copy-paste platforms are always available via --platform <name>.
+# Add a section here to include one in the default publish list.
+
+[platforms.wechat]
+output_dir = "output/wechat"
+# enabled = false
+# theme = "elegant"
+# asset_strategy = "embed"
+# preamble = """
+# #set text(size: 11pt)
+# """  # Platform Typst wrapper preamble (layer 3)
+# Notes:
+# - asset_strategy: default is "embed"; only embed is supported.
+
+[platforms.xiaohongshu]
+output_dir = "output/xiaohongshu"
+# asset_strategy = "embed"
+# template = "templates/slide-base.typ"
+# Notes:
+# - asset_strategy: default is "embed"; only embed is supported.
+
+# [platforms.zhihu]
+
+# [platforms.csdn]
+
+# [platforms.juejin]
+
+# [platforms.medium]
+
+# ---- Custom copy-paste platform (user-defined) ----
+# Any platform not in the built-in list can be added with type = "manual".
+# [platforms.my_blog]
+# type = "manual"
+# name = "My Blog"
+# editor_url = "https://myblog.com/editor"
+# format = "markdown"

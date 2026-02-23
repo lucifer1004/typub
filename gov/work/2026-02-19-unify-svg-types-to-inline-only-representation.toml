@@ -1,0 +1,37 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-002"
+title = "Unify SVG types to inline-only representation"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-19"
+refs = ["ADR-0012"]
+
+[content]
+description = "Unify SVG types to inline-only representation. Remove the separate block-level SVG type and represent all SVGs as InlineFragment, with block-level SVGs being Paragraphs containing a single Svg fragment."
+
+[[content.acceptance_criteria]]
+text = "Remove HtmlElement::Svg variant"
+status = "done"
+category = "removed"
+
+[[content.acceptance_criteria]]
+text = "Parse block SVG as Paragraph with Svg fragment"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Add is_svg_block helper in adapters-core"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update all adapters for unified SVG handling"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"

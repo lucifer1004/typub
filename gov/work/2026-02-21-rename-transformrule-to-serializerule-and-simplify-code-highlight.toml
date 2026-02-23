@@ -1,0 +1,37 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-21-002"
+title = "Rename TransformRule to SerializeRule and simplify code_highlight"
+status = "done"
+created = "2026-02-21"
+started = "2026-02-21"
+completed = "2026-02-21"
+refs = ["RFC-0002"]
+
+[content]
+description = """
+Rename TransformRule to SerializeRule to better reflect that these rules control
+HTML output at serialization time, not AST transformation. Also simplify code_highlight
+by deriving it from format (HTML=true, Markdown=false) instead of storing it as a
+configurable field - the value was 100% predictable from format type.
+"""
+
+[[content.acceptance_criteria]]
+text = "TransformRule renamed to SerializeRule in typub-html"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "transform_rules renamed to serialize_rules in profiles.toml"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "code_highlight derived from format instead of stored as field"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,54 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-013"
+title = "add per-platform documentation guides"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-17"
+
+[content]
+description = """
+Add per-platform documentation guides in docs/guide/platforms/ for each supported platform.
+Each guide should include platform-specific instructions, API key setup, and screenshots.
+"""
+
+[[content.acceptance_criteria]]
+text = "Create docs/guide/platforms/ directory structure"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Ghost platform guide with API key instructions"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Dev.to platform guide with API key instructions"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Notion platform guide with API key instructions"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "WeChat platform guide (Chinese)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Zhihu platform guide (Chinese)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "CSDN platform guide (Chinese)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "build-book.sh for dynamic SUMMARY.md generation"
+status = "done"
+category = "changed"

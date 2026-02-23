@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-ADAPTER-BOUNDARY",
+  "title": "Adapter Boundary Contract",
+  "kind": "normative",
+  "status": "active",
+  "text": "For this RFC, an adapter is the platform-specific integration component that translates shared pipeline output into target-specific publish API requests and responses.\n\nEach adapter implementation MUST declare:\n- required input/output format expectations,\n- asset strategy behavior,\n- capability surface (for example tags/categories/internal-links support),\n- unsupported behavior per capability gap (warn+degrade or hard error).\n\nCapability declarations SHOULD be available in a machine-readable or centrally documented form.\n\nShared pipeline logic MUST remain platform-agnostic where practical.\nAdapter code MUST encapsulate platform-specific API calls and target-specific output shaping.\n\nAn adapter MUST NOT bypass status tracking writes on successful publish.",
+  "since": "0.1.0"
+}

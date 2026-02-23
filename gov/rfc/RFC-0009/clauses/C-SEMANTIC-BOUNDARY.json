@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-SEMANTIC-BOUNDARY",
+  "title": "Semantic-only IR boundary",
+  "kind": "normative",
+  "status": "active",
+  "text": "The IR MUST be semantic-first. It MUST NOT contain execution-state fields such as absolute filesystem paths, preview-only URLs, temporary upload placeholders, adapter/runtime handles, or other publish-run context.\n\nPreview-only URL resolution data MUST be carried in non-conformance sidecar/context (for example materialization context), not in the IR conformance surface. If an implementation uses transient in-memory overlays during preview, those overlays MUST NOT participate in conformance serialization, equivalence checks, or persisted IR artifacts.\n\nDerived cache payloads MAY appear only when all of the following are true:\n1. The payload is derivable from canonical semantic source (`Document` semantic content plus stable renderer config).\n2. The payload is explicitly optional and safely droppable without semantic loss.\n3. The payload MUST NOT be required for semantic validation, semantic equivalence, or adapter capability negotiation.\n\nPipeline state needed for provisioning/materialization MUST live outside the IR conformance surface in context/pipeline metadata.",
+  "since": "0.2.0"
+}

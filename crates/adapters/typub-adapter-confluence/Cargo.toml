@@ -1,0 +1,32 @@
+[package]
+name = "typub-adapter-confluence"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Confluence adapter for typub publishing"
+
+[dependencies]
+typub-adapters-core.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+typub-theme.workspace = true
+
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+urlencoding.workspace = true
+
+[dev-dependencies]
+wiremock.workspace = true
+
+[lints]
+workspace = true

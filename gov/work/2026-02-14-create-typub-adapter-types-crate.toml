@@ -1,0 +1,48 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-005"
+title = "create typub-adapters-core crate"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+refs = [
+    "RFC-0007",
+    "RFC-0006",
+]
+
+[content]
+description = """Create shared subcrates per [[RFC-0007:C-SHARED-TYPES]]:
+- typub-config: Config, PlatformConfig, StorageConfig (23 tests)
+- typub-storage: S3Storage, UploadResult, utility functions (20 tests)
+- typub-adapters-core: PlatformAdapter trait, AdapterPayload, AdapterCapability, AdapterRegistrar per RFC-0006 (8 tests)"""
+
+[[content.acceptance_criteria]]
+text = "typub-adapters-core crate exists in crates/"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "typub-config crate exists in crates/"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "typub-storage crate exists in crates/"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "PlatformAdapter trait defined in typub-adapters-core"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "AdapterRegistrar implemented per RFC-0006"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "all 570 workspace tests pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,68 @@
+[govctl]
+schema = 1
+id = "ADR-0002"
+title = "extract shared types into typub-core subcrate"
+status = "accepted"
+date = "2026-02-13"
+refs = [
+    "RFC-0002",
+    "RFC-0005",
+]
+
+[content]
+context = """
+`build.rs` and the main `typub` crate both need capability types (`MathRendering`, `AssetStrategy`, etc.) but cannot share them because `build.rs` runs at build time and cannot depend on the crate being compiled.
+
+### Problem Statement
+
+`build.rs` deserializes TOML capability fields as `String` and manually maps them to Rust enum expression strings (e.g., `math_rendering_expr("svg")` → `"MathRendering::Svg"`). This is fragile — typos in TOML surface as panics in match arms rather than serde errors, and there is no compile-time guarantee that build-time and runtime enum definitions stay in sync. Theme IDs are also bare `String`/`&str` with no type distinction from other strings.
+
+### Constraints
+
+- [[RFC-0002]] defines the pipeline stages including capability resolution
+- [[RFC-0005]] defines the configuration hierarchy including theme resolution
+- `build.rs` generates static `&'static` data — the shared types must be lightweight enough for both build-time deserialization and runtime use
+- Existing `use crate::adapters::{MathRendering, ...}` import paths should remain valid via re-exports
+
+### Options Considered
+
+1. Extract enums to a `typub-core` subcrate (chosen)
+2. Keep string-based build.rs with better validation
+3. Use proc-macros to generate enums from TOML"""
+decision = """
+We will **extract capability enums and `ThemeId` newtype into a `crates/typub-core/` subcrate** because:
+
+1. **Single source of truth:** Enum variants are defined once and shared by both `build.rs` (build-dependency) and the main crate (normal dependency).
+2. **Serde validation at build time:** TOML strings are deserialized into typed enums via serde, catching typos immediately with clear error messages instead of panics in match arms.
+3. **Type safety for theme IDs:** `ThemeId(String)` newtype prevents accidental confusion between theme IDs and other strings.
+
+### Implementation Notes
+
+- Each enum implements `code_expr(&self) -> &'static str` for build-time code generation
+- `CapabilitySupport` and `DraftSupport` need custom serde deserializers due to flattened TOML representations
+- The main crate re-exports all `typub-core` types from their original module paths to avoid import churn
+- `ThemeId` implements `Deref<Target = str>` for ergonomic use at call sites"""
+consequences = """
+### Positive
+
+- Typos in `adapters.toml` produce clear serde deserialization errors at build time
+- Adding a new enum variant only requires editing `typub-core`; `build.rs` string-mapping functions are eliminated
+- `ThemeId` prevents passing arbitrary strings where theme IDs are expected
+- Workspace structure enables future subcrate extraction if needed
+
+### Negative
+
+- Additional crate adds marginal compilation overhead (mitigation: `typub-core` is tiny with minimal dependencies — only `serde`)
+- Workspace conversion changes `Cargo.lock` path behavior (mitigation: Cargo handles this transparently)
+
+### Neutral
+
+- Existing import paths (`use crate::adapters::MathRendering`) continue to work via re-exports — no downstream churn"""
+
+[[content.alternatives]]
+text = "Keep string-based build.rs with better validation: Add unit tests for TOML-to-enum mapping. Rejected: Still duplicates enum knowledge between build.rs and runtime code; adding a variant requires changes in two places."
+status = "considered"
+
+[[content.alternatives]]
+text = "Use proc-macros to generate enums from TOML: Derive enums at compile time from adapters.toml. Rejected: Proc-macro crates add significant complexity and compile time for marginal benefit over a simple shared crate."
+status = "considered"

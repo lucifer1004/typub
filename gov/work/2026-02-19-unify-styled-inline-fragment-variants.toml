@@ -1,0 +1,42 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-004"
+title = "Unify styled inline fragment variants"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-19"
+refs = ["RFC-0008"]
+
+[content]
+description = "Unify styled inline fragment variants. Consolidate the various styled text fragment types into a single Styled variant with a TextStyle enum, reducing code duplication and simplifying fragment handling."
+
+[[content.acceptance_criteria]]
+text = "Create TextStyle enum and unify styled variants into InlineFragment::Styled"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Add convenience constructors (bold, italic, etc.) to InlineFragment"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update all pattern matching to use unified Styled variant"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Update RFC-0008 to reflect unified styling approach"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

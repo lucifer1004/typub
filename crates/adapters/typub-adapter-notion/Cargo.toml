@@ -1,0 +1,32 @@
+[package]
+name = "typub-adapter-notion"
+description = "Notion adapter for typub - REST API publishing with HTML to blocks conversion"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+typub-adapters-core.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt", "macros"] }
+wiremock.workspace = true
+toml.workspace = true
+
+[lints]
+workspace = true

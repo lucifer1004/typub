@@ -1,0 +1,123 @@
+[govctl]
+schema = 1
+id = "ADR-0001"
+title = "code block syntax highlighting preservation"
+status = "accepted"
+date = "2026-02-13"
+refs = ["RFC-0002"]
+
+[content]
+context = """
+Copy-paste HTML platforms (WeChat, Zhihu, etc.) require syntax highlighting to be preserved in code blocks, but the current parser discards it.
+
+### Problem Statement
+
+In `src/html_utils/util.rs::extract_code_text` (lines 27-38), we intentionally strip all HTML tags (including `<span>` tags with highlighting styles) to produce plain text for the `CodeBlock::code` field. This was designed for Confluence, which uses CDATA sections requiring pure text.
+
+However, copy-paste HTML platforms like WeChat preserve and display highlighted code when pasted from the preview. Currently, users see monochrome code after pasting, losing syntax highlighting entirely.
+
+### Constraints
+
+1. **[[RFC-0002:C-PIPELINE-STAGES]]** defines `CodeBlock { code, language, attrs }` — changing this structure affects all adapters.
+2. **Confluence** needs plain text (CDATA cannot contain HTML entities).
+3. **Copy-paste HTML platforms** need styled HTML for best UX.
+4. **Markdown platforms** need plain text + language tag (not HTML).
+
+### Options Considered
+
+1. **Store both plain and highlighted HTML** in `CodeBlock` (dual storage).
+2. **Add a capability flag** to control parser behavior per-adapter.
+3. **Re-highlight at serialization time** using a Rust syntax highlighter."""
+decision = """
+We will **store both plain text and highlighted HTML** in `CodeBlock`, and add a **`code_highlight` capability** to let each adapter/profile declare which representation it needs.
+
+### Data Structure Change
+
+```rust
+// Before
+CodeBlock { code: String, language: String, attrs: Attrs }
+
+// After
+CodeBlock {
+    code: String,                 // Plain text (always available)
+    highlighted: Option<String>,  // HTML with syntax highlighting (if rendered)
+    language: String,
+    attrs: Attrs
+}
+```
+
+### Capability Addition
+
+Add `code_highlight` field to `adapters.toml` and `profiles.toml`:
+
+```toml
+# adapters.toml
+[[adapter]]
+id = "ghost"
+code_highlight = true   # Use highlighted HTML in code blocks
+...
+
+[[adapter]]
+id = "confluence"
+code_highlight = false  # Use plain text (CDATA requirement)
+...
+
+# profiles.toml
+[[profile]]
+id = "wechat"
+format = "html"
+code_highlight = true   # Preserve syntax highlighting
+...
+
+[[profile]]
+id = "csdn"
+format = "markdown"
+code_highlight = false  # Markdown uses plain code
+...
+```
+
+### Why This Approach
+
+1. **Dual storage** — both representations available; no information lost.
+2. **Explicit capability** — each platform declares its need; no guessing.
+3. **Zero behavioral change by default** — `code_highlight = false` preserves current behavior.
+4. **Single source of truth** — both representations come from the same render pass.
+
+### Implementation Notes
+
+1. **Parser change**: `parse_code_block` stores raw `inner_html` in `highlighted` field.
+2. **Capability check**: Serializers check `adapter.code_highlight()` to decide which field to use.
+3. **Confluence**: `code_highlight = false` → uses `code` for CDATA.
+4. **Ghost/WordPress**: `code_highlight = true` → uses `highlighted` for styled HTML.
+5. **Markdown profiles**: `code_highlight = false` by default (Markdown doesn't support inline HTML)."""
+consequences = """
+### Positive
+
+- Copy-paste HTML platforms preserve syntax highlighting — better UX for WeChat, Zhihu, etc.
+- Language detection works in editor paste — `data-lang` attribute preserved in highlighted HTML.
+- Each platform explicitly declares its code rendering preference — no implicit behavior.
+- API adapters like Ghost/WordPress can also benefit from syntax highlighting.
+- Future-proof — new adapters declare their capability; no code change needed.
+
+### Negative
+
+- Slight memory overhead — `highlighted` field duplicates content. Mitigation: code blocks are typically small.
+- Schema change in `HtmlElement::CodeBlock` — all pattern matches must be updated. Mitigation: compiler enforces exhaustive matching.
+- New capability field in two TOML files — requires updating `adapters.toml` and `profiles.toml`. Mitigation: defaults to `false` for backward compatibility.
+
+### Neutral
+
+- `highlighted` field is `None` for code blocks constructed programmatically. Serializers fall back to `code`.
+- `code_highlight = false` is the default for all platforms initially; existing behavior unchanged until explicitly enabled."""
+
+[[content.alternatives]]
+text = "Capability flag only (no dual storage): Parser checks code_highlight flag at runtime and conditionally strips HTML. Rejected: loses information; can't switch representation later without re-parsing."
+status = "considered"
+
+[[content.alternatives]]
+text = "Re-highlight at serialization: Use syntect or tree-sitter at serialize time to re-add highlighting. Rejected: adds heavy dependency; may produce different colors than Typst original; runtime cost."
+status = "considered"
+
+[[content.alternatives]]
+text = "Dual storage only (no capability): Always store both, serializer auto-detects based on format field. Rejected: API adapters have no format field; need explicit control per-platform."
+status = "considered"

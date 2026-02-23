@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-024"
+title = "Increase unit test coverage"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+
+[content]
+description = "Add unit tests to the modules with the lowest coverage that contain pure, testable logic: markdown_utils.rs (0% → full element coverage), adapters/mod.rs (capability lookup, downcast, registry), copypaste.rs (resolve_compat_fn, build_preview_html, from_profile), themes.rs (apply_theme_full_document, registry accessors). Target: increase total line coverage from ~63% baseline."
+
+[[content.acceptance_criteria]]
+text = "Unit tests for markdown_utils.rs covering all HtmlElement variants"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Unit tests for adapters/mod.rs capability lookup and downcast_payload"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Unit tests for copypaste.rs resolve_compat_fn and build_preview_html"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Unit tests for themes.rs apply_theme_full_document and registry"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests pass, clippy clean, govctl check passes"
+status = "done"
+category = "chore"

@@ -1,0 +1,40 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-021"
+title = "Generic copy-paste adapter for multi-platform publishing"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+
+[content]
+description = """
+Generalize the WeChat "preview + copy button" pattern into a data-driven \
+CopyPasteAdapter parameterized by platform profiles. Add 10 built-in profiles \
+(5 StyledHtml, 5 Markdown), migrate WeChat into a profile entry, and support \
+user-defined type="manual" platforms from config."""
+
+[[content.acceptance_criteria]]
+text = "CopyPasteAdapter with CopyFormat enum and KNOWN_PROFILES table"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "WeChat adapter migrated to CopyPasteProfile entry"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "10 initial platform profiles (5 StyledHtml + 5 Markdown)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "type=manual custom platform support in registry"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "cargo build and cargo test pass"
+status = "done"
+category = "chore"

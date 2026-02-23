@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-022"
+title = "TOML-driven copy-paste profiles via build.rs codegen"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+
+[content]
+description = "Replace the hand-written KNOWN_PROFILES Rust static array with a declarative profiles.toml file processed by build.rs at compile time. Zero runtime cost, zero leaks for built-in profiles, and adding a new platform is a 4-line TOML entry instead of a Rust struct."
+
+[[content.acceptance_criteria]]
+text = "profiles.toml with all 10 built-in copy-paste profiles"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "build.rs generates BUILTIN_PROFILES static array from profiles.toml"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "copypaste.rs uses generated code instead of hand-written KNOWN_PROFILES"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo build and cargo test pass"
+status = "done"
+category = "chore"

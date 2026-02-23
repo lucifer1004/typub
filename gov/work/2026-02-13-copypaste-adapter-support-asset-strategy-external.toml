@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-007"
+title = "CopyPaste adapter support asset_strategy external"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+refs = ["RFC-0004"]
+
+[content]
+description = """
+Add support for AssetStrategy::External in CopyPaste adapters per [[RFC-0004]].
+When external strategy is configured, assets are uploaded to storage and
+image src attributes are replaced with the storage URLs in the output HTML.
+"""
+
+[[content.acceptance_criteria]]
+text = "CopyPaste adapter supports AssetStrategy::External"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "External assets replaced with storage URLs in output"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

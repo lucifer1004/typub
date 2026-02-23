@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-21-003"
+title = "Fix Confluence admonition extra paragraph wrapper"
+status = "done"
+created = "2026-02-21"
+started = "2026-02-21"
+completed = "2026-02-21"
+
+[content]
+description = """
+Remove the extra `<p>` wrapper in Confluence admonition rendering. The children
+already contain properly formatted Paragraph elements, so wrapping them in another
+`<p>` tag caused nested paragraphs like `<p><p>content</p></p>`, leading to extra
+newlines in Confluence output.
+"""
+
+[[content.acceptance_criteria]]
+text = "Remove extra `<p>` wrapper in Confluence admonition rendering"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Add test for admonition without nested `<p>`"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Strengthen all Confluence tests to use assert_eq instead of assert!(contains)"
+status = "done"
+category = "chore"

@@ -1,0 +1,50 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-026"
+title = "implement math rendering via svg attachments for confluence"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0004",
+]
+
+[content]
+description = """
+Implement math rendering for Confluence via SVG attachments.
+Extract SVG elements from Typst HTML, upload as attachments with content-hash
+naming, replace inline SVG with ac:image references, and cache uploads to
+avoid duplicates. Supports both inline and block math styling.
+"""
+
+[[content.acceptance_criteria]]
+text = "Extract SVG elements from Typst HTML output"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Upload math SVG as Confluence attachments with content-hash naming"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Replace inline SVG with ac:image references in Confluence format"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Cache uploaded SVGs in asset_uploads table to avoid duplicates"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Support inline vs block math styling"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

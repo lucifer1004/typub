@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-22-001"
+title = "allow user-defined typst preamble hooks"
+status = "done"
+created = "2026-02-22"
+started = "2026-02-22"
+completed = "2026-02-23"
+refs = ["RFC-0005"]
+
+[content]
+description = "Add user-configurable Typst render preamble using RFC-0005 resolution layers, append it after adapter preamble for compatibility, and document/test the behavior."
+
+[[content.acceptance_criteria]]
+text = "Support user-defined Typst preamble with layered resolution"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "tests and docs cover configuration key and precedence"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Preserve adapter defaults while allowing user preamble override/append behavior"
+status = "done"
+category = "added"

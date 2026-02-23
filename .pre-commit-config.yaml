@@ -1,0 +1,65 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        exclude: "snapshots/"
+      - id: trailing-whitespace
+        exclude: "snapshots/"
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: cargo fmt --all
+        language: system
+        pass_filenames: false
+      - id: cargo-check
+        name: cargo check
+        entry: cargo check --workspace --all-features
+        language: system
+        pass_filenames: false
+      - id: cargo-clippy
+        name: cargo clippy
+        entry: cargo clippy --workspace --all-features -- -D warnings
+        language: system
+        pass_filenames: false
+      - id: cargo-test
+        name: cargo test runner
+        entry: cargo test --workspace --all-features --quiet
+        language: system
+        pass_filenames: false
+        env:
+          CI: "1"
+      - id: render-rfc
+        name: render RFCs
+        entry: govctl render rfc
+        language: system
+        pass_filenames: false
+      - id: render-changelog
+        name: render CHANGELOG.md
+        entry: govctl render changelog
+        language: system
+        pass_filenames: false
+      - id: gov-check
+        name: govctl check
+        entry: govctl check
+        language: system
+        pass_filenames: false
+
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.7.4
+    hooks:
+      - id: prettier
+        exclude: "^docs/rfc/RFC-.*\\.md$"
+        args: [--log-level=silent]

@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-012"
+title = "refactor notion adapter exemplar"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-15"
+
+[content]
+description = "Refactor the Notion adapter into a modular exemplar with clear module boundaries, comprehensive unit/mock tests, and preview-only integration tests while preserving RFC-compliant pipeline behavior."
+
+[[content.acceptance_criteria]]
+text = "Unit tests and mock tests for Notion adapter core behaviors"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "RFC compliance verified and references added"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

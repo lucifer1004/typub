@@ -1,0 +1,47 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-21-001"
+title = "Support HTML summary/details elements"
+status = "done"
+created = "2026-02-21"
+started = "2026-02-21"
+completed = "2026-02-21"
+refs = ["RFC-0008"]
+
+[content]
+description = "Support HTML summary/details elements. Add HtmlElement::Details variant to represent collapsible disclosure widgets with optional summary and children content. Map from <details>/<summary> HTML tags during parsing."
+
+[[content.acceptance_criteria]]
+text = "Add Details element to HtmlElement enum with summary and children"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Parse HTML details/summary elements"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Serialize Details to HTML"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Render Details in Markdown renderer"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update adapters (Notion, Confluence, Ghost) for Details"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"

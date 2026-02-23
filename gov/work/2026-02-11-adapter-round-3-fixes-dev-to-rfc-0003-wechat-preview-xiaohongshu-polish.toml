@@ -1,0 +1,75 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-020"
+title = "adapter round-3 fixes: Dev.to RFC-0003, WeChat preview, Xiaohongshu, polish"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = [
+    "RFC-0002",
+    "RFC-0003",
+]
+
+[content]
+description = """
+Third round of adapter fixes per [[RFC-0002]] and [[RFC-0003]]. Dev.to \
+title-based lookup for publish, WeChat preview image rewriting, Xiaohongshu \
+copy-failure logging, WordPress slug helper extraction, http_utils error \
+propagation, outdated comment cleanup, and AdapterRegistry error message \
+improvements."""
+
+[[content.acceptance_criteria]]
+text = "Dev.to publish_payload uses title lookup when no cached ID (M1, RFC-0003)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "WeChat preview uses extract_preview_body for image rewriting (M2)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Xiaohongshu preview logs warning on copy failure (M3)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "WordPress slug resolution extracted to helper (L1)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Dev.to find_article_by_title uses api_url helper (L2)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "http_utils ensure_success_with_auth_hint propagates body read errors (L3)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "WeChat outdated comment corrected (L4)"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Xiaohongshu preview uses write_preview_file (L5)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "AdapterRegistry error message clarified (L6)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check + cargo test + cargo clippy pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

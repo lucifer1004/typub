@@ -1,0 +1,12 @@
+[govctl]
+schema = 1
+id = "ADR-0013"
+title = "AST v2 big-bang migration strategy"
+status = "accepted"
+date = "2026-02-21"
+refs = ["RFC-0009"]
+
+[content]
+context = "[[RFC-0009]] introduces a semantic document IR that removes execution-state data from AST. Because this project has a single active user and no external compatibility commitments, maintaining dual AST stacks would add unnecessary complexity and delay."
+decision = "Adopt a big-bang migration for AST v2. Replace old AST models and remove ImageMarker/local_path transitional semantics in one implementation wave. Do not preserve long-term compatibility shims inside AST. Keep platform-specific workarounds in serializer policy layers only when unavoidable."
+consequences = "Positive: faster convergence to clean architecture, fewer special-case branches, clearer invariants. Negative: temporary breakage risk during migration and larger single change-set. Mitigations: strict [[RFC-0009]] validation rules, focused end-to-end snapshots on key adapters, and immediate cleanup of deprecated paths once new AST is live."

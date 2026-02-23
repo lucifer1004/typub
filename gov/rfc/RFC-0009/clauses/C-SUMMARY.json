@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-SUMMARY",
+  "title": "Summary",
+  "kind": "informative",
+  "status": "active",
+  "text": "This RFC defines the normative semantic document IR v2 conformance surface for typub.\n\nScope:\n- Document-rooted semantic IR model (`Document`, `Block`, `Inline`, assets, footnotes, metadata).\n- Determinism and validation requirements for IR production and consumption.\n- Controlled downgrade semantics (`Raw` vs `Unknown`) and adapter policy declaration requirements.\n- Explicit semantic separation between math nodes and non-math SVG nodes.\n\nOut of scope:\n- Parser implementation internals.\n- Adapter-specific target syntax details.\n- Asset backend implementation details (storage drivers, upload protocols).\n- Cross-version persisted IR compatibility (IR v2 is an in-process pipeline contract, not a long-term storage format).\n\nRelationship to other RFCs:\n- The deprecated predecessor IR RFC MUST NOT be used as IR v2 conformance surface.\n- [[RFC-0002]] and [[RFC-0004]] define pipeline and materialization contracts that consume this IR.",
+  "since": "0.2.0"
+}

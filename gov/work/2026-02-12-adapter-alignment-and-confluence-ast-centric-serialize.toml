@@ -1,0 +1,40 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-011"
+title = "Adapter alignment and confluence AST-centric serialize"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0004",
+]
+
+[content]
+description = "Align all adapters."
+
+[[content.acceptance_criteria]]
+text = "Confluence serialize removes AST-HTML-AST round trip and remains AST-centric"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Shared adapter helper enforces unresolved ImageMarker guard before deferred serialize"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Adapter code organization aligns around pure formatter modules and stage-oriented payload flow"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "cargo test and govctl check pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Increase coverage for confluence AST-centric serialize path and deferred marker guard"
+status = "done"
+category = "chore"

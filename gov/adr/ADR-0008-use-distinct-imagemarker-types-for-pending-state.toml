@@ -1,0 +1,63 @@
+[govctl]
+schema = 1
+id = "ADR-0008"
+title = "Use distinct ImageMarker types for pending state"
+status = "accepted"
+date = "2026-02-17"
+refs = ["RFC-0002"]
+
+[content]
+context = """
+The codebase has two image-related concepts:
+1. `HtmlElement::Image` / `InlineFragment::InlineImage` — resolved images with URLs
+2. `HtmlElement::ImageMarker` — pending images awaiting deferred upload
+
+For block-level images, the distinction is explicit via types. However, inline images
+use `InlineFragment::InlineImage` for both resolved and pending states, distinguishing
+them by examining the `src` field at runtime:
+
+```rust
+// Current: runtime check to determine pending state
+if !src.starts_with("http://") && !src.starts_with("https://") {
+    paths.push(PathBuf::from(src));  // pending
+}
+```
+
+This violates the Rust principle of encoding invariants in types.
+The pending state is not visible in the type system."""
+decision = """
+Add `InlineFragment::ImageMarker` variant for pending inline images, mirroring the
+block-level `HtmlElement::ImageMarker`:
+
+```rust
+enum InlineFragment {
+    // ...
+    InlineImage { src: String, alt: String, attrs: Attrs },  // resolved
+    ImageMarker { path: String, alt: String, attrs: Attrs }, // pending
+}
+```
+
+Remove the `display` field from `HtmlElement::ImageMarker` since the block/inline
+distinction is now encoded in the type itself (HtmlElement vs InlineFragment).
+
+This creates a clean state machine:
+- Block: `ImageMarker` → [upload] → `Image`
+- Inline: `InlineFragment::ImageMarker` → [upload] → `InlineFragment::InlineImage`"""
+consequences = """
+**Benefits:**
+- Type system enforces pending/resolved distinction at compile time
+- `govctl check` validates no unresolved markers before serialize
+- Unified tracking logic for both block and inline markers
+- Simpler format adapters (no runtime URL prefix checks)
+
+**Trade-offs:**
+- More enum variants to handle in match expressions
+- Need recursive traversal for `InlineFragment::ImageMarker`
+- Requires updates to all consumers of `InlineFragment`
+
+**Affected files:**
+- `typub-html/src/types.rs` — add variant, remove display field
+- `typub-html/src/svg.rs` — generate correct marker types
+- `typub-assets-ast/src/lib.rs` — recursive tracking and resolution
+- Adapter format modules — handle new variant
+"""

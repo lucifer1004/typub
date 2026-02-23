@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-025"
+title = "fix confluence attachment update on republish"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Fix Confluence adapter to properly update existing attachments on republish
+instead of creating duplicates.
+"""
+
+[[content.acceptance_criteria]]
+text = "Confluence republish updates existing attachments"
+status = "done"
+category = "fixed"

@@ -1,0 +1,49 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-010"
+title = "TOML-driven adapter capabilities with short_code SSOT"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Move API adapter capability definitions from hardcoded Rust code to adapters.toml,
+generated via build.rs. Add short_code field to both adapters.toml and profiles.toml
+for SSOT platform display codes used in CLI compact table mode."""
+
+[[content.acceptance_criteria]]
+text = "Create adapters.toml with 8 API adapters including short_code and local_output fields"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Add short_code field to all profiles in profiles.toml"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update build.rs to generate builtin_adapters.rs from adapters.toml"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update AdapterCapability and BuiltinProfile structs with short_code"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "platform_short_code() uses generated data instead of hardcoded match"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "is_local_output_platform() uses local_output field from adapters.toml"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "All tests pass and govctl check passes"
+status = "done"
+category = "chore"

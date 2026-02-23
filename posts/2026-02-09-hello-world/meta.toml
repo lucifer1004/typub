@@ -1,0 +1,21 @@
+title = "Hello World: Getting Started with typub"
+created = 2026-02-09
+updated = 2026-02-20
+tags = ["tutorial", "typst", "cms"]
+
+[platforms.astro]
+slug = "hello-world"
+
+[platforms.confluence]
+# Uses default_space from config.toml
+
+[platforms.notion]
+enabled = true
+
+[platforms.wechat]
+enabled = true
+
+[platforms.xiaohongshu]
+subtitle = "多平台内容发布系统"
+author = "@lucifer1004"
+cover_image = "assets/typub.png"

@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-20-002"
+title = "add subtitle and coverimage taxonomy attributes"
+status = "cancelled"
+created = "2026-02-20"
+started = "2026-02-20"
+completed = "2026-02-20"
+
+[content]
+description = "Add subtitle and cover_image taxonomy attributes. Extend the content taxonomy system to support optional subtitle and cover_image fields for better article metadata management."
+
+[[content.acceptance_criteria]]
+text = "Add subtitle and cover_image fields to ContentMeta"
+status = "pending"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update ContentInfo to include subtitle and cover_image"
+status = "pending"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update xiaohongshu adapter to use top-level cover_image"
+status = "pending"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Add tests for new fields"
+status = "pending"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "pending"
+category = "chore"

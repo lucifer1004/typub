@@ -1,0 +1,94 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-009"
+title = "CLI/TUI ergonomics: list/status redesign with sort/filter"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Improve CLI/TUI ergonomics by differentiating list and status commands:
+- list: compact table view with sort/filter/limit options
+- status: single-post detailed view (path required)
+- TUI: interactive sort cycling with s/S keys
+- Command aliases for common commands (ls, pub, b, w)
+- Short flags for frequently used options
+- Improved help text with examples
+- Adaptive compact platform display (short codes when table exceeds terminal width)"""
+
+[[content.acceptance_criteria]]
+text = "Sorting module with SortField/SortOrder enums and sort function"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "PostFilter struct with platform/status/tag/title_regex predicates"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "list command shows compact table with sort/filter/limit flags"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "status command requires path and shows detailed single-post info"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "TUI interactive sort with s/S keys"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Command aliases: ls for list, pub for publish, b for build, w for watch, pre for preview"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Short flags for list options (-s sort, -p platform, -t tag, -T title, -P published, -u pending)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Short flag -d for publish --dry-run"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "long_about and after_help with examples for list and publish commands"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Main CLI after_help with common workflows"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Adaptive compact platform display with short codes when table exceeds terminal width"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Platform short codes for known platforms (gh, wp, nt, etc.) with numbered fallback (p1, p2) for custom"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Legend printed after table in compact mode"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "crossterm moved to unconditional dependency for terminal width detection"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-025"
+title = "fix watch command hardcoded to astro"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+
+[content]
+description = 'The watch command (watcher.rs) is hardcoded to rebuild only for the astro adapter (registry.get("astro")). Users working with any other platform get no useful rebuilds from watch mode. Fix: accept a --platform flag (matching build/preview/publish) and fall back to default_platforms() when unspecified.'
+
+[[content.acceptance_criteria]]
+text = "watch command respects --platform flag and falls back to default platforms"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "watch rebuilds for each target platform, not just astro"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

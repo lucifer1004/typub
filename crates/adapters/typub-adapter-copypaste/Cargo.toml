@@ -1,0 +1,39 @@
+[package]
+name = "typub-adapter-copypaste"
+description = "Generic copy-paste adapter for typub multi-platform publishing"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+build = "build.rs"
+
+[dependencies]
+typub-adapters-core.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-passes.workspace = true
+typub-storage.workspace = true
+typub-theme.workspace = true
+
+anyhow.workspace = true
+arboard.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+enumset.workspace = true
+open.workspace = true
+serde.workspace = true
+toml.workspace = true
+
+[build-dependencies]
+serde = { workspace = true, features = ["derive"] }
+toml.workspace = true
+typub-core.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt", "macros"] }
+
+[lints]
+workspace = true

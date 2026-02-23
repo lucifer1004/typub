@@ -1,0 +1,166 @@
+/* Elegant Theme - 雅致
+ * Purple accents, refined typography, inspired by mdnice
+ *
+ * Note: No .content wrapper. Styles are applied directly to elements.
+ */
+
+/* ============================================================================
+ * Base typography
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  font-family:
+    "Times New Roman", Georgia, "PingFang SC", "Microsoft YaHei", serif;
+  color: #262626;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================================
+ * Headings with purple accent
+ * ============================================================================ */
+
+h1 {
+  text-align: center;
+  color: #532476;
+  margin: 2em 0 1.5em;
+}
+
+h2 {
+  color: #262626;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid #8c3fc5;
+}
+
+h3 {
+  color: #532476;
+  border-left: 4px solid #8c3fc5;
+  padding-left: 0.5em;
+}
+
+h4 {
+  color: #7131a2;
+}
+
+/* ============================================================================
+ * Strong text with purple
+ * ============================================================================ */
+
+strong {
+  color: #7131a2;
+  font-weight: 700;
+}
+
+/* ============================================================================
+ * Elegant blockquote
+ * ============================================================================ */
+
+blockquote {
+  border: none;
+  border-left: 4px solid #8c3fc5;
+  border-radius: 0 6px 6px 0;
+  background: #fcfafc;
+  padding: 1em 1.5em;
+}
+
+blockquote p {
+  color: #666;
+}
+
+/* ============================================================================
+ * Links with purple underline
+ * ============================================================================ */
+
+a {
+  color: #8c3fc5;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  border-bottom-color: #8c3fc5;
+}
+
+/* ============================================================================
+ * Inline code with purple tint
+ * ============================================================================ */
+
+p code,
+li code {
+  color: #8b3cc6;
+  background: rgba(140, 63, 197, 0.1);
+  border-radius: 3px;
+  padding: 0.15em 0.4em;
+}
+
+/* ============================================================================
+ * Code blocks
+ * ============================================================================ */
+
+pre {
+  background: #f8f5fa;
+  border: 1px solid #e8dced;
+  border-radius: 6px;
+}
+
+/* ============================================================================
+ * Table with purple headers
+ * ============================================================================ */
+
+th {
+  background: transparent;
+  color: #8c3fc5;
+  border-color: #a569d2;
+}
+
+td {
+  border-color: #a569d2;
+}
+
+/* ============================================================================
+ * Lists with purple bullets
+ * ============================================================================ */
+
+ul > li,
+ol > li {
+  color: #333;
+}
+
+li strong {
+  color: #7131a2;
+  display: inline;
+}
+
+/* ============================================================================
+ * Horizontal rule with gradient
+ * ============================================================================ */
+
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(140, 63, 197, 0.6),
+    rgba(255, 255, 255, 0)
+  );
+  margin: 2.5em 0;
+}
+
+/* ============================================================================
+ * Images with subtle shadow
+ * ============================================================================ */
+
+img {
+  border-radius: 4px;
+}

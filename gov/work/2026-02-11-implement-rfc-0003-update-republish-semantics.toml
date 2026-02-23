@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-016"
+title = "implement rfc-0003 update-republish semantics"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0003"]
+
+[content]
+description = "Implement [[RFC-0003]] decision-order and republish semantics in platform adapters."
+
+[[content.acceptance_criteria]]
+text = "Adapters prefer status remote-id as update target before deterministic lookup fallback"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Create path runs only after duplicate-safe precheck per adapter"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check plus targeted adapter tests and govctl check pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-009"
+title = "enforce internal-link capability policy at runtime"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Complete [[RFC-0002]] capability contract landing by enforcing internal-link gap behavior (warn+degrade / hard error) during pipeline execution."
+
+[[content.acceptance_criteria]]
+text = "Stage-3 runtime enforces internal-link unsupported behavior from capability policy"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Internal-link detection utility provides machine-checkable target discovery from rendered HTML"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check/tests and govctl check pass"
+status = "done"
+category = "chore"

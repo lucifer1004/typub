@@ -1,0 +1,52 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-17-003"
+title = "unify ImageMarker with InlineFragment::ImageMarker"
+status = "done"
+created = "2026-02-17"
+started = "2026-02-17"
+completed = "2026-02-17"
+refs = ["ADR-0008"]
+
+[content]
+description = "Unify ImageMarker with InlineFragment::ImageMarker per ADR-0008. Remove display field from HtmlElement::ImageMarker and add InlineFragment::ImageMarker for pending inline images."
+
+[[content.acceptance_criteria]]
+text = "InlineFragment::ImageMarker variant"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Remove display field from HtmlElement::ImageMarker"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "convert_svg_to_png_markers generates correct marker types"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Recursive traversal in build_pending_asset_list_from_elements"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Recursive resolution in resolve_asset_urls"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Remove extract_inline_image_paths from Confluence adapter"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

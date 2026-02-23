@@ -1,0 +1,18 @@
+---
+source: src/adapters/hashnode/tests.rs
+expression: "&payload.content_markdown"
+---
+# Introduction
+
+This is a **test** paragraph with *emphasis*.
+
+## Code Example
+
+```rust
+fn main() {
+    println!("Hello!");
+}
+```
+
+- First item
+- Second item

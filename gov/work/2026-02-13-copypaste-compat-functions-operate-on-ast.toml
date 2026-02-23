@@ -1,0 +1,52 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-006"
+title = "CopyPaste compat functions operate on AST"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+refs = ["RFC-0002"]
+
+[content]
+description = """
+Refactor CopyPaste adapter compat functions to operate on the AST (HtmlElement)
+instead of raw HTML strings. This aligns with [[RFC-0002:C-PIPELINE-STAGES]]
+which mandates AST-centric transforms. The compat_fn type signature changes
+from `fn(&str) -> String` to `fn(&mut Vec<HtmlElement>)`.
+"""
+
+[[content.acceptance_criteria]]
+text = "compat_fn signature takes AST elements instead of HTML string"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Update all compat functions to operate on HtmlElement"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "TransformRule enum with enumset for declarative AST transforms"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "SerializeOptions with li_span_wrap flag in serialize.rs"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Remove .content wrapper from theme CSS and themes.rs"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "WeChat preview output has no unsupported div/section tags"
+status = "done"
+category = "fixed"

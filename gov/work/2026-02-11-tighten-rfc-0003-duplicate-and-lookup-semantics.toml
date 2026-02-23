@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-015"
+title = "tighten rfc-0003 duplicate and lookup semantics"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0003"]
+
+[content]
+description = "Amend [[RFC-0003]] to prioritize remote-id and deterministic lookup, treat cached URL as hint-only, and require duplicate-create conflict rejection."
+
+[[content.acceptance_criteria]]
+text = "RFC-0003 decision order prioritizes remote-id then deterministic platform key; cached URL is hint-only"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "RFC-0003 mandates duplicate-create rejection as conflict"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl render and govctl check pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-012"
+title = "Adapter module structure standardization"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = "Standardize adapter module structure by converting large single-file adapters (WordPress, Hashnode, DevTo) into directory modules with consistent sub-module layout: types.rs, client.rs, tests.rs. Align existing directory adapters (Confluence, Notion) to the same pattern."
+
+[[content.acceptance_criteria]]
+text = "cargo check and cargo test pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "WordPress adapter split into wordpress/{mod,types,client,tests}.rs"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Hashnode adapter split into hashnode/{mod,types,client,tests}.rs"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "DevTo adapter split into devto/{mod,types,client,tests}.rs"
+status = "done"
+category = "changed"

@@ -1,0 +1,163 @@
+---
+source: tests/preview_snapshots.rs
+expression: preview_html
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Post Title - Notion Preview</title>
+    <style>
+        /* Base styles */
+        :root {
+            --brand-color: #ffffff;
+            --brand-bg: #000000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto !important;
+            padding: 20px !important;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 { font-size: 2em; font-weight: 700; margin-bottom: 0.5em; }
+        h2 { font-size: 1.5em; font-weight: 600; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; font-weight: 600; margin-top: 1em; }
+        p { margin: 1em 0; }
+        pre {
+            background: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.875em;
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.875em;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 1em 0;
+            padding-left: 1em;
+            color: #666;
+        }
+        img { max-width: 100%; height: auto; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th { background: #f6f8fa; font-weight: 600; }
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.25em 0; }
+        hr { border: none; border-top: 1px solid #eee; margin: 2em 0; }
+
+        /* Platform branding header */
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 24px;
+        }
+        .platform-badge {
+            background: var(--brand-bg);
+            color: var(--brand-color);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SVG math styling */
+        .typst-svg-block svg {
+            display: block;
+            margin: 1em auto;
+            max-width: 100%;
+        }
+
+        /* Theme CSS (for code highlighting) */
+
+    </style>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight all code blocks that don't already have highlighting
+  document.querySelectorAll('pre code').forEach(block => {
+    // Only highlight if not already highlighted (no span children from server-side)
+    if (!block.querySelector('span')) {
+      hljs.highlightElement(block);
+    }
+  });
+});
+</script>
+
+    
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  },
+  startup: {
+    ready: function() {
+      // Extract LaTeX from data-latex-src attributes (from MathRendering::Latex)
+      document.querySelectorAll('[data-latex-src]').forEach(el => {
+        const latex = el.getAttribute('data-latex-src');
+        const isBlock = el.classList.contains('typst-svg-block');
+        el.innerHTML = isBlock ? '$$' + latex + '$$' : '$' + latex + '$';
+      });
+      MathJax.startup.defaultReady();
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+</head>
+<body>
+    <div class="platform-header">
+        <span class="platform-badge">Notion</span>
+    </div>
+    <article class="content">
+        <h1>Test Post Title</h1>
+        <h1>Introduction</h1>
+<p>This is a <strong>test</strong> paragraph with <em>emphasis</em>.</p>
+<h2>Code Example</h2>
+<pre><code class="hljs language-rust" data-lang="rust">fn main() {
+    println!("Hello!");
+}</code></pre>
+<ul><li>First item</li><li>Second item</li></ul>
+<ol><li>Step one</li><li>Step two</li></ol>
+<blockquote><p>A wise quote</p></blockquote>
+<table><thead><tr><th><p>Name</p>
+</th><th><p>Value</p>
+</th></tr></thead><tbody><tr><td><p>A</p>
+</td><td><p>1</p>
+</td></tr></tbody></table>
+<hr>
+<p>Final paragraph.</p>
+
+    </article>
+</body>
+</html>

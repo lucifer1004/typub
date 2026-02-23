@@ -1,0 +1,79 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-018"
+title = "adapter layer RFC compliance and DRY cleanup"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = [
+    "RFC-0002",
+    "RFC-0003",
+]
+
+[content]
+description = """
+Bring the adapter layer into compliance with [[RFC-0002]] and [[RFC-0003]]. \
+Fix bugs (WeChat wechat_compat, Notion error swallowing) and extract shared \
+helpers (RenderedOutput::html, downcast_payload, create_page_with_blocks, \
+CapabilitySupport::gap_behavior) to eliminate copy-paste duplication."""
+
+[[content.acceptance_criteria]]
+text = "WeChat wechat_compat produces valid HTML for unstyled strong/em tags"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Notion find_existing_page propagates errors instead of swallowing them"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Extract RenderedOutput::html() helper to eliminate 12x duplicate error check"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Extract downcast_payload helper to eliminate 7x duplicate downcast boilerplate"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Extract Notion create_page_with_blocks helper to eliminate 3x block-split copy-paste"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Remove Notion elements_to_blocks duplication of Paragraph/ParagraphRich handling"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Remove dead Confluence elements_to_confluence_html indirection"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Use shared mime_type_from_path in Notion and Confluence instead of hand-rolled maps"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Extract CapabilitySupport::gap_behavior method to replace 3x copy-paste"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Replace module-level allow(dead_code) with targeted annotations"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "All existing tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

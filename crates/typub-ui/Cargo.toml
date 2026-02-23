@@ -1,0 +1,21 @@
+[package]
+name = "typub-ui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "CLI output utilities for typub"
+
+[dependencies]
+comfy-table.workspace = true
+crossterm.workspace = true
+html2text.workspace = true
+indicatif.workspace = true
+owo-colors.workspace = true
+ratatui.workspace = true
+serde.workspace = true
+typub-log.workspace = true
+
+[lints]
+workspace = true

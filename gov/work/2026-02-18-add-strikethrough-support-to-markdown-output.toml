@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-003"
+title = "Add Strikethrough support to markdown output"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+
+[content]
+description = "Add strikethrough (Strikethrough variant in InlineFragment) support to the markdown renderer output. The InlineFragment::Strikethrough variant already exists in the IR model; this work item adds rendering support to output ~~text~~ syntax in markdown files."
+
+[[content.acceptance_criteria]]
+text = "Strikethrough node type supported in content model"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Markdown renderer outputs ~~text~~ for strikethrough"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Tests pass for strikethrough rendering"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

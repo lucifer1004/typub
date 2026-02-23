@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-024"
+title = "add per-profile default asset strategy for copy-paste platforms"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = "Add per-profile default_asset_strategy field to profiles.toml for copy-paste platforms. This allows each platform to specify its preferred asset strategy (Embed/Copy) with fallback to Embed, improving platform-specific optimization while maintaining zero behavioral change for existing profiles."
+
+[[content.acceptance_criteria]]
+text = "default_asset_strategy field to profiles.toml with fallback to embed"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Wire field through build.rs and BuiltinProfile struct"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update CopyPasteAdapter to use per-profile default"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Verify zero behavioral change for existing profiles"
+status = "done"
+category = "fixed"

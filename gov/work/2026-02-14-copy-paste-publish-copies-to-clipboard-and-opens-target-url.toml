@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-001"
+title = "copy-paste publish copies to clipboard and opens target URL"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+
+[content]
+description = "Enhance copy-paste platform publish workflow to automatically copy generated content to system clipboard and open the target platform editor URL in the default browser, streamlining the publishing process."
+
+[[content.acceptance_criteria]]
+text = "Change completed"
+status = "done"
+category = "chore"

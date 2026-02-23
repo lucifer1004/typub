@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-014"
+title = "fix code block language lost for copy-paste platforms"
+status = "cancelled"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Fix code block language being lost when copying to copy-paste platforms.
+The language class (e.g., language-rust) needs to be preserved in the HTML output.
+"""
+
+[[content.acceptance_criteria]]
+text = "Code block language preserved in copy-paste output"
+status = "pending"
+category = "fixed"

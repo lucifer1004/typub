@@ -1,0 +1,236 @@
+---
+source: tests/preview_snapshots.rs
+expression: preview_html
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Post Title - CSDN Preview</title>
+    <style>
+/* Copy-paste preview page styling
+ * Used for WeChat, Zhihu, Medium, etc. clipboard copy preview pages
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
+    "Segoe UI", sans-serif;
+  background: radial-gradient(
+    circle at 10% 20%,
+    #ffffff 0%,
+    #f4f7fb 40%,
+    #eef3f9 100%
+  );
+  margin: 0;
+  padding: 24px;
+  color: #2f343b;
+}
+
+.toolbar {
+  max-width: 720px;
+  margin: 0 auto 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid #e4eaf3;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(39, 64, 102, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.copy-btn,
+.editor-link {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    background 0.14s ease;
+}
+
+.copy-btn {
+  background: linear-gradient(135deg, #0dca6d 0%, #0aa95a 100%);
+  color: #fff;
+  box-shadow: 0 8px 16px rgba(10, 169, 90, 0.24);
+}
+
+.copy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(10, 169, 90, 0.3);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
+}
+
+.editor-link {
+  background: #2f435e;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(47, 67, 94, 0.22);
+}
+
+.editor-link:hover {
+  transform: translateY(-1px);
+  background: #3a5374;
+}
+
+.theme-info {
+  color: #616b7a;
+  font-size: 13px;
+}
+
+.copy-success {
+  color: #0aa95a;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.copy-success.show {
+  opacity: 1;
+}
+
+.preview-container {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 22px 24px;
+  border: 1px solid #e4eaf3;
+  box-shadow: 0 18px 42px rgba(28, 48, 80, 0.14);
+  border-radius: 14px;
+}
+
+.preview-header {
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #edf2f8;
+  margin-bottom: 16px;
+}
+
+.preview-title {
+  font-size: 24px;
+  font-weight: 760;
+  color: #2a3038;
+  letter-spacing: 0.02em;
+}
+
+/* Markdown content area */
+.markdown-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13.5px;
+  line-height: 1.62;
+  background: #f6f8fb;
+  border: 1px solid #e4eaf3;
+  padding: 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 14px;
+  }
+
+  .toolbar {
+    max-width: 100%;
+    padding: 9px;
+  }
+
+  .preview-container {
+    max-width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .preview-title {
+    font-size: 21px;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button class="copy-btn" onclick="copyContent()">Copy</button>
+        <a href="https://editor.csdn.net/md/" target="_blank" rel="noopener" style="display:inline-block;background:#555;color:white;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:14px;font-weight:500;text-decoration:none;">Open Editor</a>
+        <span class="theme-info">CSDN · 雅致</span>
+        <span class="copy-success" id="copy-success">Copied!</span>
+    </div>
+    <div class="preview-container">
+        <div class="preview-header">
+            <div class="preview-title">Test Post Title</div>
+        </div>
+        <pre id="content-area" style="white-space:pre-wrap;word-wrap:break-word;font-family:monospace;font-size:14px;background:#f8f8f8;padding:16px;border-radius:4px;overflow-x:auto;"># Introduction
+
+This is a **test** paragraph with *emphasis*.
+
+## Code Example
+
+```rust
+fn main() {
+    println!(&quot;Hello!&quot;);
+}
+```
+
+- First item
+- Second item
+
+&lt;!-- end list --&gt;
+
+1. Step one
+2. Step two
+
+&gt; A wise quote
+
+| Name | Value |
+| --- | --- |
+| A | 1 |
+
+-----
+
+Final paragraph.</pre>
+    </div>
+    <script>
+
+        async function copyContent() {
+            const content = document.getElementById('content-area');
+            try {
+                await navigator.clipboard.writeText(content.textContent || '');
+                showSuccess();
+            } catch (err) {
+                console.error('Clipboard API failed:', err);
+                const range = document.createRange();
+                range.selectNodeContents(content);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                try { document.execCommand('copy'); showSuccess(); }
+                catch (e) { alert('Copy failed'); }
+                sel.removeAllRanges();
+            }
+        }
+        function showSuccess() {
+            const el = document.getElementById('copy-success');
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 2000);
+        }
+
+    </script>
+</body>
+</html>

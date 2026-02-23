@@ -1,0 +1,65 @@
+{
+  "rfc_id": "RFC-0004",
+  "title": "external asset storage",
+  "version": "0.2.3",
+  "status": "normative",
+  "phase": "impl",
+  "owners": ["@lucifer1004"],
+  "created": "2026-02-12",
+  "updated": "2026-02-21",
+  "sections": [
+    {
+      "title": "Summary",
+      "clauses": ["clauses/C-SUMMARY.json"]
+    },
+    {
+      "title": "Specification",
+      "clauses": [
+        "clauses/C-EXTERNAL-STRATEGY.json",
+        "clauses/C-STORAGE-CONFIG.json",
+        "clauses/C-UPLOAD-TRACKING.json",
+        "clauses/C-PIPELINE-INTEGRATION.json",
+        "clauses/C-ERROR-SEMANTICS.json",
+        "clauses/C-URL-CONSTRUCTION.json",
+        "clauses/C-ASSET-LOCATION.json"
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.2.3",
+      "date": "2026-02-21",
+      "notes": "Preview flow boundary alignment",
+      "added": [
+        "Require preview URL resolution to stay in sidecar/context, not conformance IR fields"
+      ]
+    },
+    {
+      "version": "0.2.2",
+      "date": "2026-02-21",
+      "notes": "Semantic IR pipeline integration alignment",
+      "added": [
+        "Update C-PIPELINE-INTEGRATION to asset identifier and document asset-index resolution model"
+      ]
+    },
+    {
+      "version": "0.2.1",
+      "date": "2026-02-13",
+      "notes": ""
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-02-12",
+      "notes": "Amended C-PIPELINE-INTEGRATION to specify placeholder token mechanism for asset references, avoiding fragile regex-based URL replacement",
+      "added": [
+        "Add C-ASSET-LOCATION clause requiring assets within project root"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-02-12",
+      "notes": "Initial draft"
+    }
+  ],
+  "signature": "74e3f1e4fbbe2c0c74462e0d9709f6103d5f12d6ea948caba2a97ee70c20fe3f"
+}

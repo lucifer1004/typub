@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-SUMMARY",
+  "title": "Summary",
+  "kind": "informative",
+  "status": "active",
+  "text": "This RFC is deprecated and retained only for historical reference of the pre-v2 IR model.\n\n**Replacement:** [RFC-0009](../rfc/RFC-0009.md) defines the active semantic document IR baseline.\n\nThis deprecated RFC previously specified:\n- Block-level element types (`HtmlElement`)\n- Inline fragment types (`InlineFragment`)\n- Legacy list and table auxiliary models\n\nNew implementation and governance work MUST target RFC-0009 instead of RFC-0008.",
+  "since": "0.1.0"
+}

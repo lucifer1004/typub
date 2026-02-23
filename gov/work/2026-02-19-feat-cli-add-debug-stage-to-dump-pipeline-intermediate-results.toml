@@ -1,0 +1,21 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-005"
+title = "feat(cli): add --debug-stage to dump pipeline intermediate results"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-19"
+
+[content]
+description = "Add --debug-stage CLI flag to dump pipeline intermediate results. Enable developers to inspect AST at each pipeline stage for easier debugging of content transformation issues."
+
+[[content.acceptance_criteria]]
+text = "Implement --debug-stage CLI option"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Support all pipeline stages: resolve, render, parse, transform, specialize, provision, materialize, serialize, publish, persist"
+status = "done"
+category = "added"

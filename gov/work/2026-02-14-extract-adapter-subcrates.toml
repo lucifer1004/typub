@@ -1,0 +1,37 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-006"
+title = "extract adapter subcrates"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+refs = ["RFC-0007"]
+
+[content]
+description = "Extract each built-in adapter into its own subcrate per [[RFC-0007:C-ADAPTER-CRATE]] and [[RFC-0007:C-WORKSPACE-LAYOUT]]. Depends on WI-2026-02-14-005."
+
+[[content.acceptance_criteria]]
+text = "typub-adapter-ghost crate extracted"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "typub-adapter-notion crate extracted"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "all 9 adapter crates extracted with register() functions"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "feature gates configured per RFC-0007:C-FEATURE-GATES"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "all tests pass with feature-gated registration"
+status = "done"
+category = "chore"

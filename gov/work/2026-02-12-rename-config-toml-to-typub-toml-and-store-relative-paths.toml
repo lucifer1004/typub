@@ -1,0 +1,44 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-030"
+title = "Rename config.toml to typub.toml and store relative paths"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0004",
+    "RFC-0005",
+]
+
+[content]
+description = """
+Rename config.toml to typub.toml for clearer project identification.
+Update all source references. Store asset paths as relative to project root
+in status.db for portability. Validate that assets are within project root.
+"""
+
+[[content.acceptance_criteria]]
+text = "Rename config.toml to typub.toml in CLI default"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Update all source references from config.toml to typub.toml"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Store asset paths as relative to project root in status.db"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Validate assets are within project root"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

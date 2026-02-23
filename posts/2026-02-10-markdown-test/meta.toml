@@ -1,0 +1,11 @@
+title = "Markdown Support"
+created = 2026-02-10
+tags = ["markdown", "cmarker", "platforms"]
+updated = 2026-02-20
+
+[platforms.xiaohongshu]
+cover_image = "assets/cover.png"
+subtitle = "基于 cmarker 的 Markdown 支持"
+author = "@lucifer1004"
+accent_color = "#00b6f0"
+preamble = "#set text(lang: \"en\")"

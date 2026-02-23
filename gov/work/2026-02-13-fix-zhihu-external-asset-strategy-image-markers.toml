@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-012"
+title = "fix zhihu external asset strategy image markers"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Fix external asset strategy for Zhihu to correctly resolve and display images.
+Zhihu requires external image URLs, but the external strategy was not properly resolving images.
+"""
+
+[[content.acceptance_criteria]]
+text = "External asset strategy resolves images correctly for zhihu"
+status = "done"
+category = "fixed"

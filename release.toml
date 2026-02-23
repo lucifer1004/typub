@@ -1,0 +1,135 @@
+# cargo-release configuration for typub workspace
+# Reference: https://github.com/crate-ci/cargo-release/blob/master/docs/reference.md
+#
+# Version Strategy: "Minor sync, Patch independent"
+# - Minor version bumps: All crates sync to the same minor version (e.g., all to 0.2.0)
+# - Patch version bumps: Individual crates can have independent patch versions (e.g., 0.2.1, 0.2.2)
+#
+# This allows:
+# 1. Coordinated feature releases (minor) across all crates
+# 2. Independent bugfix releases (patch) for specific crates
+# 3. Dependency versions are automatically updated
+#
+# Usage:
+#   - Sync all crates to new minor version:
+#     cargo release minor --execute
+#
+#   - Release individual crate patch version:
+#     cargo release patch -p typub-adapter-confluence --execute
+#
+#   - Dry run (default behavior):
+#     cargo release minor
+#     cargo release patch -p <crate-name>
+
+# =============================================================================
+# Version Management
+# =============================================================================
+
+# Allow crates to have different patch versions (e.g., 0.1.0 vs 0.1.1)
+# This enables independent bugfix releases
+shared-version = false
+
+# Automatically upgrade dependencies when a crate is released
+# When crate-a is released as 0.2.1, crates depending on it will update
+# their Cargo.toml to reference the new version
+dependent-version = "upgrade"
+
+# =============================================================================
+# Git Workflow
+# =============================================================================
+
+# Only allow releases from main branch
+allow-branch = ["main"]
+
+# Consolidate all version bumps into a single commit
+# This keeps the git history clean when releasing multiple crates
+consolidate-commits = true
+
+# Commit message template
+pre-release-commit-message = "chore: release {{version}}"
+
+# =============================================================================
+# Git Tags
+# =============================================================================
+
+# Create git tags for releases
+tag = true
+
+# Tag format: <crate-name>-v<version>
+# Examples: typub-ir-v0.1.0, typub-adapter-confluence-v0.2.1
+# This allows tracking each crate's releases independently
+tag-prefix = ""
+tag-name = "{{crate_name}}-v{{version}}"
+tag-message = "chore({{crate_name}}): release {{version}}"
+
+# =============================================================================
+# Publishing
+# =============================================================================
+
+# Push to git remote after successful publish
+push = true
+push-remote = "origin"
+
+# Don't verify registry access during dry-run
+# This allows testing release process without crates.io access
+verify = false
+
+# =============================================================================
+# Publishing Order (Automatic)
+# =============================================================================
+#
+# cargo-release automatically determines publishing order based on dependencies.
+# No manual configuration needed.
+#
+# Dependency tiers:
+#
+# 1. Core crates (no internal dependencies):
+#    typub-core, typub-log, typub-config, typub-ir
+#
+# 2. Second tier (depend on core crates):
+#    typub-html, typub-storage, typub-theme, typub-assets-ast,
+#    typub-markdown, typub-passes
+#
+# 3. Third tier (depend on second tier):
+#    typub-ui, typub-engine, typub-project, typub-tui,
+#    typub-adapters-core
+#
+# 4. Adapter crates (depend on adapters-core):
+#    typub-adapter-ghost, typub-adapter-devto, typub-adapter-wordpress,
+#    typub-adapter-hashnode, typub-adapter-confluence, typub-adapter-notion,
+#    typub-adapter-astro, typub-adapter-static, typub-adapter-xiaohongshu,
+#    typub-adapter-copypaste
+#
+# 5. Main binary (depends on everything):
+#    typub
+#
+# =============================================================================
+# Workflow Examples
+# =============================================================================
+#
+# Example 1: Release new minor version for all crates
+# $ cargo release minor
+# (dry-run first, then add --execute)
+#
+# Example 2: Release patch for a single adapter
+# $ cargo release patch -p typub-adapter-confluence
+# (dry-run first, then add --execute)
+#
+# Example 3: Release patch for multiple crates
+# $ cargo release patch -p typub-ir -p typub-html
+# (dry-run first, then add --execute)
+#
+# Example 4: Check what will be released
+# $ cargo release minor --dry-run
+#
+# =============================================================================
+# Notes
+# =============================================================================
+#
+# - Each crate's version is defined in its own Cargo.toml
+# - Internal dependencies use workspace format: typub-ir.workspace = true
+# - When releasing a crate, all its internal dependencies must be published first
+# - cargo-release handles dependency ordering automatically
+# - For crate-specific configuration, add [package.metadata.release] to the crate's Cargo.toml
+#
+# For detailed workflow, see docs/RELEASE_GUIDE.md

@@ -1,0 +1,42 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-015"
+title = "Add Ghost blogging platform adapter"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = ["RFC-0002"]
+
+[content]
+description = """Add Ghost blogging platform adapter."""
+
+[[content.acceptance_criteria]]
+text = "Ghost adapter module with client, types, and tests"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Support Admin API for post CRUD"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Support tags and internal links"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Register in adapters/mod.rs"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "cargo test passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

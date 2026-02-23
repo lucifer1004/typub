@@ -1,0 +1,41 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-020"
+title = "prepare workspace for cargo-release publishing"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = "Prepare the workspace for cargo-release publishing by setting up shared metadata, licenses, and release configuration. This includes adding workspace.package settings, MIT LICENSE file, release.toml configuration, and ensuring all internal crates use workspace inheritance for consistent publishing."
+
+[[content.acceptance_criteria]]
+text = "workspace.package with common metadata"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "MIT LICENSE file"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "release.toml configuration"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "internal crates use version in workspace.dependencies"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "all crates inherit workspace metadata"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo package succeeds for all crates"
+status = "done"
+category = "chore"

@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-ADAPTER-CRATE",
+  "title": "Adapter Crate Structure",
+  "kind": "normative",
+  "status": "active",
+  "text": "Each adapter crate MUST:\n\n1. Implement the `PlatformAdapter` trait from `typub-adapters-core`.\n\n2. Expose a public `register(registrar: &mut AdapterRegistrar)` function that:\n   - Calls `registrar.register_factory(platform_id, factory)` for the adapter factory.\n   - Calls `registrar.register_capability(platform_id, capability)` for the adapter capability.\n   - The `platform_id` MUST match the crate's platform identifier (e.g., `typub-adapter-ghost` → `\"ghost\"`).\n\n3. Have a `Cargo.toml` with:\n   - `name = \"typub-adapter-{platform_id}\"`\n   - `version` matching the workspace version\n   - Dependency on `typub-adapters-core` (not `typub`)\n   - Adapter-specific dependencies (e.g., `hmac`, `jwt` for Ghost)\n\n4. Contain all adapter-specific logic:\n   - API client (if applicable)\n   - Semantic IR transformations\n   - Type definitions\n\nEach adapter crate SHOULD include integration tests that can run independently of the main CLI.\n\n**Adding new first-party adapters:** Create a new crate following the above structure, add it to workspace members, add a feature gate in main crate, and add the feature-gated `register()` call to CLI bootstrap.\n\n**Rationale:**\nSelf-contained adapter crates enable independent testing, versioning, and optional inclusion. The `register` function provides a uniform entry point consistent with [[RFC-0006:C-CLI-BOOTSTRAP]].",
+  "since": "0.1.0"
+}

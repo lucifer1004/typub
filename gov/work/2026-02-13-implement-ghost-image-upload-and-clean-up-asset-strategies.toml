@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-023"
+title = "implement Ghost image upload and clean up asset strategies"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = "Implement Ghost image upload functionality via /images/upload endpoint and clean up asset strategy configurations. Remove deprecated Copy strategy from DevTo and WordPress adapters, ensuring Ghost properly handles Upload strategy in materialize_payload."
+
+[[content.acceptance_criteria]]
+text = "Ghost image upload via /images/upload endpoint"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Ghost materialize_payload handles Upload strategy"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Remove copy strategy from devto and wordpress adapters.toml"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo build and cargo test pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

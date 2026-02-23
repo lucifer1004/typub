@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-ATTRS-LAYERING",
+  "title": "Typed attrs and passthrough layering",
+  "kind": "normative",
+  "status": "active",
+  "text": "Attributes MUST be modeled as typed fields plus passthrough attributes. Semantically significant attributes used by pipeline logic or emitters MUST be represented by typed fields. Unknown or target-specific attributes MAY be preserved in a passthrough map. Passthrough maps in the conformance surface MUST use deterministic ordering.",
+  "since": "0.2.0"
+}

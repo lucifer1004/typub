@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-013"
+title = "normalize pipeline stage names to single-word terms"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Rename [[RFC-0002:C-PIPELINE-STAGES]] stages to one-word identifiers and align implementation comments."
+
+[[content.acceptance_criteria]]
+text = "RFC-0002:C-PIPELINE-STAGES uses one-word stage names suitable for code identifiers"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "src/pipeline.rs stage comments use same one-word names as RFC"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl render, govctl check, and cargo check pass"
+status = "done"
+category = "chore"

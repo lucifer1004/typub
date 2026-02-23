@@ -1,0 +1,21 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-001"
+title = "split large adapter files into module directories"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """Split large adapter files into module directories to improve code organization and readability."""
+
+[[content.acceptance_criteria]]
+text = "Change completed"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Large adapter files split into focused sub-modules"
+status = "done"
+category = "chore"

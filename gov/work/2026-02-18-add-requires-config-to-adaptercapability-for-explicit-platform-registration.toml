@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-001"
+title = "add requires_config to AdapterCapability for explicit platform registration"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+refs = ["ADR-0010"]
+
+[content]
+description = "Add requires_config field to AdapterCapability to allow platforms like astro, static, xiaohongshu to work without explicit configuration in typub.toml."
+
+[[content.acceptance_criteria]]
+text = "Add requires_config field to AdapterCapability"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update all adapters with requires_config value"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Modify AdapterRegistry to auto-register platforms without config requirement"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

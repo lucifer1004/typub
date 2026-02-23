@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-DOCUMENT-ROOT",
+  "title": "Document root and ownership",
+  "kind": "normative",
+  "status": "active",
+  "text": "The IR root MUST be a document object that owns blocks, asset index, footnote definitions, and document metadata. Footnote references in inline content MUST resolve to document-scoped footnote definitions. Cross-node resources and references MUST be addressable from this single root.",
+  "since": "0.2.0"
+}

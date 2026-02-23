@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-007"
+title = "consolidate asset strategy resolution helpers"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+
+[content]
+description = "Consolidate duplicate asset strategy resolution helper functions. Remove redundant resolve_platform_asset_strategy_with_policy from copypaste adapter and use the shared implementation from typub-adapters-core."
+
+[[content.acceptance_criteria]]
+text = "Remove duplicate resolve_platform_asset_strategy_with_policy from copypaste adapter"
+status = "done"
+category = "chore"

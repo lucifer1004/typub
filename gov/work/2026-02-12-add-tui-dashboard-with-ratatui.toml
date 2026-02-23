@@ -1,0 +1,51 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-020"
+title = "add TUI dashboard with ratatui"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Add a TUI dashboard using ratatui for interactive content management.
+Features: post list with navigation, post detail view with platform statuses,
+inline HTML preview using html2text, and publish action with progress display.
+Also refactors status command to use comfy-table tabular view.
+"""
+
+[[content.acceptance_criteria]]
+text = "Refactor status command to use comfy-table tabular view"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "TUI module with ratatui (feature-gated)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Post list view with navigation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Post detail view with platform statuses"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Inline HTML preview using html2text"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Publish action with progress display"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

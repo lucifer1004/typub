@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-019"
+title = "fix status command to show all published platforms"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Fix the `status` command to show all platforms that have been published,
+not just the currently configured ones.
+"""
+
+[[content.acceptance_criteria]]
+text = "Change completed"
+status = "done"
+category = "chore"

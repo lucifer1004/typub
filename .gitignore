@@ -1,0 +1,28 @@
+# Environment and secrets
+.env
+typub.toml
+
+# Build outputs
+target/
+output/
+.typub/
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Local development files
+LOCAL_DEVELOPMENT.md
+.govctl.lock
+/*.typ
+.claude/settings.local.json

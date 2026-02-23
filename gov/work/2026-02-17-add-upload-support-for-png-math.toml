@@ -1,0 +1,35 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-17-001"
+title = "add upload support for PNG math"
+status = "done"
+created = "2026-02-17"
+started = "2026-02-17"
+completed = "2026-02-17"
+refs = [
+    "RFC-0004",
+    "WI-2026-02-13-026",
+]
+
+[content]
+description = "Add PNG math upload support for platforms using Upload/External asset strategies. This ensures PNG math images can be uploaded when MathRendering::Png is configured with deferred asset strategies."
+
+[[content.acceptance_criteria]]
+text = "PNG math images upload for Upload/External strategies"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Confluence adapter uploads PNG math as attachments"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "CopyPaste adapter with External strategy uploads PNG math"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

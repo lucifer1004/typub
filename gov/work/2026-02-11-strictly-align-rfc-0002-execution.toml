@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-006"
+title = "strictly align RFC-0002 execution"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Continue strict RFC-0002 landing by aligning status model URL optionality and consolidating shared stage-3 link rewrite across adapters."
+
+[[content.acceptance_criteria]]
+text = "PublishResult URL is optional and status persistence handles absent URL"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Notion opts into shared stage-3 link rewrite and removes duplicate adapter-local rewrite"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check/tests and govctl check pass"
+status = "done"
+category = "chore"

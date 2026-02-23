@@ -1,0 +1,159 @@
+/* Dark Theme
+ * Slate-like dark mode with cool-blue accents.
+ * No .content wrapper for CSS inlining compatibility.
+ */
+
+body {
+  background: #0d1117;
+  color: #c9d1d9;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table,
+figcaption,
+th,
+td,
+li {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  color: #c9d1d9;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  color: #7db7ff;
+  font-weight: 700;
+  border-bottom: 1px solid #263347;
+  padding-bottom: 0.34em;
+}
+
+h2 {
+  color: #d6e2f2;
+  border-bottom: 1px solid #263347;
+  padding-bottom: 0.3em;
+}
+
+h3 {
+  color: #9ac7ff;
+}
+
+h4 {
+  color: #b7d8ff;
+}
+
+strong {
+  color: #f4f8ff;
+  font-weight: 700;
+}
+
+blockquote {
+  border-left: 3px solid #4b88d1;
+  background: #161c26;
+  padding: 0.84em 1.08em;
+  border-radius: 0 8px 8px 0;
+}
+
+blockquote p {
+  color: #a8b3c3;
+}
+
+a {
+  color: #7db7ff;
+  text-decoration: underline;
+  text-decoration-color: rgba(125, 183, 255, 0.45);
+  text-underline-offset: 0.13em;
+}
+
+a:hover {
+  color: #aad0ff;
+  text-decoration-color: rgba(170, 208, 255, 0.75);
+}
+
+p code,
+li code {
+  background: #1b2430;
+  border: 1px solid #2b3645;
+  color: #9ec9ff;
+  padding: 0.2em 0.42em;
+  border-radius: 6px;
+  font-size: 0.86em;
+}
+
+pre {
+  background: #141a23;
+  border: 1px solid #2b3645;
+  border-radius: 8px;
+  padding: 1.05em;
+}
+
+pre code {
+  color: #d6e2f2;
+  font-size: 0.86em;
+  line-height: 1.62;
+}
+
+table {
+  border: 1px solid #2b3645;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: #151d29;
+  color: #d6e2f2;
+  font-weight: 650;
+  border-color: #2b3645;
+}
+
+td {
+  border-color: #2b3645;
+}
+
+tr:nth-child(2n) {
+  background: #141b26;
+}
+
+li {
+  margin: 0.42em 0;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(67, 84, 106, 0),
+    rgba(67, 84, 106, 0.9),
+    rgba(67, 84, 106, 0)
+  );
+  margin: 2em 0;
+}
+
+img {
+  border: 1px solid #2a3444;
+  border-radius: 8px;
+}
+
+figcaption {
+  color: #98a7ba;
+  font-size: 0.86em;
+}
+
+em {
+  color: #b9d8ff;
+}
+
+del {
+  color: #6e7b8f;
+}

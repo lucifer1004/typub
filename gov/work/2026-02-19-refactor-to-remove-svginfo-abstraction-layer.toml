@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-003"
+title = "Refactor to remove SvgInfo abstraction layer"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-19"
+
+[content]
+description = "Refactor to remove SvgInfo abstraction layer. Simplify SVG handling by eliminating the intermediate SvgInfo struct and working directly with InlineFragment::Svg variants."
+
+[[content.acceptance_criteria]]
+text = "Inline SvgInfo fields into InlineFragment::Svg variant"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"

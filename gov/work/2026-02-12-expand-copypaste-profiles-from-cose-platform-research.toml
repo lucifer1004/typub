@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-002"
+title = "expand copypaste profiles from cose platform research"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = "Support extra copy-paste platforms from COSE platform research."
+
+[[content.acceptance_criteria]]
+text = "14 new copypaste profiles (5 html + 9 markdown)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "profile count test updated"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

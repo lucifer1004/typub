@@ -1,0 +1,29 @@
+[package]
+name = "typub-theme"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Theme system for typub HTML output styling"
+include = [
+    "src/**/*",
+    "templates/**/*",
+    "build.rs",
+    "Cargo.toml",
+]
+
+[dependencies]
+anyhow.workspace = true
+css-inline.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+
+[build-dependencies]
+
+[dev-dependencies]
+chrono.workspace = true
+toml.workspace = true
+
+[lints]
+workspace = true

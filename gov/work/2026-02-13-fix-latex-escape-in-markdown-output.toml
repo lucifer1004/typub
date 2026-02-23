@@ -1,0 +1,29 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-017"
+title = "Fix LaTeX escape in Markdown output"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Fix LaTeX backslash escaping in Markdown output for copy-paste platforms.
+Double backslashes (\\\\) were incorrectly appearing in output.
+"""
+
+[[content.acceptance_criteria]]
+text = "LaTeX backslashes not double-escaped in Markdown output"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Tests for inline and block math in Markdown"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

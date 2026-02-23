@@ -1,0 +1,35 @@
+[package]
+name = "typub-html"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "HTML processing utilities for typub (AST types, parsing, serialization, SVG handling, link resolution)"
+include = [
+    "src/**/*",
+    "Cargo.toml",
+]
+
+# Implements [[ADR-0003]]
+
+[dependencies]
+anyhow.workspace = true
+enumset.workspace = true
+scraper.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+relative-path.workspace = true
+usvg.workspace = true
+resvg.workspace = true
+tiny-skia.workspace = true
+typub-core.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+typub-ui.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

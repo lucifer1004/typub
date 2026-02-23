@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-022"
+title = "debug markdown extra newlines"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Debug and fix extra newlines in markdown output for copy-paste platforms.
+The issue was loose list formatting (tight: false) causing blank lines between list items.
+"""
+
+[[content.acceptance_criteria]]
+text = "Extra blank lines between list items removed"
+status = "done"
+category = "fixed"

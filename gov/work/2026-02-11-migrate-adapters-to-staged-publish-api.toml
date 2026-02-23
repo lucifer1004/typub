@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-002"
+title = "migrate adapters to staged publish API"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Migrate all platform adapters from monolithic publish orchestration to explicit stage-4 finalization and stage-5 publish hooks under RFC-0002 pipeline contract."
+
+[[content.acceptance_criteria]]
+text = "Existing adapters implement stage-4 finalization and stage-5 publish hooks"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Pipeline execution no longer relies on legacy adapter fallback path"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Rust checks/tests and govctl check pass"
+status = "done"
+category = "chore"

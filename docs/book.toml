@@ -1,0 +1,15 @@
+[book]
+title = "typub"
+description = "Multi-platform content publishing pipeline for Typst documents"
+authors = ["lucifer1004"]
+language = "en"
+src = "."
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/lucifer1004/contents"
+edit-url-template = "https://github.com/lucifer1004/contents/edit/main/docs/{path}"

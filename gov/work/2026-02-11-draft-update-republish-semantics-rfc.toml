@@ -1,0 +1,30 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-014"
+title = "draft update-republish semantics rfc"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = [
+    "RFC-0003",
+    "RFC-0002",
+]
+
+[content]
+description = "Execute next roadmap milestone by drafting a follow-up RFC for update/republish semantics that complements [[RFC-0002]]."
+
+[[content.acceptance_criteria]]
+text = "Draft RFC defining create-vs-update decision and idempotency semantics"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Specify conflict/retry behavior and status persistence requirements for republish"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl render and govctl check pass"
+status = "done"
+category = "chore"

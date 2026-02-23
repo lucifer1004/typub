@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-DRAFT-SUPPORT",
+  "title": "Draft Support Capability",
+  "kind": "normative",
+  "status": "active",
+  "text": "Each platform adapter MUST declare its draft support capability using the `DraftSupport` enum:\n\n```rust\npub enum DraftSupport {\n    /// Platform has no draft concept. Content is always published immediately.\n    None,\n\n    /// Same object with a status field that can be toggled.\n    /// `reversible` indicates whether publish -> draft transition is supported.\n    StatusField { reversible: bool },\n\n    /// Draft and published content are separate objects with different IDs.\n    /// Transition from draft to published requires a platform-specific mutation.\n    SeparateObjects,\n}\n```\n\nThe `AdapterCapability` struct MUST include a `draft_support` field:\n\n```rust\npub struct AdapterCapability {\n    pub id: &'static str,\n    pub name: &'static str,\n    pub tags: CapabilitySupport,\n    pub categories: CapabilitySupport,\n    pub internal_links: CapabilitySupport,\n    pub draft_support: DraftSupport,  // NEW\n    pub notes: &'static str,\n}\n```\n\n**Rationale:**\nDifferent platforms have fundamentally different models for draft content:\n- Some platforms (Dev.to, Ghost, WordPress, Confluence) use a status field on the same object\n- Some platforms (Hashnode) maintain separate draft and published objects\n- Some platforms (Notion) have no draft concept at all\n\nDeclaring this capability allows the pipeline to handle transitions correctly.",
+  "since": "0.1.0"
+}

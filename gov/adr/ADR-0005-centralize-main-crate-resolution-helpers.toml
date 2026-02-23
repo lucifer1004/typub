@@ -1,0 +1,67 @@
+[govctl]
+schema = 1
+id = "ADR-0005"
+title = "centralize main-crate resolution helpers"
+status = "accepted"
+date = "2026-02-15"
+refs = [
+    "RFC-0004",
+    "RFC-0005",
+]
+
+[content]
+context = """
+Main crate resolution logic is duplicated across modules: `internal_link_target` is resolved in both `src/resolved_config.rs` and `src/internal_links.rs`, and asset strategy resolution appears in both `src/resolved_config.rs` and `src/adapters/mod.rs`. This duplication risks drift and inconsistent precedence handling.
+
+### Problem Statement
+
+We need a single source of truth for resolution rules (per [[RFC-0005]] and [[RFC-0004]]) so config precedence and validation remain consistent across pipeline stages and adapter helpers.
+
+### Constraints
+
+- Resolution ordering is governed by [[RFC-0005]].
+- Asset strategy validation and supported strategies are governed by [[RFC-0004]].
+- Changes must be internal refactors without behavior changes.
+
+### Options Considered
+
+1. Keep duplicate helpers in place and synchronize manually.
+2. Centralize resolution helpers and have all modules call the shared implementation.
+3. Move all resolution into adapter subcrates."""
+decision = """
+We will **centralize main-crate resolution helpers** by making `ResolvedConfig` the canonical path for `internal_link_target` resolution and by consolidating asset strategy resolution to a single helper used by both pipeline and adapter helpers.
+
+Reasons:
+
+1. **Consistency:** A single implementation reduces drift and enforces [[RFC-0005]] precedence everywhere.
+2. **Maintainability:** Refactors and future config changes touch one location.
+3. **Auditability:** Behavior is easier to reason about and verify.
+
+### Implementation Notes
+
+- Replace `internal_links::resolve_internal_link_target` with a call into `ResolvedConfig` (or a shared helper within `resolved_config`).
+- Replace `adapters::resolve_platform_asset_strategy*` with a thin wrapper around the centralized helper.
+- No external behavior changes; only reuse shared logic."""
+consequences = """
+### Positive
+
+- One canonical resolution path for `internal_link_target` and asset strategies.
+- Lower drift risk across pipeline/adapters layers.
+- Simpler tests and clearer audit trail.
+
+### Negative
+
+- Short-term refactor churn in core modules (mitigation: keep changes small and add targeted tests).
+- Some helper APIs may change or be removed (mitigation: preserve wrappers temporarily if needed).
+
+### Neutral
+
+- No behavior changes expected; only internal wiring adjustments."""
+
+[[content.alternatives]]
+text = "Keep duplicate helpers: Rejected because it invites drift and inconsistent precedence."
+status = "considered"
+
+[[content.alternatives]]
+text = "Move all resolution into adapter subcrates: Rejected because main crate still needs resolution for pipeline and config; increases coupling."
+status = "considered"

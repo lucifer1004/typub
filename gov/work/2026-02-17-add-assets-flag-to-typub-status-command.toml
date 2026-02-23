@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-17-005"
+title = "add --assets flag to typub status command"
+status = "done"
+created = "2026-02-17"
+started = "2026-02-17"
+completed = "2026-02-17"
+
+[content]
+description = "Add --assets flag to typub status command to display cached asset uploads for a post."
+
+[[content.acceptance_criteria]]
+text = "--assets flag added to status command"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "asset uploads displayed in table format when flag is set"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "tests pass for new functionality"
+status = "done"
+category = "chore"

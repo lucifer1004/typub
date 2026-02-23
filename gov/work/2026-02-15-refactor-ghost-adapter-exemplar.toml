@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-001"
+title = "refactor ghost adapter exemplar"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+
+[content]
+description = "Refactor the Ghost adapter to match the Notion exemplar structure with clear module boundaries, consistent config/registration helpers, and expanded unit/mock/preview tests while preserving RFC-compliant behavior."
+
+[[content.acceptance_criteria]]
+text = "Ghost adapter reorganized into adapter/config/model modules following Notion exemplar"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Unit tests and mock tests for Ghost adapter core behaviors"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Preview integration coverage maintained for Ghost adapter"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

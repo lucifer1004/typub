@@ -1,0 +1,47 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-013"
+title = "Add environment variable substitution in config using subst crate"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = ["RFC-0004"]
+
+[content]
+description = "Implement environment variable substitution in config using subst."
+
+[[content.acceptance_criteria]]
+text = "Add subst crate dependency with toml feature"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "PlatformConfig::get_str() expands ${VAR} syntax"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "StorageConfig fields support ${VAR} expansion"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Document env var substitution in docs/guide/adapters.md"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Existing hardcoded env var fallbacks remain for backward compatibility"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "cargo test passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

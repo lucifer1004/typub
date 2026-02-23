@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-023"
+title = "fix math equations lost in HTML preview"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Fix math equations being lost or incorrectly rendered in HTML preview output.
+Math equations now render as SVG in HTML output.
+"""
+
+[[content.acceptance_criteria]]
+text = "Math equations render as SVG in HTML output"
+status = "done"
+category = "fixed"

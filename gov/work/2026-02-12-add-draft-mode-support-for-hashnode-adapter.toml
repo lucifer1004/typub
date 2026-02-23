@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-017"
+title = "Add draft mode support for Hashnode adapter"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """Add draft mode support for Hashnode adapter."""
+
+[[content.acceptance_criteria]]
+text = "publishAs field in GraphQL mutations"
+status = "done"
+category = "added"

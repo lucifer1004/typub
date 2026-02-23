@@ -1,0 +1,33 @@
+---
+source: src/adapters/devto/tests.rs
+expression: "&payload.body_markdown"
+---
+# Introduction
+
+This is a **test** paragraph with *emphasis*.
+
+## Code Example
+
+```rust
+fn main() {
+    println!("Hello!");
+}
+```
+
+- First item
+- Second item
+
+<!-- end list -->
+
+1. Step one
+2. Step two
+
+> A wise quote
+
+| Name | Value |
+| --- | --- |
+| A | 1 |
+
+-----
+
+Final paragraph.

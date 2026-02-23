@@ -1,0 +1,21 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-008"
+title = "Write RFC for adapter extension mechanism"
+status = "cancelled"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+
+[content]
+description = "Design and document the adapter extension mechanism for typub. This RFC should define how third-party adapters can be registered, configured, and integrated into the typub ecosystem. The mechanism should support dynamic registration, capability declaration, and configuration validation."
+
+[[content.acceptance_criteria]]
+text = "RFC drafted with normative clauses for adapter extension"
+status = "pending"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "pending"
+category = "chore"

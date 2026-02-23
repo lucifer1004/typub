@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-ASSET-REFERENCE",
+  "title": "Asset references are document-indexed",
+  "kind": "normative",
+  "status": "active",
+  "text": "Image and binary resources MUST be referenced by stable asset identifiers from content nodes. The document root MUST provide an asset index mapping asset identifiers to source metadata and resolved variants. Emitters MUST resolve resources through this index and MUST NOT infer resource identity from inline path strings.\n\nRendered binary artifacts produced by enrich/materialize pipelines (including math or SVG raster outputs) MUST also resolve through asset identifiers and `Document.assets`.\n\n`Document.assets` resolved variants MUST contain only publish-conformance data that is reproducible across runs for identical inputs and configuration. Preview-only resolution data MUST remain in preview sidecar/context and MUST NOT be persisted or serialized as IR conformance-surface data.\n\nStrategy-specific transport forms (for example data URI emission for `Embed`) are materialization/serialization concerns and MUST NOT redefine semantic identity in content nodes.",
+  "since": "0.2.0"
+}

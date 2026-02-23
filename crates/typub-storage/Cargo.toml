@@ -1,0 +1,29 @@
+[package]
+name = "typub-storage"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "S3-compatible storage client for typub"
+
+[dependencies]
+anyhow.workspace = true
+chrono.workspace = true
+hex.workspace = true
+regex.workspace = true
+rust-s3.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+sha2.workspace = true
+typub-config.workspace = true
+typub-core.workspace = true
+typub-project.workspace = true
+typub-log.workspace = true
+mime_guess.workspace = true
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

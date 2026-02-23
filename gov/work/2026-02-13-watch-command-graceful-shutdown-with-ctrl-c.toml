@@ -1,0 +1,30 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-005"
+title = "Watch command graceful shutdown with Ctrl-C"
+status = "cancelled"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Improve watch command UX by handling Ctrl-C signal gracefully.
+When the user presses Ctrl-C, the watch loop should exit cleanly
+and automatically close any preview browser window that was opened.
+"""
+
+[[content.acceptance_criteria]]
+text = "Handle Ctrl-C signal gracefully in watch command"
+status = "pending"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Auto-close preview window on shutdown"
+status = "pending"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "pending"
+category = "chore"

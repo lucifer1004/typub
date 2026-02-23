@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-SUMMARY",
+  "title": "Summary",
+  "kind": "informative",
+  "status": "active",
+  "text": "This RFC specifies an adapter extension API that enables third-party adapters to be registered and used by the typub CLI without modifying core source code.\n\n**Scope:**\n- Defines the `AdapterRegistrar` API for runtime registration of adapter factories and capabilities.\n- Specifies capability lookup order when multiple sources provide capabilities.\n- Specifies backward compatibility constraints for existing built-in adapters and configurations.\n\n**Out of Scope:**\n- Dynamic library plugin loading (deferred to a future RFC).\n- Data-driven adapters via manifest/template (deferred to a future RFC).\n\n**Rationale:**\nThe current adapter architecture requires editing multiple core files (`Adapter` enum, factory array, `adapters.toml`) to add new adapters. This creates friction for third-party integrations and makes the codebase harder to maintain. A registration-based API decouples adapter creation from core dispatch logic, enabling extension crates to inject adapters at startup.\n\n**References:**\n- [[RFC-0002]] — publish pipeline contract (defines adapter boundary and pipeline stages)\n- [[ADR-0002]] — shared types in `typub-core` (capability enums)",
+  "since": "0.1.0"
+}

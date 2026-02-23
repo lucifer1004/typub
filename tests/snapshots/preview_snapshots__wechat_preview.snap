@@ -1,0 +1,265 @@
+---
+source: tests/preview_snapshots.rs
+expression: preview_html
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Post Title - WeChat Official Account Preview</title>
+    <style>
+/* Copy-paste preview page styling
+ * Used for WeChat, Zhihu, Medium, etc. clipboard copy preview pages
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
+    "Segoe UI", sans-serif;
+  background: radial-gradient(
+    circle at 10% 20%,
+    #ffffff 0%,
+    #f4f7fb 40%,
+    #eef3f9 100%
+  );
+  margin: 0;
+  padding: 24px;
+  color: #2f343b;
+}
+
+.toolbar {
+  max-width: 720px;
+  margin: 0 auto 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid #e4eaf3;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(39, 64, 102, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.copy-btn,
+.editor-link {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    background 0.14s ease;
+}
+
+.copy-btn {
+  background: linear-gradient(135deg, #0dca6d 0%, #0aa95a 100%);
+  color: #fff;
+  box-shadow: 0 8px 16px rgba(10, 169, 90, 0.24);
+}
+
+.copy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(10, 169, 90, 0.3);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
+}
+
+.editor-link {
+  background: #2f435e;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(47, 67, 94, 0.22);
+}
+
+.editor-link:hover {
+  transform: translateY(-1px);
+  background: #3a5374;
+}
+
+.theme-info {
+  color: #616b7a;
+  font-size: 13px;
+}
+
+.copy-success {
+  color: #0aa95a;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.copy-success.show {
+  opacity: 1;
+}
+
+.preview-container {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 22px 24px;
+  border: 1px solid #e4eaf3;
+  box-shadow: 0 18px 42px rgba(28, 48, 80, 0.14);
+  border-radius: 14px;
+}
+
+.preview-header {
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #edf2f8;
+  margin-bottom: 16px;
+}
+
+.preview-title {
+  font-size: 24px;
+  font-weight: 760;
+  color: #2a3038;
+  letter-spacing: 0.02em;
+}
+
+/* Markdown content area */
+.markdown-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13.5px;
+  line-height: 1.62;
+  background: #f6f8fb;
+  border: 1px solid #e4eaf3;
+  padding: 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 14px;
+  }
+
+  .toolbar {
+    max-width: 100%;
+    padding: 9px;
+  }
+
+  .preview-container {
+    max-width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .preview-title {
+    font-size: 21px;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button class="copy-btn" onclick="copyContent()">Copy</button>
+        <a href="https://mp.weixin.qq.com" target="_blank" rel="noopener" style="display:inline-block;background:#555;color:white;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:14px;font-weight:500;text-decoration:none;">Open Editor</a>
+        <span class="theme-info">WeChat Official Account · 微信绿</span>
+        <span class="copy-success" id="copy-success">Copied!</span>
+    </div>
+    <div class="preview-container">
+        <div class="preview-header">
+            <div class="preview-title">Test Post Title</div>
+        </div>
+        <div id="content-area"><!DOCTYPE html><html style="margin: 0;padding: 0;"><head>
+
+</head>
+<body style="margin: 0;padding: 0;">
+<h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #07c160;letter-spacing: 0.02em;margin-bottom: 0.6em;font-weight: 700;line-height: 1.35;font-size: 1.92em;text-align: center;margin: 2em 0 1.5em;margin-top: 0.2em;">Introduction</h1>
+<p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 0.95em 0;line-height: 1.84;">This is a <strong style="font-weight: 600;color: #07c160;">test</strong> paragraph with <em style="font-style: italic;">emphasis</em>.</p>
+<h2 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin-top: 1.85em;margin-bottom: 0.6em;font-weight: 650;line-height: 1.35;font-size: 1.58em;padding-bottom: 0.3em;border-bottom: 2px solid #07c160;">Code Example</h2>
+<pre style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;background: #f7faf8;border: 1px solid #e8f5ec;border-radius: 8px;overflow-x: auto;margin: 1.1em 0;padding: 1em;"><code class="hljs language-rust" data-lang="rust" style="font-family: 'SFMono-Regular', ui-monospace, Consolas, 'Liberation Mono', Menlo,
+    'Courier New', monospace;font-size: 0.85em;line-height: 1.6;">fn main() {
+    println!("Hello!");
+}</code></pre>
+<ul style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;padding-left: 1.65em;margin: 0.95em 0;line-height: 1.78;list-style-type: disc;"><li style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;margin: 0.5em 0;"><span style="display:inline;">First item</span></li><li style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;margin: 0.5em 0;"><span style="display:inline;">Second item</span></li></ul>
+<ol style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;padding-left: 1.65em;margin: 0.95em 0;line-height: 1.78;"><li style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;margin: 0.5em 0;"><span style="display:inline;">Step one</span></li><li style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;margin: 0.5em 0;"><span style="display:inline;">Step two</span></li></ol>
+<blockquote style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 1.5em 0;padding: 1em 1.5em;border-left: 4px solid #07c160;border-radius: 0 8px 8px 0;background: #f7faf8;line-height: 1.78;box-shadow: 0 2px 8px rgba(7, 193, 96, 0.08);"><p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;letter-spacing: 0.02em;line-height: 1.84;color: #666;margin: 0.5em 0;">A wise quote</p></blockquote>
+<table style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;border-collapse: collapse;width: 100%;margin: 1.1em 0;line-height: 1.7;font-size: 0.96em;border-radius: 8px;overflow: hidden;border: 1px solid #e8f5ec;"><thead><tr><th style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #07c160;letter-spacing: 0.015em;border: 1px solid #d7deea;padding: 0.56em 0.9em;text-align: left;background: #f7faf8;font-weight: 600;border-color: #e8f5ec;"><p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 0.95em 0;line-height: 1.84;">Name</p>
+</th><th style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #07c160;letter-spacing: 0.015em;border: 1px solid #d7deea;padding: 0.56em 0.9em;text-align: left;background: #f7faf8;font-weight: 600;border-color: #e8f5ec;"><p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 0.95em 0;line-height: 1.84;">Value</p>
+</th></tr></thead><tbody><tr><td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;border: 1px solid #d7deea;padding: 0.56em 0.9em;text-align: left;border-color: #e8f5ec;"><p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 0.95em 0;line-height: 1.84;">A</p>
+</td><td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;border: 1px solid #d7deea;padding: 0.56em 0.9em;text-align: left;border-color: #e8f5ec;"><p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 0.95em 0;line-height: 1.84;">1</p>
+</td></tr></tbody></table>
+<hr style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #2f343b;letter-spacing: 0.015em;border: none;height: 1px;background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(7, 193, 96, 0.5),
+    rgba(255, 255, 255, 0)
+  );margin: 2.5em 0;">
+<p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;color: #353535;letter-spacing: 0.02em;margin: 0.95em 0;line-height: 1.84;">Final paragraph.</p>
+
+
+</body></html></div>
+    </div>
+    <script>
+
+        async function copyContent() {
+            const content = document.getElementById('content-area');
+            const htmlContent = content.innerHTML;
+            try {
+                await navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': new Blob([htmlContent], { type: 'text/html' }),
+                        'text/plain': new Blob([content.textContent || ''], { type: 'text/plain' })
+                    })
+                ]);
+                showSuccess();
+            } catch (err) {
+                console.error('Clipboard API failed:', err);
+                const range = document.createRange();
+                range.selectNodeContents(content);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                try { document.execCommand('copy'); showSuccess(); }
+                catch (e) { alert('Copy failed'); }
+                sel.removeAllRanges();
+            }
+        }
+        function showSuccess() {
+            const el = document.getElementById('copy-success');
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 2000);
+        }
+
+    </script>
+</body>
+</html>

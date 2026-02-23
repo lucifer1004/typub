@@ -1,0 +1,30 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-021"
+title = "TUI: local platform status and platform-aware preview"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Fix TUI platform status display and preview behavior.
+Local-output platforms (astro, xiaohongshu) show dash instead of pending status.
+TUI preview uses the currently selected platform's adapter.
+"""
+
+[[content.acceptance_criteria]]
+text = "Local-output platforms show dash instead of pending"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "TUI preview uses selected platform"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Change completed"
+status = "done"
+category = "chore"

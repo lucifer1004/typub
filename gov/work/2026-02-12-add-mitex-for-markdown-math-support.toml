@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-024"
+title = "add mitex for markdown math support"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Add mitex library support for Markdown TeX math rendering.
+Markdown TeX math expressions now render as SVG in HTML output.
+"""
+
+[[content.acceptance_criteria]]
+text = "Markdown TeX math renders as SVG in HTML output"
+status = "done"
+category = "fixed"

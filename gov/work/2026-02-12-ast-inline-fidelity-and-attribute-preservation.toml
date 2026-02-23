@@ -1,0 +1,46 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-008"
+title = "AST inline fidelity and attribute preservation"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = "Unify HtmlElement AST structure: all text-bearing variants use `Vec<InlineFragment>` directly, add Attrs for HTML attribute preservation, and enhance `InlineFragment::Link` to support nested content."
+
+[[content.acceptance_criteria]]
+text = "All HtmlElement text-bearing variants use `Vec<InlineFragment>` directly (removed plain/Rich split)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Attrs type alias and attrs field on all HtmlElement variants for HTML attribute preservation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "InlineFragment::Link uses fragments Vec instead of text String for nested inline support"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "HTML/Markdown/Notion/Confluence serializers updated for unified variants"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Helper constructors (paragraph_text, heading_text, etc.) for simplified element creation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

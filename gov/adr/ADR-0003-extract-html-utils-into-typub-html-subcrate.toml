@@ -1,0 +1,49 @@
+[govctl]
+schema = 1
+id = "ADR-0003"
+title = "extract html_utils into typub-html subcrate"
+status = "accepted"
+date = "2026-02-13"
+refs = ["ADR-0002"]
+
+[content]
+context = """
+The `html_utils` module is the most widely used internal module in typub, with 11+ modules depending on it for HTML AST types (`HtmlElement`, `InlineFragment`), serialization, parsing, and transformation.
+
+### Problem Statement
+
+Currently `html_utils` is embedded in the main crate, making it impossible to use independently. As the crate grows, extracting stable, well-bounded modules improves:
+- Compilation times (parallel crate compilation)
+- Code organization (clear boundaries)
+- Potential reuse in other tools
+
+### Constraints
+
+- [[ADR-0002]] established the workspace pattern with `typub-core`
+- Existing `use crate::html_utils::*` imports must continue to work
+- Module has zero internal dependencies (ideal extraction candidate)
+
+### Options Considered
+
+1. Extract to `typub-html` subcrate with workspace dependencies (chosen)
+2. Keep embedded in main crate"""
+decision = """
+Extract `src/html_utils/` into `crates/typub-html/` subcrate:
+
+1. Move all files from `src/html_utils/` to `crates/typub-html/src/`
+2. Create `crates/typub-html/Cargo.toml` using workspace dependencies
+3. Add `pub use typub_html as html_utils;` in main crate for import compatibility
+4. Unify all shared dependencies to `[workspace.dependencies]` in root `Cargo.toml`
+5. Update all subcrates to use `{ workspace = true }` for shared deps"""
+consequences = """
+### Positive
+
+- Follows pattern established by [[ADR-0002]]
+- Unified dependency versions across workspace
+- Improved compile times through parallelism
+- Clear module boundaries
+
+### Negative
+
+- Additional subcrate to maintain
+- Must keep re-export for backward compatibility"""

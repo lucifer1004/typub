@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-010"
+title = "Fix adapter review leftovers"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = "Apply small adapter consistency fixes from follow-up review: improve asset strategy error messaging and pass resolved asset maps through serialize paths for confluence/notion robustness."
+
+[[content.acceptance_criteria]]
+text = "Change completed"
+status = "done"
+category = "chore"

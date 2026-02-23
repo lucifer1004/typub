@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-005"
+title = "centralize shared stage-3 transforms"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Implement non-empty stage-3 shared transformation step in pipeline and remove duplicated link rewrite logic from adapters to better align RFC-0002."
+
+[[content.acceptance_criteria]]
+text = "Stage-3 shared transforms execute in pipeline module"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Devto/WordPress remove duplicate adapter-local internal-link rewrite"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check/tests and govctl check pass"
+status = "done"
+category = "chore"

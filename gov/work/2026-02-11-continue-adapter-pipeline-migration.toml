@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-003"
+title = "continue adapter pipeline migration"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Continue RFC-0002 adapter migration by moving payload shaping out of monolithic publish methods and using staged finalize/publish hooks for remote adapters."
+
+[[content.acceptance_criteria]]
+text = "Devto and WordPress split stage-4 payload finalization from stage-5 publish calls"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Notion and Confluence remove monolithic publish wrappers in favor of staged hooks"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo checks/tests and govctl check pass"
+status = "done"
+category = "chore"

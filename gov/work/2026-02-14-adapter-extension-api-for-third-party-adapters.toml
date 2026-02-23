@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-003"
+title = "adapter extension API for third-party adapters"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+refs = ["RFC-0006"]
+
+[content]
+description = "Draft RFC-0006 specifying the adapter extension API for third-party adapter registration."
+
+[[content.acceptance_criteria]]
+text = "RFC drafted with normative clauses for AdapterRegistrar API"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "RFC specifies capability registration and lookup order"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "RFC specifies backward compatibility constraints"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

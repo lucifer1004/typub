@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-005"
+title = "Split typub-html/svg module"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+
+[content]
+description = "Refactor the typub-html/svg module by splitting it into focused sub-modules (convert, flatten, rasterize) for better maintainability and testability."
+
+[[content.acceptance_criteria]]
+text = "SVG module cleanly split into sub-modules"
+status = "done"
+category = "chore"

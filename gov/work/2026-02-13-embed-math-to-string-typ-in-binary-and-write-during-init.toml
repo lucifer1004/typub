@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-021"
+title = "embed math-to-string.typ in binary and write during init"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = "Fix missing math-to-string.typ file by embedding it in the binary and writing it during init. The renderer ensures the file exists before Typst compilation, preventing runtime errors when rendering math."
+
+[[content.acceptance_criteria]]
+text = "packages/math-to-string.typ created during init"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "renderer ensures math-to-string.typ exists before compile"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "cargo test passes"
+status = "done"
+category = "chore"

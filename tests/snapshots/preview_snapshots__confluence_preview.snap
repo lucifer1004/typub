@@ -1,0 +1,707 @@
+---
+source: tests/preview_snapshots.rs
+expression: preview_html
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Post Title - Confluence Preview</title>
+    <style>
+        /* Base styles */
+        :root {
+            --brand-color: #ffffff;
+            --brand-bg: #0052cc;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto !important;
+            padding: 20px !important;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 { font-size: 2em; font-weight: 700; margin-bottom: 0.5em; }
+        h2 { font-size: 1.5em; font-weight: 600; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; font-weight: 600; margin-top: 1em; }
+        p { margin: 1em 0; }
+        pre {
+            background: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.875em;
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.875em;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 1em 0;
+            padding-left: 1em;
+            color: #666;
+        }
+        img { max-width: 100%; height: auto; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th { background: #f6f8fa; font-weight: 600; }
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.25em 0; }
+        hr { border: none; border-top: 1px solid #eee; margin: 2em 0; }
+
+        /* Platform branding header */
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 24px;
+        }
+        .platform-badge {
+            background: var(--brand-bg);
+            color: var(--brand-color);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SVG math styling */
+        .typst-svg-block svg {
+            display: block;
+            margin: 1em auto;
+            max-width: 100%;
+        }
+
+        /* Theme CSS (for code highlighting) */
+/* Base styles for all themes
+ * This file is always loaded first, themes override these defaults.
+ *
+ * Note: No .content wrapper is used. Styles are applied directly to elements
+ * so that css-inline can inline them without a wrapper div. This is required
+ * for platforms like WeChat that filter out <div> tags.
+ */
+
+/* ============================================================================
+ * Base typography
+ * ============================================================================ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table,
+hr,
+figcaption,
+li,
+th,
+td {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  color: #2f343b;
+  letter-spacing: 0.015em;
+}
+
+/* ============================================================================
+ * Headings
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 1.85em;
+  margin-bottom: 0.6em;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-top: 0.2em;
+}
+
+h1 {
+  font-size: 1.92em;
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  font-size: 1.58em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h4 {
+  font-size: 1.12em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 0.92em;
+  color: #626b79;
+}
+
+/* ============================================================================
+ * Paragraphs and lists
+ * ============================================================================ */
+
+p {
+  margin: 0.95em 0;
+  line-height: 1.84;
+}
+
+ul,
+ol {
+  padding-left: 1.65em;
+  margin: 0.95em 0;
+  line-height: 1.78;
+}
+
+li {
+  margin: 0.4em 0;
+}
+
+li > ul,
+li > ol {
+  margin-top: 0.45em;
+  margin-bottom: 0.45em;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ul ul {
+  list-style-type: circle;
+}
+
+ul ul ul {
+  list-style-type: square;
+}
+
+ul li.task-item {
+  list-style: none;
+  position: relative;
+  padding-left: -1.5em;
+}
+
+ul li.task-item::marker {
+  display: none;
+}
+
+/* ============================================================================
+ * Blockquotes
+ * ============================================================================ */
+
+blockquote {
+  margin: 1.15em 0;
+  padding: 0.75em 1.05em;
+  border-left: 3px solid #ccd5e1;
+  border-radius: 0 8px 8px 0;
+  background: #f7f9fc;
+  line-height: 1.78;
+}
+
+blockquote p {
+  margin: 0.45em 0;
+  color: #4c5563;
+}
+
+/* ============================================================================
+ * Code blocks and inline code
+ * ============================================================================ */
+
+pre {
+  background: #f7f8fb;
+  border: 1px solid #e3e8f0;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.1em 0;
+  padding: 1.05em 1.15em;
+}
+
+code {
+  font-family:
+    "SFMono-Regular", ui-monospace, Consolas, "Liberation Mono", Menlo,
+    "Courier New", monospace;
+  font-size: 0.89em;
+}
+
+p code,
+li code {
+  background: #f1f4f8;
+  border: 1px solid #e1e7ef;
+  color: #2e3b4f;
+  border-radius: 4px;
+  padding: 0.16em 0.4em;
+}
+
+/* ============================================================================
+ * Tables
+ * ============================================================================ */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.1em 0;
+  line-height: 1.7;
+  font-size: 0.96em;
+}
+
+th,
+td {
+  border: 1px solid #d7deea;
+  padding: 0.56em 0.9em;
+  text-align: left;
+}
+
+th {
+  background: #f4f7fb;
+  font-weight: 650;
+}
+
+/* ============================================================================
+ * Images and figures
+ * ============================================================================ */
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.15em 0;
+  border-radius: 8px;
+}
+
+figure {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+figure > img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+figcaption {
+  text-align: center;
+  color: #6d7683;
+  font-size: 0.88em;
+  margin-top: 0.55em;
+  line-height: 1.45;
+}
+
+/* ============================================================================
+ * Links
+ * ============================================================================ */
+
+a {
+  color: #0b67c2;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(11, 103, 194, 0.4);
+  text-underline-offset: 0.13em;
+}
+
+a:hover {
+  color: #084f97;
+  text-decoration-color: rgba(8, 79, 151, 0.75);
+}
+
+/* ============================================================================
+ * Text formatting
+ * ============================================================================ */
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+}
+
+del {
+  text-decoration: line-through;
+  color: #8f98a5;
+}
+
+/* ============================================================================
+ * Horizontal rule
+ * ============================================================================ */
+
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(145, 157, 178, 0),
+    rgba(145, 157, 178, 0.55),
+    rgba(145, 157, 178, 0)
+  );
+  margin: 2.2em 0;
+}
+
+/* ============================================================================
+ * SVG math equations
+ * ============================================================================ */
+
+/* Inline SVG (inline math): display inline with text baseline */
+.typst-svg-inline {
+  display: inline;
+}
+
+.typst-svg-inline svg {
+  display: inline;
+}
+
+/* Block SVG (block math): center with margin */
+.typst-svg-block {
+  display: block;
+  margin: 1em 0;
+}
+
+.typst-svg-block svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* ============================================================================
+ * Admonitions / Callouts
+ * ============================================================================ */
+
+.admonition {
+  margin: 1em 0;
+  padding: 0.75em 1em;
+  border-left: 4px solid #c6d0df;
+  background: #f7f9fc;
+  border-radius: 6px;
+  line-height: 1.68;
+}
+
+.admonition p {
+  margin: 0.5em 0;
+}
+
+.admonition-title {
+  font-weight: 650;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+/* Note */
+.admonition.note {
+  border-left-color: #2f77d0;
+  background: #f2f7ff;
+}
+
+/* Tip */
+.admonition.tip {
+  border-left-color: #2f9856;
+  background: #f1fbf4;
+}
+
+/* Warning */
+.admonition.warning {
+  border-left-color: #d69a21;
+  background: #fff9ef;
+}
+
+/* Danger */
+.admonition.danger {
+  border-left-color: #d1495b;
+  background: #fff4f5;
+}
+
+/* Info */
+.admonition.info {
+  border-left-color: #2f91a8;
+  background: #f1fbff;
+}
+
+/* Reset blockquote styles when used for admonitions (WeChat/Weibo compatibility)
+ * These need higher specificity to override the base blockquote rules.
+ */
+blockquote.admonition {
+  margin: 1em 0;
+  padding: 0.75em 1em;
+  border-left: 4px solid #c6d0df;
+  background: #f7f9fc;
+  border-radius: 6px;
+  line-height: 1.68;
+}
+
+blockquote.admonition p {
+  margin: 0.5em 0;
+}
+
+blockquote.admonition.note {
+  border-left-color: #2f77d0;
+  background: #f2f7ff;
+}
+
+blockquote.admonition.tip {
+  border-left-color: #2f9856;
+  background: #f1fbf4;
+}
+
+blockquote.admonition.warning {
+  border-left-color: #d69a21;
+  background: #fff9ef;
+}
+
+blockquote.admonition.danger {
+  border-left-color: #d1495b;
+  background: #fff4f5;
+}
+
+blockquote.admonition.info {
+  border-left-color: #2f91a8;
+  background: #f1fbff;
+}
+
+
+/* Theme: tech */
+/* Tech Theme
+ * Blue accents, monospace emphasis, clean and modern
+ * No .content wrapper for CSS inlining compatibility.
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  color: #24292f;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  color: #0969da;
+  border-bottom: 2px solid #0969da;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  color: #24292f;
+  border-bottom: 1px solid #d0d7de;
+  padding-bottom: 0.3em;
+}
+
+h3 {
+  color: #0550ae;
+}
+h4 {
+  color: #0969da;
+}
+
+strong {
+  color: #0550ae;
+  font-weight: 600;
+}
+
+blockquote {
+  border-left: 4px solid #0969da;
+  background: #f6f8fa;
+  padding: 0.8em 1em;
+  border-radius: 0 6px 6px 0;
+}
+
+blockquote p {
+  color: #57606a;
+}
+
+a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p code,
+li code {
+  background: rgba(175, 184, 193, 0.2);
+  color: #0550ae;
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  font-size: 0.85em;
+}
+
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  padding: 1em;
+}
+
+pre code {
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+table {
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th {
+  background: #f6f8fa;
+  color: #24292f;
+  font-weight: 600;
+  border-color: #d0d7de;
+}
+
+td {
+  border-color: #d0d7de;
+}
+tr:nth-child(2n) {
+  background: #f6f8fa;
+}
+
+li {
+  margin: 0.4em 0;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: #d0d7de;
+  margin: 2em 0;
+}
+
+img {
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+}
+
+figcaption {
+  color: #57606a;
+  font-size: 0.85em;
+}
+
+    </style>
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Highlight all code blocks that don't already have highlighting
+  document.querySelectorAll('pre code').forEach(block => {
+    // Only highlight if not already highlighted (no span children from server-side)
+    if (!block.querySelector('span')) {
+      hljs.highlightElement(block);
+    }
+  });
+});
+</script>
+
+    
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  },
+  startup: {
+    ready: function() {
+      // Extract LaTeX from data-latex-src attributes (from MathRendering::Latex)
+      document.querySelectorAll('[data-latex-src]').forEach(el => {
+        const latex = el.getAttribute('data-latex-src');
+        const isBlock = el.classList.contains('typst-svg-block');
+        el.innerHTML = isBlock ? '$$' + latex + '$$' : '$' + latex + '$';
+      });
+      MathJax.startup.defaultReady();
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+</head>
+<body>
+    <div class="platform-header">
+        <span class="platform-badge">Confluence</span>
+    </div>
+    <article class="content">
+        <h1>Test Post Title</h1>
+        <h1>Introduction</h1>
+<p>This is a <strong>test</strong> paragraph with <em>emphasis</em>.</p>
+<h2>Code Example</h2>
+<pre><code class="hljs language-rust" data-lang="rust">fn main() {
+    println!("Hello!");
+}</code></pre>
+<ul><li>First item</li><li>Second item</li></ul>
+<ol><li>Step one</li><li>Step two</li></ol>
+<blockquote><p>A wise quote</p></blockquote>
+<table><thead><tr><th><p>Name</p>
+</th><th><p>Value</p>
+</th></tr></thead><tbody><tr><td><p>A</p>
+</td><td><p>1</p>
+</td></tr></tbody></table>
+<hr>
+<p>Final paragraph.</p>
+
+    </article>
+</body>
+</html>

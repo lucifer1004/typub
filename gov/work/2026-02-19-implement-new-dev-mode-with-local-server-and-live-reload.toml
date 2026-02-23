@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-19-007"
+title = "implement new dev mode with local server and live reload"
+status = "done"
+created = "2026-02-19"
+started = "2026-02-19"
+completed = "2026-02-20"
+
+[content]
+description = "Implement dev mode with local server and live reload. Replace the current file-based preview workflow with a local HTTP server that automatically reloads when content changes, improving the development experience."
+
+[[content.acceptance_criteria]]
+text = "dev command with local HTTP server and live reload"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "dev only supports -p flag (single platform)"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "publish supports both -p and no flag (all platforms)"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "remove build command (replaced by dev)"
+status = "done"
+category = "chore"

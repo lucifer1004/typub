@@ -1,0 +1,41 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-008"
+title = "Preview i18n support with zh/en locale detection"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Add minimal i18n support for preview HTML pages.
+
+Detect locale from LANG/LC_ALL environment variables and provide
+Chinese (zh) and English (en) translations for preview UI strings
+(copy button, success/error messages, page titles)."""
+
+[[content.acceptance_criteria]]
+text = "i18n module with Locale enum and t() function"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Locale detection from LANG/LC_ALL environment variable"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Chinese and English translations for preview UI strings"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "copypaste.rs and xiaohongshu.rs use i18n::t() for UI strings"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

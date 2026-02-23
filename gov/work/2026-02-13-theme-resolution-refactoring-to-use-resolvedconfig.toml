@@ -1,0 +1,25 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-004"
+title = "Theme resolution refactoring to use ResolvedConfig"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Refactor theme resolution to use ResolvedConfig.theme_id instead of calling
+themes::resolve_theme() with full context at each call site.
+
+The refactoring:
+1. ResolvedConfig.theme_id is resolved once per (content, platform) pair at Stage 1
+2. Adapters use themes::load_theme() with the pre-resolved theme_id
+3. Legacy preview methods updated to accept ctx parameter for consistent resolution
+4. Removed global_config field from adapters that only used it for theme resolution
+"""
+
+[[content.acceptance_criteria]]
+text = "Theme resolution uses ResolvedConfig.theme_id"
+status = "done"
+category = "chore"

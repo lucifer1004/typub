@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-006"
+title = "clean up pure re-export modules"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+
+[content]
+description = "Remove low-value pure re-export modules in main crate to reduce indirection and keep internal usage direct."
+
+[[content.acceptance_criteria]]
+text = "Remove pure re-export config module and update imports"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Remove main-crate re-export-only aliases where unused"
+status = "done"
+category = "changed"

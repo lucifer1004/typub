@@ -1,0 +1,49 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-018"
+title = "extract capability enums and ThemeId into typub-core subcrate"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+refs = ["ADR-0002"]
+
+[content]
+description = """
+Extract capability-related enums (MathRendering, MathDelimiters, CapabilitySupport, DraftSupport) and ThemeId into a new typub-core subcrate to serve as a shared types crate for build.rs and CLI.
+"""
+
+[[content.acceptance_criteria]]
+text = "Create typub-core subcrate with 6 capability enums and ThemeId newtype"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Convert root Cargo.toml to workspace with typub-core as member"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "build.rs uses typed enums from typub-core instead of String fields"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Main crate re-exports enums from typub-core, preserving existing import paths"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Replace raw String theme fields with ThemeId newtype"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo build and cargo test pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

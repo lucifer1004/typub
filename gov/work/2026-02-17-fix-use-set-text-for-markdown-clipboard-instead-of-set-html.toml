@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-17-006"
+title = "fix: use set_text for Markdown clipboard instead of set_html"
+status = "done"
+created = "2026-02-17"
+started = "2026-02-17"
+completed = "2026-02-17"
+
+[content]
+description = "Markdown content was being copied to clipboard using arboard::set_html() which treats the content as HTML, causing newlines to be lost. Fixed by using set_text() for Markdown format and set_html() only for HTML format."
+
+[[content.acceptance_criteria]]
+text = "Fix Markdown clipboard handling for copypaste adapters"
+status = "done"
+category = "fixed"

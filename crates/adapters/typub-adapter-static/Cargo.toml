@@ -1,0 +1,27 @@
+[package]
+name = "typub-adapter-static"
+description = "Static HTML adapter for typub - generates standalone deployable HTML files"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+typub-adapters-core.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+typub-theme.workspace = true
+
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt", "macros"] }
+
+[lints]
+workspace = true

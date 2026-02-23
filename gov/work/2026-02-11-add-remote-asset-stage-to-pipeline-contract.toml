@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-011"
+title = "add remote-asset stage to pipeline contract"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Amend [[RFC-0002:C-PIPELINE-STAGES]] to introduce a dedicated remote-asset materialization stage and align implementation stage documentation."
+
+[[content.acceptance_criteria]]
+text = "RFC-0002 pipeline stages define optional remote asset materialization stage between finalize and publish"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "pipeline implementation comments align stage numbering with updated RFC contract"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl render and govctl check pass"
+status = "done"
+category = "chore"

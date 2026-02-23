@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-005"
+title = "refactor main crate renderer and pipeline layout"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+
+[content]
+description = "Refactor main crate renderer/pipeline structure and remaining duplicated logic with minimal behavior changes, following low-risk-first ordering."
+
+[[content.acceptance_criteria]]
+text = "Use config-based project root for renderer instead of cwd"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Split pipeline module into stage-focused submodules without behavior changes"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Eliminate any remaining duplicate resolution logic in main crate"
+status = "done"
+category = "changed"

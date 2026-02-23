@@ -1,0 +1,42 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-20-003"
+title = "fix admonition to support block-level content including nested lists"
+status = "done"
+created = "2026-02-20"
+started = "2026-02-20"
+completed = "2026-02-21"
+refs = ["RFC-0008"]
+
+[content]
+description = "Fix admonition to support block-level content including nested lists. Update the Admonition element to use children: Vec<HtmlElement> instead of fragments, enabling proper support for nested block elements like lists and code blocks inside callouts."
+
+[[content.acceptance_criteria]]
+text = "Change Admonition.fragments to Admonition.children: `Vec<HtmlElement>`"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Update parse_admonition to use recursive block parsing"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Update Notion adapter to render children blocks inside callouts"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Update HTML/theme adapters for block-level admonition content"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Add tests for nested lists in callouts"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

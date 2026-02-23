@@ -1,0 +1,39 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-015"
+title = "add code_highlight capability for syntax highlighting preservation"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Add code_highlight capability to preserve syntax highlighting for copy-paste platforms.
+Code blocks should store both plain text and highlighted HTML, allowing platforms to choose.
+"""
+
+[[content.acceptance_criteria]]
+text = "ADR-0001 accepted: dual storage + code_highlight capability"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "code_highlight field in adapters.toml and profiles.toml"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "CodeBlock stores both plain text and highlighted HTML"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Copy-paste HTML platforms preserve syntax highlighting"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

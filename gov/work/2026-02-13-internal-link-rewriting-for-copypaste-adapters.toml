@@ -1,0 +1,56 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-002"
+title = "Internal link rewriting for copypaste adapters"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+refs = ["RFC-0002"]
+
+[content]
+description = """
+Implement internal link resolution for copypaste adapters that searches for published
+versions of linked posts on other platforms, with configurable target platform preference.
+
+Also includes config structure refactor: flattened Config (removed [general] section)."""
+
+[[content.acceptance_criteria]]
+text = "internal_link_target field in ContentMeta, PostPlatformConfig, Config, PlatformConfig"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "resolve_href_for_copypaste and resolve_internal_link_target functions in internal_links.rs"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "get_first_published_url in StatusTracker for alphabetical platform selection"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "CopyPaste adapter enables shared link rewrite (supports_shared_link_rewrite -> true)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Pipeline uses copypaste-specific resolution for copypaste platforms"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Config structure flattened - removed [general] section, content_dir/output_dir at root"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Unit tests for copypaste internal link resolution"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

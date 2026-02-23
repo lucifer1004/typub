@@ -1,0 +1,49 @@
+[package]
+name = "typub-adapter-wordpress"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "WordPress platform adapter for typub"
+include = [
+    "src/**/*",
+    "Cargo.toml",
+]
+
+[dependencies]
+# Core adapter infrastructure
+typub-adapters-core.workspace = true
+typub-core.workspace = true
+typub-config.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+typub-theme.workspace = true
+
+# Async runtime
+async-trait.workspace = true
+tokio.workspace = true
+
+# HTTP client
+reqwest.workspace = true
+
+# Serialization
+serde.workspace = true
+serde_json.workspace = true
+
+# Error handling
+anyhow.workspace = true
+
+# Date/time
+chrono.workspace = true
+
+# URL encoding
+urlencoding.workspace = true
+
+[dev-dependencies]
+wiremock.workspace = true
+toml.workspace = true
+
+[lints]
+workspace = true

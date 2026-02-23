@@ -1,0 +1,41 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-027"
+title = "Refactor math rendering: unify SVG types and cleanup"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """
+Refactor math rendering: unify InlineSvg and Svg types into a single Svg type
+with an inline attribute. Deduplicate HTML parsing logic in html_utils.
+Remove unused SVG hash/upload code from Confluence adapter.
+Add Notion math formula support via equation blocks.
+"""
+
+[[content.acceptance_criteria]]
+text = "Unify InlineSvg and Svg into single Svg type with inline attr"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Deduplicate HTML parsing logic in html_utils"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Unused SVG hash/upload code from Confluence adapter"
+status = "done"
+category = "removed"
+
+[[content.acceptance_criteria]]
+text = "Notion math formula support via equation blocks"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"

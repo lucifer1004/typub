@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-001"
+title = "refine RFC-0002 pipeline contract"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Refine RFC-0002 clause wording to keep stage contracts strict while preserving adapter flexibility, then render and validate governance artifacts."
+
+[[content.acceptance_criteria]]
+text = "Clarify strict pipeline stage semantics in RFC-0002"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Tighten status correctness and reconciliation wording"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Rendered docs and governance checks pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,9 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-004"
+title = "Implement RFC-0004 external asset storage"
+status = "done"
+created = "2026-02-12"
+
+[content]
+description = "Implement external asset storage per RFC-0004. Add AssetStrategy::External variant, S3-compatible storage module, asset upload tracking in SQLite, and integration with Materialize stage. Enable HashNode and similar platforms to render images via public URLs."

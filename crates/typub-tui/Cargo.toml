@@ -1,0 +1,23 @@
+[package]
+name = "typub-tui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Terminal UI for typub"
+
+[dependencies]
+anyhow.workspace = true
+crossterm.workspace = true
+html2text.workspace = true
+open.workspace = true
+ratatui.workspace = true
+typub-config.workspace = true
+typub-core.workspace = true
+typub-engine.workspace = true
+typub-storage.workspace = true
+typub-ui.workspace = true
+
+[lints]
+workspace = true

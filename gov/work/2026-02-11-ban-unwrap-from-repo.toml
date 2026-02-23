@@ -1,0 +1,18 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-017"
+title = "ban-unwrap-from-repo"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+
+[content]
+description = """
+Ban .unwrap() and .expect() from production code, ban .unwrap() from test \
+code. Enforce via clippy workspace lints and document the policy in CLAUDE.md."""
+
+[[content.acceptance_criteria]]
+text = "unwrap/expect banned from production code, unwrap banned from test code, enforced via clippy lints and CLAUDE.md"
+status = "done"
+category = "chore"

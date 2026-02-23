@@ -1,0 +1,39 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-026"
+title = "Add MathRendering::Png via resvg"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-14"
+refs = ["RFC-0002"]
+
+[content]
+description = """
+Add PNG rasterization support for math SVGs to enable platforms that don't
+support inline SVG (like ModelScope) to display math equations as images."""
+
+[[content.acceptance_criteria]]
+text = "MathRendering::Png variant in typub-core"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "svg_to_png() function using resvg"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "HTML serialization outputs PNG img tags"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "ModelScope profile uses math_rendering=png"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

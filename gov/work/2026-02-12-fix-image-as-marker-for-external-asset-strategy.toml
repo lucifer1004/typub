@@ -1,0 +1,21 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-016"
+title = "Fix image_as_marker for External asset strategy"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+
+[content]
+description = """Fix `image_as_marker` for External asset strategy."""
+
+[[content.acceptance_criteria]]
+text = "External strategy triggers image_as_marker"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "All adapters use requires_deferred_upload()"
+status = "done"
+category = "chore"

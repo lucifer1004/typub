@@ -1,0 +1,22 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-012"
+title = "name RFC-0002 pipeline stages"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Refine [[RFC-0002:C-PIPELINE-STAGES]] wording by adding clear short names for each stage."
+
+[[content.acceptance_criteria]]
+text = "RFC-0002:C-PIPELINE-STAGES lists short names for all seven stages"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl render and govctl check pass"
+status = "done"
+category = "chore"

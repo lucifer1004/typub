@@ -1,0 +1,45 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-019"
+title = "extract html_utils into typub-html subcrate with workspace dependencies"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+refs = ["ADR-0003"]
+
+[content]
+description = """
+Extract html_utils modules into a typub-html subcrate to improve code organization.
+Also add workspace.dependencies for unified dependency version management across crates.
+"""
+
+[[content.acceptance_criteria]]
+text = "Create typub-html subcrate with html_utils modules"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Add workspace.dependencies for unified version management"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "All crates use workspace = true for shared dependencies"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Main crate re-exports typub_html as html_utils for path compatibility"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo build and cargo test pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

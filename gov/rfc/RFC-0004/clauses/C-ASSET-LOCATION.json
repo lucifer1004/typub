@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-ASSET-LOCATION",
+  "title": "Asset Location Constraints",
+  "kind": "normative",
+  "status": "active",
+  "text": "All assets referenced in content MUST be located within the project root as defined in [[RFC-0005:C-PROJECT-ROOT]].\n\n**Validation:**\nBefore processing an asset, the system MUST verify that:\n1. The asset path resolves to a location within the project root.\n2. The asset file exists and is readable.\n\nIf an asset path resolves outside the project root, the system MUST fail with an error that:\n- Identifies the offending asset path.\n- States that assets must be within the project directory.\n- Suggests moving the asset into the project or using a symlink within the project tree.\n\n**Storage:**\nPer [[RFC-0005:C-PROJECT-ROOT]], asset paths stored in the status database MUST be relative to the project root. This enables project portability.\n\n**Rationale:** Constraining assets to the project tree ensures:\n1. The entire project can be moved, synced, or version-controlled as a unit.\n2. Relative paths in the status database remain valid across machines.\n3. No accidental references to system files or files in unrelated directories.",
+  "since": "0.2.1"
+}

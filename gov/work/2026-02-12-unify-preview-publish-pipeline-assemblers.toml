@@ -1,0 +1,53 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-029"
+title = "Unify preview/publish pipeline assemblers"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = ["RFC-0002"]
+
+[content]
+description = """
+Unify preview and publish pipeline assemblers per RFC-0002.
+Create preview_single_platform as a pipeline assembler. Add PipelineMode enum
+to distinguish preview/publish contexts. Extract shared pipeline stages into
+reusable functions. Add prepare_preview_elements and build_preview to
+PlatformAdapter trait. Update all adapters to implement new trait methods.
+"""
+
+[[content.acceptance_criteria]]
+text = "Create preview_single_platform function as pipeline assembler"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Add PipelineMode enum to distinguish preview/publish contexts"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Extract shared pipeline stages into reusable functions"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Add prepare_preview_elements and build_preview to PlatformAdapter trait"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Update all adapters to implement new trait methods"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Update cmd_preview to use preview_single_platform"
+status = "done"
+category = "changed"

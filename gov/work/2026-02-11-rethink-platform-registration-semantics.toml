@@ -1,0 +1,31 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-023"
+title = "Rethink platform registration semantics"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+
+[content]
+description = "Clarify platform registration semantics: section presence in config.toml implies enabled (included in default publish list), `enabled = false` is the only meaningful toggle. Rename enabled_platforms() to default_platforms(), remove redundant `enabled = true` noise from configs, and make config.template.toml the SSOT for cmd_init."
+
+[[content.acceptance_criteria]]
+text = "Rename enabled_platforms() to default_platforms() with updated semantics"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Remove redundant enabled=true from config.toml and config.template.toml"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Add commented # enabled = false example in config.template.toml"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All tests pass and govctl check clean"
+status = "done"
+category = "chore"

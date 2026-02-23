@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-004"
+title = "extract adapters into subcrates"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+refs = ["RFC-0007"]
+
+[content]
+description = "Draft RFC-0007 specifying extraction of adapters into workspace subcrates."
+
+[[content.acceptance_criteria]]
+text = "RFC drafted with crate boundary specifications"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "RFC specifies shared adapter types crate"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "RFC specifies migration path from current layout"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

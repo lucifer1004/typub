@@ -1,0 +1,16 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-006"
+title = "Split typub-markdown render.rs into sub-modules"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+
+[content]
+description = "Refactor the typub-markdown render.rs file by splitting it into focused sub-modules (block, inline, options) for better maintainability and testability."
+
+[[content.acceptance_criteria]]
+text = "render.rs cleanly split into sub-modules"
+status = "done"
+category = "chore"

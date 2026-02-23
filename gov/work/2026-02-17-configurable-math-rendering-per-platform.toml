@@ -1,0 +1,46 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-17-002"
+title = "configurable math rendering per platform"
+status = "done"
+created = "2026-02-17"
+started = "2026-02-17"
+completed = "2026-02-17"
+
+[content]
+description = "Add `math_rendering` and `math_delimiters` as configurable options per platform, with validation against adapter-declared supported values. Follow the existing `asset_strategy` validation pattern. Also extend `ImageMarker` with `display` attribute to support inline PNG math for Confluence."
+
+[[content.acceptance_criteria]]
+text = "math_rendering and math_delimiters fields in PlatformConfig"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "supported_math_renderings in AdapterCapability"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "resolve_math_rendering_from_config helper with validation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "ImageMarker display attribute for inline/block distinction"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Confluence PNG math support for inline and block"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "typub.template.toml updated with math_rendering options"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

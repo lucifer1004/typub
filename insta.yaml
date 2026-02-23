@@ -1,0 +1,10 @@
+# Insta snapshot testing configuration
+# See: https://insta.rs/docs/settings/
+
+# Note: snapshot_path is a runtime setting, not a config file setting.
+# To centralize snapshots, use with_settings! macro in test code.
+# This file configures other insta behaviors.
+
+behavior:
+  # Use "auto" update mode (default)
+  update: auto

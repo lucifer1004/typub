@@ -1,0 +1,53 @@
+[package]
+name = "typub-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Build engine for typub (pipeline, rendering, assets, project)."
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+css-inline.workspace = true
+dirs.workspace = true
+enumset.workspace = true
+html2text.workspace = true
+regex.workspace = true
+reqwest.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+tempfile.workspace = true
+tokio.workspace = true
+typub-adapters-core.workspace = true
+typub-assets-ast.workspace = true
+typub-adapter-astro.workspace = true
+typub-adapter-static.workspace = true
+typub-adapter-confluence.workspace = true
+typub-adapter-copypaste.workspace = true
+typub-adapter-devto.workspace = true
+typub-adapter-ghost.workspace = true
+typub-adapter-hashnode.workspace = true
+typub-adapter-notion.workspace = true
+typub-adapter-wordpress.workspace = true
+typub-adapter-xiaohongshu.workspace = true
+typub-config.workspace = true
+typub-core.workspace = true
+typub-html.workspace = true
+typub-ir.workspace = true
+typub-passes.workspace = true
+typub-project.workspace = true
+typub-storage.workspace = true
+typub-theme.workspace = true
+typub-ui.workspace = true
+url.workspace = true
+urlencoding.workspace = true
+usvg.workspace = true
+walkdir.workspace = true
+
+[lints]
+workspace = true

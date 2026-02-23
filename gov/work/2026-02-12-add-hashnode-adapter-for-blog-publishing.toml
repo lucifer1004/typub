@@ -1,0 +1,35 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-003"
+title = "Add HashNode adapter for blog publishing"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0003",
+]
+
+[content]
+description = "Implement HashNode adapter for publishing blog posts via HashNode's GraphQL API. Follows [[RFC-0002:C-PIPELINE-STAGES]] for the adapter pipeline and [[RFC-0003:C-DECISION-KEY]] for update/republish semantics."
+
+[[content.acceptance_criteria]]
+text = "HashNode adapter module with GraphQL API integration"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "HashNode registered in AdapterRegistry with capability entry"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Unit tests and wiremock integration tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

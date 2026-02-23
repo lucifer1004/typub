@@ -1,0 +1,205 @@
+/* WeChat Green Theme - 微信绿
+ * Native WeChat green accent, clean sans-serif, card-style elements
+ *
+ * Note: No .content wrapper. Styles are applied directly to elements for
+ * platforms like WeChat that filter out <div> tags.
+ */
+
+/* ============================================================================
+ * Base typography (applied to block elements for inlining)
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  color: #353535;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================================
+ * Headings with green accent
+ * ============================================================================ */
+
+h1 {
+  color: #07c160;
+  text-align: center;
+  font-weight: 700;
+  margin: 2em 0 1.5em;
+}
+
+h2 {
+  color: #353535;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid #07c160;
+}
+
+h3 {
+  color: #07c160;
+  border-left: 4px solid #07c160;
+  padding-left: 0.5em;
+}
+
+h4 {
+  color: #06ad56;
+}
+
+/* ============================================================================
+ * Strong text with green
+ * ============================================================================ */
+
+strong {
+  color: #07c160;
+  font-weight: 600;
+}
+
+/* ============================================================================
+ * Card-style blockquote
+ * ============================================================================ */
+
+blockquote {
+  border-left: 4px solid #07c160;
+  background: #f7faf8;
+  padding: 1em 1.5em;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5em 0;
+  box-shadow: 0 2px 8px rgba(7, 193, 96, 0.08);
+}
+
+blockquote p {
+  color: #666;
+  margin: 0.5em 0;
+}
+
+/* ============================================================================
+ * Links with WeChat green
+ * ============================================================================ */
+
+a {
+  color: #07c160;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  border-bottom-color: #07c160;
+}
+
+/* ============================================================================
+ * Inline code with green tint
+ * ============================================================================ */
+
+p code,
+li code {
+  color: #059a4c;
+  background: rgba(7, 193, 96, 0.08);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  font-size: 0.9em;
+}
+
+/* ============================================================================
+ * Code blocks
+ * ============================================================================ */
+
+pre {
+  background: #f7faf8;
+  border: 1px solid #e8f5ec;
+  border-radius: 8px;
+  padding: 1em;
+}
+
+pre code {
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+/* ============================================================================
+ * Table with green headers
+ * ============================================================================ */
+
+table {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e8f5ec;
+}
+
+th {
+  background: #f7faf8;
+  color: #07c160;
+  font-weight: 600;
+  border-color: #e8f5ec;
+}
+
+td {
+  border-color: #e8f5ec;
+}
+
+/* ============================================================================
+ * Lists
+ * ============================================================================ */
+
+li {
+  margin: 0.5em 0;
+}
+
+li strong {
+  color: #07c160;
+}
+
+/* ============================================================================
+ * Horizontal rule with gradient
+ * ============================================================================ */
+
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(7, 193, 96, 0.5),
+    rgba(255, 255, 255, 0)
+  );
+  margin: 2.5em 0;
+}
+
+/* ============================================================================
+ * Images with subtle border
+ * ============================================================================ */
+
+img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+figcaption {
+  color: #999;
+  font-size: 0.85em;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+/* ============================================================================
+ * Emphasis callouts (class-based, for future use)
+ * ============================================================================ */
+
+blockquote.tip {
+  background: #e8f8ed;
+  border-left-color: #07c160;
+}
+
+blockquote.warning {
+  background: #fff8e6;
+  border-left-color: #fa9d3b;
+}

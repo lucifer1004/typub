@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-011"
+title = "migrate adapters from typub-ui to typub-log per ADR-0004"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+refs = ["ADR-0004"]
+
+[content]
+description = "Migrate all adapters from typub-ui to typub-log per ADR-0004 Phase 4."
+
+[[content.acceptance_criteria]]
+text = "typub-adapters-core no longer re-exports typub-ui"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "All adapters use tracing macros"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "cargo build passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

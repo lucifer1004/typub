@@ -1,0 +1,67 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-004"
+title = "Redesign IR model for nested structures and extensions"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+refs = ["RFC-0008"]
+
+[content]
+description = "Complete redesign of the Content Intermediate Representation model to support nested lists, task lists, definition lists, enhanced table cells, and new inline fragments. This is a breaking change that migrates BulletList/NumberedList from flat Vec<Vec<InlineFragment>> to recursive ListItem structure."
+
+[[content.acceptance_criteria]]
+text = "ListItem struct with recursive children field for nested list support"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "TaskItem struct with checked field for task list support"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "DefinitionItem struct for definition list (dl/dt/dd) support"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "TableCell struct with colspan, rowspan, and align fields"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "New inline fragments (Underline, Mark, Superscript, Subscript, Kbd, LineBreak)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "HTML parser handles nested ul/ol within li elements"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "HTML parser handles task lists and definition lists"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Markdown renderer outputs correct nested list indentation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All adapters updated with fallback handling for new types"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests pass"
+status = "done"
+category = "chore"

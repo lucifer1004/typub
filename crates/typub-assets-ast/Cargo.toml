@@ -1,0 +1,21 @@
+[package]
+name = "typub-assets-ast"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "AST-level asset processing for typub"
+
+[dependencies]
+anyhow.workspace = true
+typub-core.workspace = true
+typub-ir.workspace = true
+typub-storage.workspace = true
+typub-project.workspace = true
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

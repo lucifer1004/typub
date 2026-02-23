@@ -1,0 +1,5 @@
+---
+source: src/adapters/ghost/tests.rs
+expression: "&inner.lexical"
+---
+{"root":{"children":[{"type":"html","version":1,"html":"<h1>Introduction</h1>\n<p>This is a <strong>test</strong> paragraph with <em>emphasis</em>.</p>\n<h2>Code Example</h2>\n<pre><code class=\"hljs language-rust\" data-lang=\"rust\">fn main() {\n    println!(\"Hello!\");\n}</code></pre>\n<ul><li>First item</li><li>Second item</li></ul>\n<ol><li>Step one</li><li>Step two</li></ol>\n<blockquote>A wise quote</blockquote>\n<table><tr><th>Name</th><th>Value</th></tr><tr><td>A</td><td>1</td></tr></table>\n<hr>\n<p>Final paragraph.</p>\n"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}

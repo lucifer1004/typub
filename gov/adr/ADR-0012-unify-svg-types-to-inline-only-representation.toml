@@ -1,0 +1,30 @@
+[govctl]
+schema = 1
+id = "ADR-0012"
+title = "Unify SVG types to inline-only representation"
+status = "accepted"
+date = "2026-02-19"
+refs = [
+    "ADR-0011",
+    "RFC-0009",
+]
+
+[content]
+context = """
+SVG handling was previously unified to inline-only representation to simplify legacy IR shape and align with the then-current image pattern.
+
+The current semantic IR baseline is defined by RFC-0009, which introduces explicit math nodes and document-root semantics. This ADR is retained as historical implementation context, but normative IR modeling now follows RFC-0009."""
+decision = """
+Keep this ADR as an accepted historical record of the legacy SVG unification step.
+
+For ongoing and future implementation work, treat RFC-0009 as normative and model math/embedded equation content using explicit semantic math nodes rather than SVG-only structural conventions."""
+consequences = """
+Positive:
+- Preserves traceability of why legacy code paths treat SVG as inline-first.
+- Removes normative ambiguity by making RFC-0009 the active source of truth.
+
+Negative:
+- Legacy adapter helpers that infer block math from SVG wrappers are transitional and should be phased out under the RFC-0009 migration plan.
+
+Neutral:
+- Historical behavior remains documented without constraining v2 semantic IR design."""

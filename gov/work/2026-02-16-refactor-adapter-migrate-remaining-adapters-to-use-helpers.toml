@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-16-003"
+title = "refactor(adapter): migrate remaining adapters to use helpers"
+status = "done"
+created = "2026-02-16"
+started = "2026-02-16"
+completed = "2026-02-16"
+
+[content]
+description = """Migrate remaining adapters to use helpers."""
+
+[[content.acceptance_criteria]]
+text = "Update notion adapter to use prepare_deferred_assets"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update confluence adapter to use prepare_deferred_assets"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update wordpress adapter to use prepare_deferred_assets"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update copypaste adapter to use prepare_deferred_assets"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests and clippy pass"
+status = "done"
+category = "chore"

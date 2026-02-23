@@ -1,0 +1,467 @@
+---
+source: src/adapters/astro.rs
+expression: "&payload.themed_html"
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Astro</title>
+    <style>
+/* Base styles for all themes
+ * This file is always loaded first, themes override these defaults
+ *
+ * Note: No .content wrapper is used. Styles are applied directly to elements
+ * so that css-inline can inline them without a wrapper div. This is required
+ * for platforms like WeChat that filter out <div> tags.
+ *
+ * Base typography styles (font-family, color, line-height) are applied to
+ * each block-level element individually to ensure proper inlining.
+ */
+
+/* ============================================================================
+ * Base typography (applied to all block elements)
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table,
+img,
+hr {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #333;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================================
+ * Headings
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h1 {
+  font-size: 1.75em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.25em;
+}
+h4 {
+  font-size: 1.1em;
+}
+h5 {
+  font-size: 1em;
+}
+h6 {
+  font-size: 0.9em;
+}
+
+/* ============================================================================
+ * Paragraphs
+ * ============================================================================ */
+
+p {
+  margin: 1em 0;
+  line-height: 1.8;
+}
+
+/* ============================================================================
+ * Lists
+ * ============================================================================ */
+
+ul,
+ol {
+  padding-left: 2em;
+  margin: 1em 0;
+  line-height: 1.8;
+}
+
+li {
+  margin: 0.5em 0;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ul ul {
+  list-style-type: circle;
+}
+
+ul ul ul {
+  list-style-type: square;
+}
+
+/* ============================================================================
+ * Blockquotes
+ * ============================================================================ */
+
+blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid #ddd;
+  background: #f9f9f9;
+  line-height: 1.8;
+}
+
+blockquote p {
+  margin: 0.5em 0;
+}
+
+/* ============================================================================
+ * Code blocks
+ * ============================================================================ */
+
+pre {
+  background: #f5f5f5;
+  padding: 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+code {
+  font-family:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New",
+    monospace;
+  font-size: 0.9em;
+}
+
+p code,
+li code {
+  background: #f0f0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+/* ============================================================================
+ * Tables
+ * ============================================================================ */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  line-height: 1.8;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+/* ============================================================================
+ * Images
+ * ============================================================================ */
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+}
+
+figcaption {
+  text-align: center;
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}
+
+/* ============================================================================
+ * Links
+ * ============================================================================ */
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================================
+ * Text formatting
+ * ============================================================================ */
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+del {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* ============================================================================
+ * Horizontal rule
+ * ============================================================================ */
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 2em 0;
+}
+
+/* ============================================================================
+ * SVG math equations
+ * ============================================================================ */
+
+/* Inline SVG (inline math): display inline with text baseline */
+.svg-inline {
+  display: inline;
+}
+
+.svg-inline svg {
+  display: inline;
+}
+
+/* Block SVG (block math): center with margin */
+.svg-block {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+.svg-block svg {
+  display: inline-block;
+}
+
+
+/* Theme: minimal */
+/* Minimal Theme - 极简
+ * Black and white, no decorations, pure typography
+ *
+ * Note: No .content wrapper. Styles are applied directly to elements.
+ */
+
+/* ============================================================================
+ * Base typography
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  font-family:
+    Georgia, "Times New Roman", "PingFang SC", "Microsoft YaHei", serif;
+  color: #222;
+  line-height: 1.9;
+}
+
+/* ============================================================================
+ * Clean headings without decoration
+ * ============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #000;
+  font-weight: 700;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+}
+
+h1 {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+h2 {
+  font-size: 1.4em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+/* ============================================================================
+ * Subtle strong text
+ * ============================================================================ */
+
+strong {
+  font-weight: 700;
+  color: #000;
+}
+
+/* ============================================================================
+ * Minimal blockquote
+ * ============================================================================ */
+
+blockquote {
+  border-left: 2px solid #333;
+  background: transparent;
+  padding: 0 0 0 1.5em;
+  margin: 1.5em 0;
+  font-style: italic;
+}
+
+blockquote p {
+  color: #444;
+}
+
+/* Nested blockquotes */
+blockquote blockquote {
+  border-left-color: #666;
+  margin-left: 0;
+}
+
+/* ============================================================================
+ * Minimal links
+ * ============================================================================ */
+
+a {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: #555;
+}
+
+/* ============================================================================
+ * Subtle inline code
+ * ============================================================================ */
+
+p code,
+li code {
+  background: #f5f5f5;
+  color: #333;
+  padding: 0.15em 0.35em;
+  border-radius: 2px;
+  font-size: 0.88em;
+}
+
+/* ============================================================================
+ * Clean code blocks
+ * ============================================================================ */
+
+pre {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  padding: 1.2em;
+}
+
+pre code {
+  font-size: 0.85em;
+  line-height: 1.7;
+}
+
+/* ============================================================================
+ * Simple table
+ * ============================================================================ */
+
+table {
+  margin: 1.5em 0;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 0.6em 1em;
+}
+
+th {
+  background: #fafafa;
+  font-weight: 700;
+}
+
+/* ============================================================================
+ * Lists with proper spacing
+ * ============================================================================ */
+
+li {
+  margin: 0.6em 0;
+}
+
+/* ============================================================================
+ * Simple horizontal rule
+ * ============================================================================ */
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 2.5em 0;
+}
+
+/* ============================================================================
+ * Images without decoration
+ * ============================================================================ */
+
+img {
+  border: none;
+}
+
+figcaption {
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+</style>
+</head>
+<body>
+    <h1>Introduction</h1>
+<p>This is a <strong>test</strong> paragraph with <em>emphasis</em>.</p>
+<h2>Code Example</h2>
+<pre><code class="hljs language-rust" data-lang="rust">fn main() {
+    println!("Hello!");
+}</code></pre>
+<ul><li>First item</li><li>Second item</li></ul>
+<ol><li>Step one</li><li>Step two</li></ol>
+<blockquote>A wise quote</blockquote>
+<table><tr><th>Name</th><th>Value</th></tr><tr><td>A</td><td>1</td></tr></table>
+<hr>
+<p>Final paragraph.</p>
+
+</body>
+</html>

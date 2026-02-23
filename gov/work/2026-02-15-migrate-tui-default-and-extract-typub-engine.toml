@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-007"
+title = "migrate tui default and extract typub-engine"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+completed = "2026-02-15"
+refs = ["ADR-0006"]
+
+[content]
+description = "Make TUI default (no feature gate), move TUI/i18n into typub-ui, and extract core build logic into a new typub-engine crate."
+
+[[content.acceptance_criteria]]
+text = "TUI is enabled by default; typub-tui remains a standalone crate; typub-ui owns i18n"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Core build pipeline moved into typub-engine crate"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "just pre-commit passes"
+status = "done"
+category = "chore"

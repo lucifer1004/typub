@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-FAILURE-SEMANTICS",
+  "title": "Failure and Status Semantics",
+  "kind": "normative",
+  "status": "active",
+  "text": "For this RFC, post+platform key means (post slug, platform name), where platform name is the adapter identifier.\n\nIf any stage before adapter publish fails, the operation MUST terminate without recording a successful publish result.\n\nIf adapter publish fails, the operation MUST surface an error and MUST NOT mark content as published in status tracking.\n\nA successful publish record MUST, at minimum, persist published=true and published_at for the post+platform key.\nWhen provided by the target platform, platform-specific identifier MUST be persisted. URL MAY be absent.\n\nStatus persistence for a successful publish MUST be atomic at the local storage layer (for example, a single database transaction or crash-safe single-file replace), so a partial successful record is not observable.\n\nIf status persistence fails after adapter publish succeeds, the operation MUST be surfaced to the caller as a failure and MUST include reconciliation guidance to recover local status for the already-published remote state.\n\nRetry behavior MAY be implemented by callers, but retries MUST preserve idempotent status semantics (no duplicate successful entries for one final published state).",
+  "since": "0.1.0"
+}

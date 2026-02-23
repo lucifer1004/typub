@@ -1,0 +1,21 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-15-008"
+title = "refactor workspace for reusable crates and metadata normalization"
+status = "done"
+created = "2026-02-15"
+started = "2026-02-15"
+refs = ["ADR-0007"]
+
+[content]
+description = "Refactor workspace layout to extract reusable crates (project, links, assets-ast), rename taxonomy to metadata in adapters-core, and update engine/CLI/TUI to the new module boundaries."
+
+[[content.acceptance_criteria]]
+text = "Update engine/tui/cli usages to new crate/module layout"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

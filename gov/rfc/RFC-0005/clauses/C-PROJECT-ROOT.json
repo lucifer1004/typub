@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-PROJECT-ROOT",
+  "title": "Project Root Definition",
+  "kind": "normative",
+  "status": "active",
+  "text": "The **project root** is the directory containing `typub.toml`.\n\nAll relative paths stored in the status database (`status.db`) MUST be resolved relative to the project root.\n\nThe system MUST reject paths that resolve outside the project root with a descriptive error.\n\n**Path normalization for storage:**\nWhen persisting paths to the status database:\n1. Absolute paths MUST be converted to relative paths (relative to project root).\n2. If the path cannot be expressed as relative to the project root (i.e., the asset is outside the project tree), the system MUST reject the operation with an error.\n3. Relative paths MUST use forward slashes (`/`) as path separators, regardless of operating system.\n4. Relative paths MUST NOT begin with `./` or contain `..` components after normalization.\n\n**Path resolution on read:**\nWhen reading paths from the status database:\n1. Relative paths MUST be resolved against the project root to obtain absolute paths for file operations.\n2. The resolved path MUST be validated to exist within the project root.\n\n**Rationale:** Storing relative paths enables project portability — the entire project directory (including `typub.toml`, content, and `.typub/status.db`) can be moved, synced, or shared across machines without breaking path references.",
+  "since": "0.2.0"
+}

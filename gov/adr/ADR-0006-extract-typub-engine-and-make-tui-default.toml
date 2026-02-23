@@ -1,0 +1,67 @@
+[govctl]
+schema = 1
+id = "ADR-0006"
+title = "extract typub-engine and make TUI default"
+status = "accepted"
+date = "2026-02-15"
+refs = [
+    "RFC-0004",
+    "ADR-0005",
+]
+
+[content]
+context = """
+The main crate currently owns pipeline orchestration, rendering, asset handling, internal link resolution, project root logic, and UI/TUI modules. This makes the CLI crate both the composition root and the engine, increasing coupling and making reuse difficult.
+
+### Problem Statement
+
+We need a clear separation between the CLI/app wiring and the reusable build engine, and we want TUI to be a default capability without a feature gate.
+
+### Constraints
+
+- Existing subcrates already capture core types (`typub-core`), config (`typub-config`), HTML utilities (`typub-html`), storage (`typub-storage`), and adapter interfaces (`typub-adapters-core`).
+- The extraction should avoid over-fragmentation: prefer a single engine crate over many tiny crates.
+- No behavior changes beyond enabling TUI by default.
+
+### Options Considered
+
+1. Keep all engine logic in the main crate and only remove the TUI feature gate.
+2. Extract a single `typub-engine` crate and move TUI/i18n into `typub-ui` (preferred).
+3. Split engine into many subcrates (pipeline, renderer, assets, links, etc.)."""
+decision = """
+We will **extract a single `typub-engine` crate** that owns the build pipeline (pipeline, renderer, assets, internal links, resolved config, project, cache, sorting, taxonomy) and **move TUI and i18n into `typub-ui`**, while making TUI enabled by default (no feature gate).
+
+Reasons:
+
+1. **Separation of concerns:** The main crate becomes a thin CLI composition root.
+2. **Reusability:** The engine can be reused by watcher mode or future front-ends.
+3. **Low fragmentation:** One engine crate avoids excessive crate sprawl.
+
+### Implementation Notes
+
+- `typub-engine` depends on existing core/config/html/storage/adapters-core crates.
+- The main crate depends on `typub-engine` and `typub-ui` and wires CLI commands.
+- Remove `cfg(feature = "tui")` gates and make TUI paths always available."""
+consequences = """
+### Positive
+
+- Clear separation between CLI wiring and build engine.
+- Easier reuse for watcher mode and future front-ends.
+- Reduced coupling in main crate.
+
+### Negative
+
+- Short-term migration cost and import churn (mitigation: staged move and strict builds).
+- Potential temporary duplication of re-exports during transition (mitigation: keep API surface minimal).
+
+### Neutral
+
+- TUI becomes always built, which slightly increases binary dependencies."""
+
+[[content.alternatives]]
+text = "Keep engine in main: Rejected because it preserves high coupling and blocks reuse."
+status = "considered"
+
+[[content.alternatives]]
+text = "Split into many small crates: Rejected because of fragmentation and cycle risk."
+status = "considered"

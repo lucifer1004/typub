@@ -1,0 +1,50 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-006"
+title = "AST-centric pipeline redesign"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0004",
+]
+
+[content]
+description = "Redesign publish pipeline to maintain AST representation until Serialize stage. Replaces placeholder-based string replacement with typed AST node modification for asset URL injection."
+
+[[content.acceptance_criteria]]
+text = "RFC-0002 v0.3.0 defines 9-stage AST-centric pipeline"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "RFC-0004 v0.3.0 updates C-PIPELINE-INTEGRATION for AST modification"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "AdapterPayload carries AST (`Vec<HtmlElement>`) not strings"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Materialize stage modifies AST nodes (`ImageMarker` → `Image`)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Serialize trait method added to PlatformAdapter"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All existing tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

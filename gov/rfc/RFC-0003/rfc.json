@@ -1,0 +1,32 @@
+{
+  "rfc_id": "RFC-0003",
+  "title": "update and republish semantics",
+  "version": "0.1.0",
+  "status": "normative",
+  "phase": "impl",
+  "owners": ["@lucifer1004"],
+  "created": "2026-02-11",
+  "updated": "2026-02-11",
+  "sections": [
+    {
+      "title": "Summary",
+      "clauses": ["clauses/C-SUMMARY.json"]
+    },
+    {
+      "title": "Specification",
+      "clauses": [
+        "clauses/C-DECISION-KEY.json",
+        "clauses/C-IDEMPOTENCY.json",
+        "clauses/C-CONFLICTS.json",
+        "clauses/C-STATUS.json"
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-02-11",
+      "notes": "Initial draft"
+    }
+  ]
+}

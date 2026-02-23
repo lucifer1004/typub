@@ -1,0 +1,48 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-001"
+title = "Theme system enhancement with 5-level resolution"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Enhance the theme system with compile-time embedding, 5-level resolution,
+and improved UI/UX across all themes."""
+
+[[content.acceptance_criteria]]
+text = "4 new theme CSS files (wechat-green, dark, notion, github)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "5-level theme resolution chain"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "default_theme field in profiles.toml"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Extract inline CSS from adapters to `_preview-*.css` files"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "UI/UX refinement of existing themes"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Themes embedded at compile time via build.rs with user override support"
+status = "done"
+category = "added"

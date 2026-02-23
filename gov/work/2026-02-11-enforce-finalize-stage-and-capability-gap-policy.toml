@@ -1,0 +1,32 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-008"
+title = "enforce finalize stage and capability gap policy"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Continue [[RFC-0002]] strict landing by hard-enforcing stage-4 finalization and machine-readable capability gap semantics."
+
+[[content.acceptance_criteria]]
+text = "Remove default empty finalize_payload so every adapter must implement stage-4"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Adapter capability matrix includes per-gap behavior semantics (warn+degrade vs hard error)"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "CLI taxonomy compatibility warnings derive from capability gap policy"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check and govctl check pass"
+status = "done"
+category = "chore"

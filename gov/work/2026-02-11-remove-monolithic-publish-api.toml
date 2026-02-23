@@ -1,0 +1,27 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-11-004"
+title = "remove monolithic publish API"
+status = "done"
+created = "2026-02-11"
+started = "2026-02-11"
+completed = "2026-02-11"
+refs = ["RFC-0002"]
+
+[content]
+description = "Complete RFC-0002 migration by deleting legacy monolithic adapter publish API and enforcing staged publish hooks across all adapters."
+
+[[content.acceptance_criteria]]
+text = "PlatformAdapter trait removes monolithic publish method"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "All adapters publish only via finalize_payload and publish_payload"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "cargo check, tests, and govctl check pass"
+status = "done"
+category = "chore"

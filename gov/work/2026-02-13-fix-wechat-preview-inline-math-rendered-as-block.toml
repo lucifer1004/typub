@@ -1,0 +1,19 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-011"
+title = "fix wechat preview inline math rendered as block"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = """
+Fix inline math in WeChat preview being rendered as block-level elements.
+Add CSS styles for .svg-inline and .svg-block classes in _base.css to ensure
+inline math displays inline with text and block math is centered."""
+
+[[content.acceptance_criteria]]
+text = "Inline math renders inline in wechat preview"
+status = "done"
+category = "fixed"

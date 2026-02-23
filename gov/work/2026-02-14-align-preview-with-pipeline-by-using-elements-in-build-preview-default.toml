@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-14-002"
+title = "align preview with pipeline by using elements in build_preview default"
+status = "done"
+created = "2026-02-14"
+started = "2026-02-14"
+completed = "2026-02-14"
+
+[content]
+description = "Align preview with pipeline execution by removing deprecated preview() method and updating build_preview() default implementation to use pipeline-processed elements. This eliminates divergence between preview and publish output by ensuring both use the same pipeline stages 2-5."
+
+[[content.acceptance_criteria]]
+text = "build_preview default uses pipeline elements"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "preview() method removed from trait"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "all tests pass"
+status = "done"
+category = "chore"

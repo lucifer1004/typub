@@ -1,0 +1,55 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-007"
+title = "Implement AST-through pipeline behavior"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = [
+    "RFC-0002",
+    "RFC-0004",
+]
+
+[content]
+description = "Move serialization logic from Specialize to Serialize stage. Materialize modifies AST nodes. No string processing until Stage 8."
+
+[[content.acceptance_criteria]]
+text = "Specialize stages collect metadata only, no string serialization"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Shared resolve_asset_urls() modifies AST in Materialize"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Hashnode/Devto implement serialize_payload (AST→Markdown)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "WordPress implements serialize_payload (AST→HTML)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Notion implements serialize_payload (AST→blocks)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Confluence implements serialize_payload (AST→storage format)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "All existing tests pass"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

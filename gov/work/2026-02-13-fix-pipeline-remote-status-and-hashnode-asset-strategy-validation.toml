@@ -1,0 +1,26 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-13-025"
+title = "fix pipeline remote_status and hashnode asset strategy validation"
+status = "done"
+created = "2026-02-13"
+started = "2026-02-13"
+completed = "2026-02-13"
+
+[content]
+description = "Fix pipeline remote_status determination to use lifecycle action instead of hardcoded logic. Remove Hashnode Copy and Embed strategy code paths that are not in the supported asset strategy list, ensuring consistent validation."
+
+[[content.acceptance_criteria]]
+text = "Pipeline uses lifecycle action to determine correct remote_status"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Hashnode Copy strategy code path (not in supported list)"
+status = "done"
+category = "removed"
+
+[[content.acceptance_criteria]]
+text = "Hashnode Embed strategy code path (not in supported list)"
+status = "done"
+category = "removed"

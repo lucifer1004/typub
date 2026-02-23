@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-GOALS",
+  "title": "Goals and Non-Goals",
+  "kind": "informative",
+  "status": "active",
+  "text": "Goals:\n- A clear authoring-to-publish flow centered on local files.\n- Platform adapters that preserve core intent while allowing target-specific output constraints.\n- Governance readiness so future implementation RFCs can reference [[RFC-0001]] as baseline intent.\n\nNon-goals:\n- Becoming a hosted CMS.\n- Enforcing identical output semantics across all publishing targets.\n- Abstracting away every platform limitation at the cost of architectural clarity.\n\nForward references:\nFuture normative RFCs SHOULD reference [[RFC-0001]] for product alignment and define concrete MUST/SHOULD/MAY requirements at the feature level.",
+  "since": "0.1.0"
+}

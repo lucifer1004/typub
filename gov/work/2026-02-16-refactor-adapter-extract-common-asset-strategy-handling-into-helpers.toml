@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-16-001"
+title = "refactor(adapter): extract common asset strategy handling into helpers"
+status = "done"
+created = "2026-02-16"
+started = "2026-02-16"
+completed = "2026-02-16"
+
+[content]
+description = "Extract common asset strategy handling logic into centralized helper functions in typub-adapters-core to reduce code duplication across adapters."
+
+[[content.acceptance_criteria]]
+text = "Add prepare_deferred_assets helper in typub-adapters-core"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Add materialize_and_resolve_urls helper in typub-adapters-core"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Remove duplicate render_config_for from ghost/wordpress/notion"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Update adapters to use new helpers"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "All tests and clippy pass"
+status = "done"
+category = "chore"

@@ -1,0 +1,8 @@
+adr/
+!adr/
+adr/*
+!adr/README.md
+work/
+book/
+CHANGELOG.md
+SUMMARY.md

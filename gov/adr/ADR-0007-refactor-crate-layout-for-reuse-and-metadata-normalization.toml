@@ -1,0 +1,49 @@
+[govctl]
+schema = 1
+id = "ADR-0007"
+title = "refactor crate layout for reuse and metadata normalization"
+status = "accepted"
+date = "2026-02-15"
+refs = ["ADR-0003"]
+
+[content]
+context = """
+## Context
+We are restructuring the typub workspace to maximize reuse of internal crates outside the project while reducing duplication and dependency tangles. Current functionality such as project root/path utilities, internal link rewriting, asset AST processing, and taxonomy handling are split across `typub-engine`, `typub-storage`, and `typub-adapters-core`, causing overlap and limiting reuse.
+
+### Problem Statement
+We need a clearer crate layout and ownership boundaries so that reusable capabilities can be extracted as independent crates, and metadata handling can evolve beyond taxonomy into a unified normalization layer. The current taxonomy logic exists in both `typub-engine` and `typub-adapters-core`, and asset/path/link logic is duplicated across multiple crates.
+
+### Constraints
+- Avoid circular dependencies (e.g., `config` ↔ `theme`).
+- Reusable crates must remain “pure”: no UI, no runtime initialization, no project-specific I/O.
+- The refactor must preserve existing runtime behavior for engine, CLI, and TUI.
+
+### Options Considered
+- Keep current structure and only clean up duplication in-place.
+- Extract minimal new crates for project/path, link rewriting, and asset AST processing, and centralize metadata normalization in adapters-core.
+- Move everything into `typub-core` (rejected due to high coupling risk)."""
+decision = """
+Describe the decision that was made.
+What is the change that we're proposing and/or doing?"""
+consequences = """
+### Positive
+- Reusable crates can be published or consumed outside typub with minimal dependencies.
+- Metadata handling becomes consistent and extensible beyond taxonomy.
+- Reduced duplication across engine/storage/adapters improves maintainability.
+
+### Negative
+- API renames (`taxonomy` → `metadata`) require refactors across call sites.
+- Short-term churn: module moves and dependency updates across multiple crates.
+- Potential migration complexity for existing adapters (mitigation: mechanical rename + compiler-guided updates).
+
+### Neutral
+- Engine behavior should remain the same; only structure and ownership change."""
+
+[[content.alternatives]]
+text = "Keep current structure with localized cleanups: Rejected; does not improve reuse boundaries or remove duplication."
+status = "considered"
+
+[[content.alternatives]]
+text = "Move all shared logic into typub-core: Rejected; creates a high-coupling core and increases cycle risk."
+status = "considered"

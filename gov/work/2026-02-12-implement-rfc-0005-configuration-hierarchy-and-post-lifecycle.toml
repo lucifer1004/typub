@@ -1,0 +1,52 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-12-018"
+title = "Implement RFC-0005: configuration hierarchy and post lifecycle"
+status = "done"
+created = "2026-02-12"
+started = "2026-02-12"
+completed = "2026-02-12"
+refs = ["RFC-0005"]
+
+[content]
+description = """Implement RFC-0005: configuration hierarchy and post lifecycle."""
+
+[[content.acceptance_criteria]]
+text = "DraftSupport enum and extend AdapterCapability"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "published field to Config, PlatformConfig, ContentMeta, PostPlatformConfig"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "resolve_published() with 5-level fallback chain"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "data integrity guard for remote_status"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "determine_lifecycle_action() implementing decision table"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Hashnode adapter lifecycle support with publishDraft mutation"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Dev.to, Ghost, WordPress, Confluence adapter lifecycle support"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"

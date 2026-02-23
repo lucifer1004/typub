@@ -1,0 +1,73 @@
+[govctl]
+schema = 1
+id = "ADR-0011"
+title = "Unify image types to inline-only representation"
+status = "accepted"
+date = "2026-02-19"
+refs = ["ADR-0008"]
+
+[content]
+context = """
+Per [[ADR-0008]], the codebase has four image-related variants:
+- `HtmlElement::Image` — block-level resolved image
+- `HtmlElement::ImageMarker` — block-level pending image
+- `InlineFragment::InlineImage` — inline resolved image
+- `InlineFragment::ImageMarker` — inline pending image
+
+This creates redundancy: the same image data is represented in two places (HtmlElement vs InlineFragment).
+
+### Problem Statement
+
+The block/inline distinction for images is a rendering concern, not a content concern. In HTML, `<img>` is always an inline element — the "block-level" appearance comes from the container (e.g., `<p><img></p>`), not the image itself.
+
+Maintaining separate types for block and inline images:
+1. Duplicates code and logic
+2. Requires adapters to handle both variants
+3. Mixes content representation with presentation concerns
+
+### Constraints
+
+- [[ADR-0008]] established the ImageMarker pattern for deferred upload
+- Adapters (Notion, Confluence) have different handling for block vs inline images
+
+### Options Considered
+
+1. **Keep current design** — 4 variants, explicit block/inline
+2. **Unify to inline-only** — Remove HtmlElement Image variants, detect single-image paragraphs at render time"""
+decision = """
+We will **remove `HtmlElement::Image` and `HtmlElement::ImageMarker` variants** and unify image representation to inline-only because:
+
+1. **Single source of truth:** Images are always represented as `InlineFragment::InlineImage` or `InlineFragment::ImageMarker`
+2. **Separation of concerns:** IR represents content; adapters decide presentation (block vs inline rendering)
+3. **Simpler parsing:** Standalone `<img>` elements parse as `Paragraph { fragments: [InlineImage] }`
+
+### Implementation Notes
+
+**Parsing changes:**
+- Remove `parse_image()` function from `blocks.rs`
+- `<img>` at block level becomes `Paragraph` with single `InlineImage`
+
+**Adapter changes:**
+- Add helper function `is_single_image_paragraph(fragments: &[InlineFragment]) -> bool`
+- Notion: Single-image paragraph → image block
+- Confluence: Single-image paragraph → `<ac:image>` block
+- HTML: All images render as `<img>`"""
+consequences = """
+### Positive
+
+- Simpler type system: 2 image variants instead of 4
+- Clear separation: IR for content, adapters for presentation
+- Easier maintenance: Single code path for image handling
+
+### Negative
+
+- Adapters need to detect single-image paragraphs for special rendering (mitigation: provide helper function in adapters-core)
+- Breaking change to IR structure (mitigation: we explicitly allow breaking changes per task description)
+
+### Neutral
+
+- Standalone `<img>` HTML produces `Paragraph` instead of `Image` element"""
+
+[[content.alternatives]]
+text = "Keep 4 variants: Explicit block/inline distinction. Rejected: Adds unnecessary complexity, mixes content and presentation concerns."
+status = "considered"

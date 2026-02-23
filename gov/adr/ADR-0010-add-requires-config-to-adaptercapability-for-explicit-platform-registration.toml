@@ -1,0 +1,43 @@
+[govctl]
+schema = 1
+id = "ADR-0010"
+title = "add requires_config to AdapterCapability for explicit platform registration"
+status = "accepted"
+date = "2026-02-18"
+refs = ["RFC-0006"]
+
+[content]
+context = """
+Currently, all adapters require explicit configuration in `typub.toml` to be available for use. This creates friction for local-output adapters like `astro`, `static`, and `xiaohongshu` that don't need any external credentials or settings - they can work with sensible defaults immediately.
+
+Previously, `AdapterRegistry::new` only registered adapters where the platform config had `enabled = true`. This meant users had to add `[platforms.astro]` and `enabled = true` to their config just to use local-output adapters.
+
+Per [[ADR-0009]], we split the output adapters into astro (markdown with frontmatter) and static (HTML). Both are local-output adapters that don't require external service configuration."""
+decision = """
+Add a `requires_config: bool` field to `AdapterCapability`:
+
+1. Field definition in `AdapterCapability` struct:
+   - `requires_config: bool` - indicates whether the platform requires configuration in `typub.toml`
+
+2. Platform classification:
+   - `requires_config = false`: astro, static, xiaohongshu, all copypaste profiles
+   - `requires_config = true`: devto, ghost, wordpress, hashnode, confluence, notion
+
+3. Updated `AdapterRegistry::new` logic:
+   - For `requires_config = true` adapters: only register if config exists AND is enabled
+   - For `requires_config = false` adapters: register by default, unless explicitly disabled
+
+This allows users to run `typub publish -p astro` or `typub publish -p static` without any configuration in `typub.toml`."""
+consequences = """
+**Benefits:**
+- Zero-config local output: `typub publish -p static` works immediately
+- Clear separation between platforms needing credentials vs pure local output
+- Users can still explicitly disable local adapters if needed
+
+**Drawbacks:**
+- One more field to maintain in `AdapterCapability`
+- Breaking change: all adapter definitions must include `requires_config`
+
+**Migration:**
+- This is a breaking change for the adapter capability struct
+- All existing adapter configs must be updated to include the new field"""

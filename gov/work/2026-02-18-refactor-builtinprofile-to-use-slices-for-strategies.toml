@@ -1,0 +1,36 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-18-002"
+title = "refactor BuiltinProfile to use slices for strategies"
+status = "done"
+created = "2026-02-18"
+started = "2026-02-18"
+completed = "2026-02-18"
+
+[content]
+description = "Refactor BuiltinProfile to use slices (asset_strategies, math_delimiters, math_renderings) where the first element is the default, matching the pattern used in AdapterCapability. This allows future configuration override at multiple layers."
+
+[[content.acceptance_criteria]]
+text = "Add helper methods default_xxx() for slices"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "govctl check passes"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "Change BuiltinProfile asset_strategy to asset_strategies slice"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Change BuiltinProfile math_rendering to math_renderings slice"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Change BuiltinProfile math_delimiters to math_delimiters slice"
+status = "done"
+category = "changed"

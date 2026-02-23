@@ -1,0 +1,8 @@
+{
+  "clause_id": "C-ERROR-SEMANTICS",
+  "title": "Error Semantics",
+  "kind": "normative",
+  "status": "active",
+  "text": "The system MUST provide clear, actionable error messages for external storage failures.\n\n**Configuration errors:**\nWhen storage configuration is missing or invalid, the error MUST:\n- Identify which configuration field is missing or invalid.\n- Indicate whether the error is at global or platform-specific scope.\n- Suggest corrective action (for example, \"set S3_ACCESS_KEY_ID environment variable or add access_key_id to storage configuration\").\n\n**Upload errors:**\nWhen an asset upload fails, the error MUST:\n- Identify the local asset path that failed.\n- Include the underlying storage service error message.\n- Indicate whether the failure is retryable (for example, network timeout vs. access denied).\n\n**Credential errors:**\nWhen storage credentials are rejected, the error MUST NOT expose credential values. The error SHOULD indicate which credential source was used (environment variable or configuration file).\n\n**Rationale:** Clear error messages reduce debugging time and prevent users from publishing with broken images.",
+  "since": "0.1.0"
+}
