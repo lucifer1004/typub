@@ -10,14 +10,7 @@ This guide walks you through installing typub and publishing your first content.
 ## Installation
 
 ```bash
-# From crates.io (when published)
-cargo install typub
-
-# Or build from source
-git clone https://github.com/lucifer1004/typub
-cd typub
-cargo build --release
-# Binary at ./target/release/typub
+cargo install --git https://github.com/lucifer1004/typub
 ```
 
 ## Initialize a Content Project

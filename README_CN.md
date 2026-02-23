@@ -12,6 +12,23 @@
 
 typub 是一个以 Typst 为优先、支持多平台的发布工具。
 
+## 用户基础
+
+### 安装
+
+```bash
+cargo install --git https://github.com/lucifer1004/typub
+```
+
+### 最小流程
+
+```bash
+typub init
+typub new "My Post"
+typub dev posts/my-post -p ghost
+typub publish posts/my-post -p ghost
+```
+
 ## 核心特性
 
 ### 🎯 以 Typst 为主，兼容 Markdown
@@ -117,23 +134,6 @@ typub tui
 - 开发流程：`DEVELOPING_GUIDE.md`
 - 贡献者规范：`CLAUDE.md`
 - 规范和架构：`docs/rfc/` 和 `docs/adr/`
-
-## 用户基础
-
-### 安装
-
-```bash
-cargo install typub
-```
-
-### 最小流程
-
-```bash
-typub init
-typub new "我的文章"
-typub dev posts/my-post -p ghost
-typub publish posts/my-post -p ghost
-```
 
 ## 高级功能
 

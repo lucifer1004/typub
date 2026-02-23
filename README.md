@@ -12,6 +12,23 @@
 
 typub is a Typst-first, multi-platform publishing tool.
 
+## User Basics
+
+### Install
+
+```bash
+cargo install --git https://github.com/lucifer1004/typub
+```
+
+### Minimal flow
+
+```bash
+typub init
+typub new "My Post"
+typub dev posts/my-post -p ghost
+typub publish posts/my-post -p ghost
+```
+
 ## Key Features
 
 ### 🎯 Typst-first with Markdown-compatibility
@@ -117,23 +134,6 @@ Manage configuration with 5-level resolution priority (highest to lowest):
 - Development workflow: `DEVELOPING_GUIDE.md`
 - Agent/contributor guardrails: `CLAUDE.md`
 - Specifications and architecture: `docs/rfc/` and `docs/adr/`
-
-## User Basics
-
-### Install
-
-```bash
-cargo install typub
-```
-
-### Minimal flow
-
-```bash
-typub init
-typub new "My Post"
-typub dev posts/my-post -p ghost
-typub publish posts/my-post -p ghost
-```
 
 ## User Advanced Features
 
