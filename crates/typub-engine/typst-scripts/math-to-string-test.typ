@@ -26,11 +26,11 @@
 // 3. Fractions (math.frac)
 // ============================================================================
 
-#assert(math-to-string($a/b$) == "(a)/(b)", message: "frac: simple")
-#assert(math-to-string($1/2$) == "(1)/(2)", message: "frac: numbers")
+#assert(math-to-string($a/b$) == "a/b", message: "frac: simple")
+#assert(math-to-string($1/2$) == "1/2", message: "frac: numbers")
 #assert(math-to-string($(a+b)/(c-d)$) == "(a+b)/(c−d)", message: "frac: expressions")
-#assert(math-to-string($(a/b)/c$) == "((a)/(b))/(c)", message: "frac: nested left")
-#assert(math-to-string($a/(b/c)$) == "(a)/((b)/(c))", message: "frac: nested right")
+#assert(math-to-string($(a/b)/c$) == "(a/b)/c", message: "frac: nested left")
+#assert(math-to-string($a/(b/c)$) == "a/(b/c)", message: "frac: nested right")
 
 // ============================================================================
 // 4. Subscript and Superscript (math.attach)
@@ -56,7 +56,9 @@
 // 6. LR Delimiters (math.lr)
 // ============================================================================
 
-#assert(math-to-string($lr( a + b )$) == "a + b", message: "lr: parens")
+#assert(math-to-string($lr(a + b)$) == "a + b", message: "lr: parens")
+#assert(math-to-string($lr(a+b)^2$) == "(a+b)^2", message: "lr: avoid double parens on attach")
+#assert(math-to-string($(a+b)^2$) == "(a+b)^2", message: "explicit parens: avoid double wrapping")
 
 // ============================================================================
 // 7. Vector/Matrix (math.vec, math.mat)
