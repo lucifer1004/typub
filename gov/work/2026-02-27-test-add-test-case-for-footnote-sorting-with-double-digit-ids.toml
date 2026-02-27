@@ -2,16 +2,15 @@
 schema = 1
 id = "WI-2026-02-27-002"
 title = "test: add test case for footnote sorting with double-digit IDs"
-status = "active"
+status = "done"
 created = "2026-02-27"
 started = "2026-02-27"
+completed = "2026-02-27"
 
 [content]
-description = """
-Describe the work to be done.
-What is the goal? What are the acceptance criteria?"""
+description = "Add test case to verify footnote sorting with double-digit IDs (1, 2, 10, 11, 12) works correctly after the fix."
 
 [[content.acceptance_criteria]]
 text = "Test case added for footnote sorting with double-digit IDs"
-status = "pending"
-category = "added"
+status = "done"
+category = "chore"
