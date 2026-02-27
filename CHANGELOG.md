@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- FootnoteId changed to numeric type for correct sorting (WI-2026-02-27-001)
+
 ## [0.1.0] - 2026-02-23
 
 ### Added

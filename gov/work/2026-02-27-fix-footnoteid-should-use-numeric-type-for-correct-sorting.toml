@@ -1,0 +1,18 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-27-001"
+title = "fix: FootnoteId should use numeric type for correct sorting"
+status = "done"
+created = "2026-02-27"
+started = "2026-02-27"
+completed = "2026-02-27"
+
+[content]
+description = """
+Originally, FootnoteId is String and the sorting is incorrect, leading to mismatched links.
+We now change to numeric ID to provider stable and correct sorting."""
+
+[[content.acceptance_criteria]]
+text = "FootnoteId changed to numeric type for correct sorting"
+status = "done"
+category = "fixed"

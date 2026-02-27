@@ -111,6 +111,6 @@ fn parse_anchor_doc_noteref_becomes_footnote_ref() {
     assert!(
         content
             .iter()
-            .any(|inline| matches!(inline, Inline::FootnoteRef(id) if id.0 == "1"))
+            .any(|inline| matches!(inline, Inline::FootnoteRef(id) if id.0 == 1))
     );
 }

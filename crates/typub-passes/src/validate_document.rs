@@ -294,7 +294,7 @@ mod tests {
     #[test]
     fn validate_document_rejects_missing_footnote_ref() {
         let doc = empty_doc(vec![Block::Paragraph {
-            content: vec![Inline::FootnoteRef(FootnoteId("missing".to_string()))],
+            content: vec![Inline::FootnoteRef(FootnoteId(999))],
             attrs: BlockAttrs::default(),
         }]);
         assert!(validate_document(&doc).is_err());

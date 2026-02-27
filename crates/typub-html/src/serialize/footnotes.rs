@@ -12,15 +12,15 @@ pub(super) fn serialize_footnotes(
 
     out.push_str("<section class=\"footnotes\"><ol>");
     for (id, def) in footnotes {
-        let id_escaped = escape_html_attr(&id.0);
-        out.push_str(&format!("<li id=\"fn-{}\">", id_escaped));
+        let id_str = id.0.to_string();
+        out.push_str(&format!("<li id=\"fn-{}\">", id_str));
         if has_footnote_backlink(def, id) {
             serialize_blocks(ctx, &def.blocks, out);
         } else if let Some(blocks) = append_backlink_to_last_paragraph(def, id) {
             serialize_blocks(ctx, &blocks, out);
         } else {
             serialize_blocks(ctx, &def.blocks, out);
-            out.push_str(&format!("<a href=\"#fnref-{}\">↩</a>", id_escaped));
+            out.push_str(&format!("<a href=\"#fnref-{}\">↩</a>", id_str));
         }
         out.push_str("</li>");
     }

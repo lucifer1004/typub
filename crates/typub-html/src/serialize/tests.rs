@@ -457,7 +457,7 @@ fn serialize_definition_list_paragraph_fallback_preserves_inline_markup() {
 fn serialize_footnotes_and_refs() {
     let mut footnotes = BTreeMap::new();
     footnotes.insert(
-        typub_ir::FootnoteId("1".to_string()),
+        typub_ir::FootnoteId(1),
         FootnoteDef {
             blocks: vec![Block::Paragraph {
                 content: vec![Inline::Text("note".to_string())],
@@ -467,7 +467,7 @@ fn serialize_footnotes_and_refs() {
     );
     let doc = Document {
         blocks: vec![Block::Paragraph {
-            content: vec![Inline::FootnoteRef(typub_ir::FootnoteId("1".to_string()))],
+            content: vec![Inline::FootnoteRef(typub_ir::FootnoteId(1))],
             attrs: BlockAttrs::default(),
         }],
         footnotes,
@@ -486,7 +486,7 @@ fn serialize_footnotes_and_refs() {
 fn serialize_footnotes_does_not_duplicate_existing_backlink() {
     let mut footnotes = BTreeMap::new();
     footnotes.insert(
-        typub_ir::FootnoteId("1".to_string()),
+        typub_ir::FootnoteId(1),
         FootnoteDef {
             blocks: vec![Block::Paragraph {
                 content: vec![

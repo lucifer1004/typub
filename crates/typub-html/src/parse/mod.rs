@@ -377,8 +377,11 @@ pub(crate) fn parse_footnote_container(el: ElementRef<'_>, ctx: &mut ParseCtx) -
                     if footnote_id.is_empty() {
                         continue;
                     }
+                    let Some(id_num) = footnote_id.parse::<u64>().ok() else {
+                        continue;
+                    };
                     ctx.footnotes
-                        .insert(FootnoteId(footnote_id), FootnoteDef { blocks });
+                        .insert(FootnoteId(id_num), FootnoteDef { blocks });
                     extracted_any = true;
                 }
             }
@@ -397,8 +400,11 @@ pub(crate) fn parse_footnote_container(el: ElementRef<'_>, ctx: &mut ParseCtx) -
         && let Some(id) = id_attr.strip_prefix("fn-")
     {
         let blocks = blocks::parse_child_blocks(el, ctx)?;
+        let Some(id_num) = id.parse::<u64>().ok() else {
+            return Ok(false);
+        };
         ctx.footnotes
-            .insert(FootnoteId(id.to_string()), FootnoteDef { blocks });
+            .insert(FootnoteId(id_num), FootnoteDef { blocks });
         return Ok(true);
     }
 

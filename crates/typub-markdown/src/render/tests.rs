@@ -679,18 +679,18 @@ fn test_footnote_reference_matches_definition_name() {
     let mut doc = document(vec![Block::Paragraph {
         content: vec![
             Inline::Text("note".to_string()),
-            Inline::FootnoteRef(FootnoteId("a".to_string())),
+            Inline::FootnoteRef(FootnoteId(1)),
         ],
         attrs: BlockAttrs::default(),
     }]);
     doc.footnotes.insert(
-        FootnoteId("a".to_string()),
+        FootnoteId(1),
         FootnoteDef {
             blocks: vec![paragraph_text("footnote body")],
         },
     );
     let md = render_doc(&doc);
-    assert_eq!(md, "note[^fn:a]\n\n[^fn:a]:\n    footnote body");
+    assert_eq!(md, "note[^fn:1]\n\n[^fn:1]:\n    footnote body");
 }
 
 #[test]

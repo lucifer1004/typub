@@ -15,7 +15,7 @@ pub(super) fn inline_text(inlines: &[Inline]) -> String {
                 out.push_str(&inline_text(content))
             }
             Inline::Image { alt, .. } => out.push_str(alt),
-            Inline::FootnoteRef(id) => out.push_str(&id.0),
+            Inline::FootnoteRef(id) => out.push_str(&format!("[{}]", id.0)),
             Inline::MathInline { .. } => out.push_str("[math]"),
             Inline::SvgInline { .. } => out.push_str("[svg]"),
             Inline::UnknownInline { content, .. } => out.push_str(&inline_text(content)),

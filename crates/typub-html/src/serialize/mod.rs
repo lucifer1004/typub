@@ -72,7 +72,7 @@ pub fn inlines_text(inlines: &[Inline]) -> String {
             Inline::Image { alt, .. } => out.push_str(alt),
             Inline::FootnoteRef(id) => {
                 out.push('[');
-                out.push_str(&id.0);
+                out.push_str(&id.0.to_string());
                 out.push(']');
             }
             Inline::MathInline { math, .. } => out.push_str(&math_source_text(&math.src)),
@@ -540,10 +540,10 @@ fn serialize_inline(ctx: &SerializeCtx<'_>, inline: &Inline) -> String {
             attrs,
         } => serialize_image_inline(ctx, asset, alt, title.as_deref(), attrs),
         Inline::FootnoteRef(id) => {
-            let escaped = escape_html_attr(&id.0);
+            let id_str = id.0.to_string();
             format!(
                 "<sup><a href=\"#fn-{}\" id=\"fnref-{}\">[{}]</a></sup>",
-                escaped, escaped, escaped
+                id_str, id_str, id_str
             )
         }
         Inline::MathInline { math, attrs } => serialize_math_inline(ctx, math, attrs),

@@ -417,11 +417,10 @@ fn render_inline(inline: &Inline, ctx: &RenderCtx<'_>) -> String {
             title,
             attrs,
         } => render_image_inline(asset, alt, title.as_deref(), attrs, ctx),
-        Inline::FootnoteRef(id) => format!(
-            "<sup><a href=\"\\#fn-{}\">[{}]</a></sup>",
-            escape_html_attr(&id.0),
-            escape_html_text(&id.0)
-        ),
+        Inline::FootnoteRef(id) => {
+            let id_str = id.0.to_string();
+            format!("<sup><a href=\"\\#fn-{}\">[{}]</a></sup>", id_str, id_str)
+        }
         Inline::MathInline { math, .. } | Inline::SvgInline { svg: math, .. } => {
             render_math_inline(math, ctx).unwrap_or_default()
         }
@@ -731,11 +730,10 @@ fn render_footnote(
     ctx: &RenderCtx<'_>,
     out: &mut String,
 ) {
-    let id_attr = escape_html_attr(&id.0);
-    let id_text = escape_html_text(&id.0);
+    let id_str = id.0.to_string();
 
     if definition.blocks.is_empty() {
-        out.push_str(&format!(r#"<p id="fn-{id_attr}">[{id_text}]</p>"#));
+        out.push_str(&format!(r#"<p id="fn-{id_str}">[{id_str}]</p>"#));
         return;
     }
 
@@ -743,13 +741,13 @@ fn render_footnote(
         match first {
             Block::Paragraph { content, .. } | Block::Heading { content, .. } => {
                 out.push_str(&format!(
-                    r#"<p id="fn-{id_attr}">[{id_text}] {}</p>"#,
+                    r#"<p id="fn-{id_str}">[{id_str}] {}</p>"#,
                     render_inlines(content, ctx)
                 ));
                 render_blocks(&definition.blocks[1..], ctx, out);
             }
             _ => {
-                out.push_str(&format!(r#"<p id="fn-{id_attr}">[{id_text}]</p>"#));
+                out.push_str(&format!(r#"<p id="fn-{id_str}">[{id_str}]</p>"#));
                 render_blocks(&definition.blocks, ctx, out);
             }
         }
@@ -1088,20 +1086,18 @@ mod tests {
 
     #[test]
     fn footnote_does_not_wrap_block_html_inside_paragraph() {
-        let mut doc = document(vec![paragraph(vec![Inline::FootnoteRef(FootnoteId(
-            "f1".to_string(),
-        ))])]);
+        let mut doc = document(vec![paragraph(vec![Inline::FootnoteRef(FootnoteId(1))])]);
         doc.footnotes.insert(
-            FootnoteId("f1".to_string()),
+            FootnoteId(1),
             FootnoteDef {
                 blocks: vec![paragraph_text("first line"), bullet_list_text(&["item"])],
             },
         );
 
         let html = to_html(&doc);
-        assert!(html.contains(r#"<p id="fn-f1">[f1] first line</p>"#));
+        assert!(html.contains(r#"<p id="fn-1">[1] first line</p>"#));
         assert!(html.contains("<ul><li>item</li></ul>"));
-        assert!(!html.contains(r#"<p id="fn-f1">[f1] <p>"#));
+        assert!(!html.contains(r#"<p id="fn-1">[1] <p>"#));
     }
 
     #[test]

@@ -428,7 +428,7 @@ pub(crate) mod test_fixtures {
         let svg = fixture_svg();
         let mut footnotes = BTreeMap::new();
         footnotes.insert(
-            FootnoteId("f1".to_string()),
+            FootnoteId(1),
             FootnoteDef {
                 blocks: vec![Block::Paragraph {
                     content: vec![Inline::SvgInline {

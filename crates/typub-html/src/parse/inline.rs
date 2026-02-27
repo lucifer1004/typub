@@ -154,6 +154,11 @@ fn parse_styled(el: ElementRef, ctx: &mut ParseCtx, style: TextStyle) -> InlineS
     }]
 }
 
+fn parse_footnote_id_str(s: &str) -> Option<FootnoteId> {
+    let num = s.parse::<u64>().ok()?;
+    Some(FootnoteId(num))
+}
+
 fn parse_footnote_ref_from_sup(el: ElementRef<'_>) -> Option<FootnoteId> {
     let mut footnote_id: Option<FootnoteId> = None;
 
@@ -181,7 +186,7 @@ fn parse_footnote_ref_from_sup(el: ElementRef<'_>) -> Option<FootnoteId> {
                 if id.is_empty() {
                     return None;
                 }
-                footnote_id = Some(FootnoteId(id.to_string()));
+                footnote_id = parse_footnote_id_str(id);
             }
             _ => return None,
         }
@@ -198,7 +203,7 @@ fn parse_footnote_ref_from_anchor(el: ElementRef<'_>) -> Option<FootnoteId> {
 
     let text = el.text().collect::<String>();
     if let Some(label) = normalize_footnote_label(&text) {
-        return Some(FootnoteId(label));
+        return parse_footnote_id_str(&label);
     }
 
     let href = el.value().attr("href")?;
@@ -206,7 +211,7 @@ fn parse_footnote_ref_from_anchor(el: ElementRef<'_>) -> Option<FootnoteId> {
         if id.is_empty() {
             None
         } else {
-            Some(FootnoteId(id.to_string()))
+            parse_footnote_id_str(id)
         }
     } else {
         None

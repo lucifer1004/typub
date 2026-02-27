@@ -20,8 +20,30 @@ pub fn empty_map() -> AttrMap {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct AnchorId(pub String);
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub struct FootnoteId(pub String);
+/// Footnote identifier using numeric type for correct sorting.
+/// Serializes as string for JSON compatibility (e.g., "1" instead of 1).
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct FootnoteId(pub u64);
+
+impl Serialize for FootnoteId {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.0.to_string())
+    }
+}
+
+impl<'de> Deserialize<'de> for FootnoteId {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        let num = s.parse::<u64>().map_err(de::Error::custom)?;
+        Ok(FootnoteId(num))
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct AssetId(pub String);

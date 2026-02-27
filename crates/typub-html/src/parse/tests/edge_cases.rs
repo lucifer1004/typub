@@ -123,12 +123,12 @@ fn parse_footnote_section_into_document_footnotes() {
     assert!(
         content
             .iter()
-            .any(|inline| matches!(inline, Inline::FootnoteRef(id) if id.0 == "1"))
+            .any(|inline| matches!(inline, Inline::FootnoteRef(id) if id.0 == 1))
     );
     assert_eq!(doc.footnotes.len(), 1);
     let def = doc
         .footnotes
-        .get(&typub_ir::FootnoteId("1".to_string()))
+        .get(&typub_ir::FootnoteId(1))
         .expect("footnote 1");
     assert!(!def.blocks.is_empty());
 }
@@ -140,7 +140,7 @@ fn parse_nested_footnote_container_into_document_footnotes() {
     assert_eq!(doc.footnotes.len(), 1);
     let def = doc
         .footnotes
-        .get(&typub_ir::FootnoteId("2".to_string()))
+        .get(&typub_ir::FootnoteId(2))
         .expect("footnote 2");
     assert!(!def.blocks.is_empty());
     assert!(doc.blocks.is_empty());
@@ -170,13 +170,13 @@ fn parse_doc_endnotes_section_into_document_footnotes() {
     assert!(
         content
             .iter()
-            .any(|inline| matches!(inline, Inline::FootnoteRef(id) if id.0 == "1"))
+            .any(|inline| matches!(inline, Inline::FootnoteRef(id) if id.0 == 1))
     );
 
     assert_eq!(doc.footnotes.len(), 1);
     let def = doc
         .footnotes
-        .get(&typub_ir::FootnoteId("1".to_string()))
+        .get(&typub_ir::FootnoteId(1))
         .expect("footnote 1");
     assert!(!def.blocks.is_empty());
     assert!(!footnote_blocks_contain_doc_backlink(&def.blocks));
