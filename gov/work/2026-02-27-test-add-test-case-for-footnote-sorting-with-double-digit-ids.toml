@@ -1,0 +1,17 @@
+[govctl]
+schema = 1
+id = "WI-2026-02-27-002"
+title = "test: add test case for footnote sorting with double-digit IDs"
+status = "active"
+created = "2026-02-27"
+started = "2026-02-27"
+
+[content]
+description = """
+Describe the work to be done.
+What is the goal? What are the acceptance criteria?"""
+
+[[content.acceptance_criteria]]
+text = "Test case added for footnote sorting with double-digit IDs"
+status = "pending"
+category = "added"

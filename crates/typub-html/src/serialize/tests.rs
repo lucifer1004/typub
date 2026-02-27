@@ -602,3 +602,58 @@ fn serialize_numbered_list_honors_item_value_override() {
     let html = document_to_html(&doc);
     assert!(html.contains("<li value=\"5\">five</li>"));
 }
+
+#[test]
+fn serialize_footnote_sorting_with_double_digit_ids() {
+    // Test that footnotes are sorted numerically, not lexicographically.
+    // Before the fix, "10" < "2" in string comparison, causing wrong order.
+    // After the fix, 10 > 2 in numeric comparison, giving correct order.
+    let mut footnotes = BTreeMap::new();
+
+    // Create footnotes with IDs that would sort incorrectly as strings
+    // String sort: 1, 10, 11, 12, 2, 3, ... (WRONG)
+    // Numeric sort: 1, 2, 3, ..., 10, 11, 12 (CORRECT)
+    for id in [1, 2, 3, 10, 11, 12] {
+        footnotes.insert(
+            typub_ir::FootnoteId(id),
+            FootnoteDef {
+                blocks: vec![Block::Paragraph {
+                    content: vec![Inline::Text(format!("footnote {id}"))],
+                    attrs: BlockAttrs::default(),
+                }],
+            },
+        );
+    }
+
+    let doc = Document {
+        blocks: Vec::new(),
+        footnotes,
+        assets: BTreeMap::new(),
+        meta: Default::default(),
+    };
+
+    let html = document_to_html(&doc);
+
+    // Verify footnotes appear in correct numeric order
+    // Find positions of each footnote ID in the output
+    let pos_1 = html.find("id=\"fn-1\"").expect("fn-1 should exist");
+    let pos_2 = html.find("id=\"fn-2\"").expect("fn-2 should exist");
+    let pos_3 = html.find("id=\"fn-3\"").expect("fn-3 should exist");
+    let pos_10 = html.find("id=\"fn-10\"").expect("fn-10 should exist");
+    let pos_11 = html.find("id=\"fn-11\"").expect("fn-11 should exist");
+    let pos_12 = html.find("id=\"fn-12\"").expect("fn-12 should exist");
+
+    // With numeric sorting: 1 < 2 < 3 < 10 < 11 < 12
+    assert!(pos_1 < pos_2, "fn-1 should come before fn-2");
+    assert!(pos_2 < pos_3, "fn-2 should come before fn-3");
+    assert!(pos_3 < pos_10, "fn-3 should come before fn-10");
+    assert!(pos_10 < pos_11, "fn-10 should come before fn-11");
+    assert!(pos_11 < pos_12, "fn-11 should come before fn-12");
+
+    // Explicitly verify the bug is fixed: fn-2 should come BEFORE fn-10
+    // (With string sorting, "10" < "2", so fn-10 would incorrectly come before fn-2)
+    assert!(
+        pos_2 < pos_10,
+        "fn-2 should come before fn-10 (verifies numeric sorting, not string sorting)"
+    );
+}
