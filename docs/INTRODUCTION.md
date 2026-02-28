@@ -66,7 +66,7 @@ See [Adapters](./guide/adapters.md) for setup model and [Platforms](./guide/plat
 
 ```bash
 # Install
-cargo install --git https://github.com/lucifer1004/typub
+cargo install typub
 
 # Initialize a content project
 typub init

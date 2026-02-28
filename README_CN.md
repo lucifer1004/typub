@@ -30,7 +30,7 @@ cargo install typst
 ### 安装
 
 ```bash
-cargo install --git https://github.com/lucifer1004/typub
+cargo install typub
 ```
 
 ### 最小流程

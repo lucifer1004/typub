@@ -30,7 +30,7 @@ cargo install typst
 ### Install
 
 ```bash
-cargo install --git https://github.com/lucifer1004/typub
+cargo install typub
 ```
 
 ### Minimal flow

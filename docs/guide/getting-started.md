@@ -10,7 +10,7 @@ This guide walks you through installing typub and publishing your first content.
 ## Installation
 
 ```bash
-cargo install --git https://github.com/lucifer1004/typub
+cargo install typub
 ```
 
 ## Initialize a Content Project
