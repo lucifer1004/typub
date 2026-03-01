@@ -26,3 +26,4 @@ LOCAL_DEVELOPMENT.md
 .govctl.lock
 /*.typ
 .claude/settings.local.json
+.omc

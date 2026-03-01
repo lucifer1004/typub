@@ -1,0 +1,18 @@
+[govctl]
+schema = 1
+id = "WI-2026-03-01-001"
+title = "Restrict debug-stage option to dev/pub commands only"
+status = "done"
+created = "2026-03-01"
+started = "2026-03-01"
+completed = "2026-03-01"
+
+[content]
+description = """
+Describe the work to be done.
+What is the goal? What are the acceptance criteria?"""
+
+[[content.acceptance_criteria]]
+text = "debug_stage moved from global Cli to Dev and Publish subcommands only"
+status = "done"
+category = "chore"

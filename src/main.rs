@@ -38,11 +38,6 @@ struct Cli {
     #[arg(short, long, global = true)]
     verbose: bool,
 
-    /// Dump intermediate output after specified stage (for debugging)
-    /// Valid values: 1-10, or resolve/render/parse/transform/specialize/provision/materialize/serialize/publish/persist
-    #[arg(short = 'D', long, global = true, value_name = "STAGE")]
-    debug_stage: Option<String>,
-
     #[command(subcommand)]
     command: Commands,
 }
@@ -118,6 +113,11 @@ EXAMPLES:
         /// Port for dev server (default: random available)
         #[arg(long, default_value = "0")]
         port: u16,
+
+        /// Dump intermediate output after specified stage (for debugging)
+        /// Valid values: 1-10, or resolve/render/parse/transform/specialize/provision/materialize/serialize/publish/persist
+        #[arg(short = 'D', long, value_name = "STAGE")]
+        debug_stage: Option<String>,
     },
 
     /// Publish a post to platform(s)
@@ -149,6 +149,11 @@ EXAMPLES:
         /// Force publish even if content hasn't changed
         #[arg(short, long)]
         force: bool,
+
+        /// Dump intermediate output after specified stage (for debugging)
+        /// Valid values: 1-10, or resolve/render/parse/transform/specialize/provision/materialize/serialize/publish/persist
+        #[arg(short = 'D', long, value_name = "STAGE")]
+        debug_stage: Option<String>,
     },
 
     /// Show detailed publish status for a single post
@@ -186,18 +191,6 @@ async fn run() -> Result<()> {
 
     // Initialize UI with verbose setting
     ui::init(cli.verbose);
-
-    // Parse debug stage option
-    let debug_stage =
-        cli.debug_stage
-            .as_ref()
-            .and_then(|s| match s.parse::<typub_engine::PipelineStage>() {
-                Ok(stage) => Some(stage),
-                Err(_) => {
-                    ui::warn(&format!("Unknown debug stage: {}, ignoring", s));
-                    None
-                }
-            });
 
     // Handle init command separately (doesn't need config)
     if let Commands::Init { path } = &cli.command {
@@ -247,7 +240,9 @@ async fn run() -> Result<()> {
             path,
             platform,
             port,
+            debug_stage,
         } => {
+            let debug_stage = parse_debug_stage(debug_stage.as_deref());
             cmd_dev(&config, &project_root, &path, &platform, port, debug_stage).await?;
         }
         Commands::Publish {
@@ -255,7 +250,9 @@ async fn run() -> Result<()> {
             platform,
             dry_run,
             force,
+            debug_stage,
         } => {
+            let debug_stage = parse_debug_stage(debug_stage.as_deref());
             cmd_publish(
                 &config,
                 &project_root,
@@ -546,6 +543,16 @@ fn warn_metadata_compatibility(content: &content::Content, platform_id: &str) {
     for warning in metadata_validation_warnings(content, platform_id) {
         ui::warn(&warning);
     }
+}
+
+fn parse_debug_stage(s: Option<&str>) -> Option<typub_engine::PipelineStage> {
+    s.and_then(|s| match s.parse::<typub_engine::PipelineStage>() {
+        Ok(stage) => Some(stage),
+        Err(_) => {
+            ui::warn(&format!("Unknown debug stage: {}, ignoring", s));
+            None
+        }
+    })
 }
 
 async fn cmd_dev(
