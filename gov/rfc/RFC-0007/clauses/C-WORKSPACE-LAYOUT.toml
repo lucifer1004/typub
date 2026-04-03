@@ -1,0 +1,39 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-WORKSPACE-LAYOUT"
+title = "Workspace Layout"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The workspace MUST include the following crates:
+
+- `typub` — main CLI binary
+- `typub-core` — capability types (existing)
+- `typub-html` — HTML parsing/serialization (existing)
+- `typub-adapters-core` — shared adapter abstractions (new)
+
+Adapter crates MUST follow the naming convention `typub-adapter-{platform_id}`.
+
+Adapter crates SHOULD be placed under `crates/adapters/` to group related crates:
+
+```
+crates/
+├── typub-core/
+├── typub-html/
+├── typub-adapters-core/
+└── adapters/
+    ├── typub-adapter-ghost/
+    ├── typub-adapter-notion/
+    └── ...
+```
+
+The workspace `Cargo.toml` MUST list all adapter crates as members.
+
+New first-party adapters MAY be added without modifying this RFC, provided they follow the naming convention and placement guidelines above.
+
+**Rationale:**
+Consistent naming enables tooling and documentation automation. The `crates/adapters/` subdirectory groups related crates without polluting the top-level. Pattern-based rules avoid RFC churn when adding new adapters."""

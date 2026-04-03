@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-005"
 title = "Complete RFC-0004 materialize_payload integration"
 status = "done"

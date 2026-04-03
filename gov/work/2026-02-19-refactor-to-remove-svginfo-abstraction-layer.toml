@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-19-003"
 title = "Refactor to remove SvgInfo abstraction layer"
 status = "done"

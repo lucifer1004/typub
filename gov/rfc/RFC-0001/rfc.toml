@@ -1,0 +1,28 @@
+#:schema ../../schema/rfc.schema.json
+
+[govctl]
+id = "RFC-0001"
+title = "typub: a typst-first local cms"
+version = "0.1.0"
+status = "normative"
+phase = "stable"
+owners = ["@lucifer1004"]
+created = "2026-02-11"
+updated = "2026-02-11"
+
+[[sections]]
+title = "Summary"
+clauses = [
+    "clauses/C-SUMMARY.toml",
+    "clauses/C-VISION.toml",
+    "clauses/C-GOALS.toml",
+]
+
+[[sections]]
+title = "Specification"
+clauses = ["clauses/C-SPEC-PLACEHOLDER.toml"]
+
+[[changelog]]
+version = "0.1.0"
+date = "2026-02-11"
+notes = "Initial draft"

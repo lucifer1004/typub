@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-15-008"
 title = "refactor workspace for reusable crates and metadata normalization"
 status = "done"

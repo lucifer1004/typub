@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-19-005"
 title = "feat(cli): add --debug-stage to dump pipeline intermediate results"
 status = "done"

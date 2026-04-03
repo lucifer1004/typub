@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-019"
 title = "extract html_utils into typub-html subcrate with workspace dependencies"
 status = "done"

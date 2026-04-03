@@ -1,0 +1,25 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-FEATURE-GATES"
+title = "Feature Gates"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+Adapter feature gates in the main `typub` crate are OPTIONAL.
+
+Implementations MAY use Cargo features to control first-party adapter inclusion, but this RFC does not require a specific feature matrix (for example `adapter-all` / `adapter-{platform}`) for conformance.
+
+If feature gates are used, the implementation MUST ensure:
+1. Disabled adapters are not registered at runtime.
+2. Enabled adapters preserve the same runtime semantics as non-feature-gated builds.
+
+If feature gates are not used, the default runtime path MUST still support selective adapter activation via platform configuration (`enabled = true/false`) and adapter `requires_config` semantics.
+
+A build with no optional adapter features enabled (when such features exist) SHOULD still compile and provide non-adapter CLI commands (`--help`, `--version`). Commands requiring unavailable adapters MUST fail with a clear diagnostic.
+
+**Rationale:**
+The current implementation relies primarily on runtime registration/activation semantics. Making feature gates optional avoids constraining implementation to one packaging strategy while preserving behavior guarantees."""

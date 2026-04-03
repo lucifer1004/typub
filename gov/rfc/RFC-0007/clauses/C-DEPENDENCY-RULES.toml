@@ -1,0 +1,36 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-DEPENDENCY-RULES"
+title = "Dependency Rules"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The following dependency rules MUST be enforced:
+
+**Allowed dependencies:**
+
+| Crate | May depend on |
+|-------|---------------|
+| `typub-core` | (none in workspace) |
+| `typub-html` | `typub-core` |
+| `typub-adapters-core` | `typub-core`, `typub-html` |
+| `typub-adapter-*` | `typub-adapters-core` |
+| `typub` (main) | all of the above |
+
+Adapter crates SHOULD depend only on `typub-adapters-core`, which re-exports needed types from `typub-core` and `typub-html`. Direct dependencies on `typub-core` or `typub-html` MAY be added only when adapter-specific needs require types not re-exported by `typub-adapters-core`.
+
+**Forbidden dependencies:**
+
+| Crate | MUST NOT depend on |
+|-------|-------------------|
+| `typub-core` | any other workspace crate |
+| `typub-html` | `typub-adapters-core`, `typub-adapter-*`, `typub` |
+| `typub-adapters-core` | `typub-adapter-*`, `typub` |
+| `typub-adapter-*` | `typub`, other `typub-adapter-*` crates |
+
+**Rationale:**
+Strict layering prevents circular dependencies and ensures adapter crates can compile without the full CLI. No adapter should depend on another adapter to maintain isolation. Preferring `typub-adapters-core` avoids redundant dependency declarations."""

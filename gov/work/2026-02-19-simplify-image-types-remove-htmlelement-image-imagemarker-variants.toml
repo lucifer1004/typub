@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-19-001"
 title = "Simplify image types: remove HtmlElement::Image/ImageMarker variants"
 status = "done"

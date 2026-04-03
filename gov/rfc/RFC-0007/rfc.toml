@@ -1,0 +1,49 @@
+#:schema ../../schema/rfc.schema.json
+
+[govctl]
+id = "RFC-0007"
+title = "adapter workspace subcrates"
+version = "0.1.2"
+status = "normative"
+phase = "impl"
+owners = ["@lucifer1004"]
+created = "2026-02-14"
+updated = "2026-02-22"
+refs = ["RFC-0006"]
+signature = "215021d0378f10e798119c459aa0c2846c62fa947d80e6e604d14821aea037f8"
+
+[[sections]]
+title = "Summary"
+clauses = ["clauses/C-SUMMARY.toml"]
+
+[[sections]]
+title = "Specification"
+clauses = [
+    "clauses/C-WORKSPACE-LAYOUT.toml",
+    "clauses/C-SHARED-TYPES.toml",
+    "clauses/C-ADAPTER-CRATE.toml",
+    "clauses/C-DEPENDENCY-RULES.toml",
+    "clauses/C-FEATURE-GATES.toml",
+    "clauses/C-RFC-0006-COMPAT.toml",
+]
+
+[[changelog]]
+version = "0.1.2"
+date = "2026-02-22"
+notes = "Make adapter feature-gate model optional"
+added = [
+    "Relax C-FEATURE-GATES from mandatory adapter-all matrix to optional build strategy",
+    "Update RFC-0006 compatibility clause to behavior-based compatibility",
+]
+
+[[changelog]]
+version = "0.1.1"
+date = "2026-02-21"
+notes = "Adapter wording alignment"
+added = ["Replace remaining AST wording with semantic IR terminology in adapter crate responsibilities"]
+
+[[changelog]]
+version = "0.1.0"
+date = "2026-02-14"
+notes = "Initial draft"
+added = ["Resolve versioning contradiction; loosen workspace layout clause"]

@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-14-003"
 title = "adapter extension API for third-party adapters"
 status = "done"

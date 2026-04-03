@@ -7,9 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- ResolvedConfig struct with all resolvable fields (WI-2026-02-13-003)
+- ResolvedConfig::resolve() implements 4-level chain for all fields (WI-2026-02-13-003)
+- Unit tests for ResolvedConfig resolution (WI-2026-02-13-003)
+
+### Changed
+
+- Remove standalone `resolve_*` functions, use `ResolvedConfig` (WI-2026-02-13-003)
+- Pipeline and adapters use ResolvedConfig instead of ad-hoc resolution (WI-2026-02-13-003)
+
 ### Fixed
 
+- StorageConfig correctly merges global and per-platform config (WI-2026-02-13-003)
 - FootnoteId changed to numeric type for correct sorting (WI-2026-02-27-001)
+- resolve_platform_field implements 4-layer resolution for platform-specific fields (WI-2026-04-04-001)
 
 ## [0.1.0] - 2026-02-23
 

@@ -1,0 +1,23 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-RAW-UNKNOWN-POLICY"
+title = "Raw and Unknown handling policy"
+kind = "normative"
+status = "active"
+since = "0.2.0"
+
+[content]
+text = """
+The IR MUST distinguish Raw nodes from Unknown nodes. Raw nodes carry literal source payload under explicit trust/origin metadata. Unknown nodes represent unmodeled structures without implicit execution.
+
+Each adapter MUST provide a machine-readable Raw/Unknown policy declaration in its capability declaration surface.
+
+The declared policy MUST include, at minimum, one action for each category (`Raw`, `Unknown`) from this closed set: `pass`, `sanitize`, `drop`, `error`.
+
+Validation timing requirements:
+1. Adapter registration/loading MUST fail if the declaration is missing or contains invalid actions.
+2. Publish-time adapter selection MUST fail if no valid declaration is available for the selected adapter.
+3. CI/governance checks MUST verify declaration presence for first-party adapters.
+
+Adapter execution MUST apply the declared policy consistently."""

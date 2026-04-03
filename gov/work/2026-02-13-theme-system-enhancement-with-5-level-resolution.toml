@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-001"
 title = "Theme system enhancement with 5-level resolution"
 status = "done"

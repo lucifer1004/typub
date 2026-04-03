@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-016"
 title = "Fix image_as_marker for External asset strategy"
 status = "done"

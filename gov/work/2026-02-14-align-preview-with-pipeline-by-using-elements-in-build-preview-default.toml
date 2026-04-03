@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-14-002"
 title = "align preview with pipeline by using elements in build_preview default"
 status = "done"

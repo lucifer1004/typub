@@ -303,6 +303,42 @@ impl ResolvedConfig {
     }
 }
 
+/// Resolve a platform-specific string field using 4-layer resolution.
+///
+/// Implements [[RFC-0005:C-RESOLUTION-ORDER]]:
+/// 1. `meta.toml[platforms.<platform>].{field}` — per-content platform-specific
+/// 2. `meta.toml.{field}` — per-content default (not applicable for most platform-specific fields)
+/// 3. `typub.toml[platforms.<platform>].{field}` — global platform-specific
+/// 4. `typub.toml.{field}` — global default (not applicable for most platform-specific fields)
+/// 5. `default` — caller-provided default
+///
+/// This function is used by adapters to resolve fields like `space`, `parent_id`,
+/// `slug`, `subtitle`, etc. that are specific to a platform but may be overridden
+/// at the post level.
+pub fn resolve_platform_field(
+    content: &Content,
+    platform: &str,
+    config: &Config,
+    field: &str,
+    default: Option<String>,
+) -> Option<String> {
+    // Layer 1: meta.toml[platforms.<platform>].{field} (via extra)
+    content
+        .platform_config(platform)
+        .and_then(|c| c.get_str(field))
+        // Layer 2: not applicable (no per-content default for platform-specific fields)
+        // Layer 3: typub.toml[platforms.<platform>].{field}
+        .or_else(|| {
+            config
+                .platforms
+                .get(platform)
+                .and_then(|p| p.get_str(field))
+        })
+        // Layer 4: not applicable (no global default for platform-specific fields)
+        // Layer 5: caller-provided default
+        .or(default)
+}
+
 fn parse_asset_strategy(platform: &str, strategy: &str) -> Result<AssetStrategy> {
     AssetStrategy::parse(strategy).ok_or_else(|| {
         anyhow::anyhow!(
@@ -781,5 +817,109 @@ mod tests {
         let err = ResolvedConfig::resolve(&content, "wechat", &config, defaults)
             .expect_err("invalid node_policy should error");
         assert!(err.to_string().contains("invalid value"));
+    }
+
+    // --- resolve_platform_field tests ---
+
+    #[test]
+    fn test_resolve_platform_field_layer_1_post_platform_specific() {
+        let mut post_extra = HashMap::new();
+        post_extra.insert(
+            "space".to_string(),
+            toml::Value::String("POSTSPACE".to_string()),
+        );
+        let mut post_platforms = HashMap::new();
+        post_platforms.insert(
+            "confluence".to_string(),
+            make_post_platform_config(None, None, post_extra),
+        );
+        let content = make_content(None, None, None, post_platforms);
+
+        let mut global_extra = HashMap::new();
+        global_extra.insert(
+            "space".to_string(),
+            toml::Value::String("GLOBALSPACE".to_string()),
+        );
+        let mut global_platforms = HashMap::new();
+        global_platforms.insert(
+            "confluence".to_string(),
+            PlatformConfig {
+                enabled: true,
+                asset_strategy: None,
+                published: None,
+                theme: None,
+                internal_link_target: None,
+                math_rendering: None,
+                math_delimiters: None,
+                extra: global_extra,
+            },
+        );
+        let config = Config {
+            platforms: global_platforms,
+            ..Default::default()
+        };
+
+        // Layer 1 should win
+        let result = resolve_platform_field(&content, "confluence", &config, "space", None);
+        assert_eq!(result, Some("POSTSPACE".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_platform_field_layer_3_global_platform_specific() {
+        let content = make_content(None, None, None, HashMap::new());
+
+        let mut global_extra = HashMap::new();
+        global_extra.insert(
+            "space".to_string(),
+            toml::Value::String("GLOBALSPACE".to_string()),
+        );
+        let mut global_platforms = HashMap::new();
+        global_platforms.insert(
+            "confluence".to_string(),
+            PlatformConfig {
+                enabled: true,
+                asset_strategy: None,
+                published: None,
+                theme: None,
+                internal_link_target: None,
+                math_rendering: None,
+                math_delimiters: None,
+                extra: global_extra,
+            },
+        );
+        let config = Config {
+            platforms: global_platforms,
+            ..Default::default()
+        };
+
+        // Layer 3 should be used when Layer 1 is not set
+        let result = resolve_platform_field(&content, "confluence", &config, "space", None);
+        assert_eq!(result, Some("GLOBALSPACE".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_platform_field_layer_5_default() {
+        let content = make_content(None, None, None, HashMap::new());
+        let config = Config::default();
+
+        // Layer 5 (caller default) should be used when no config is found
+        let result = resolve_platform_field(
+            &content,
+            "confluence",
+            &config,
+            "space",
+            Some("DEFAULT".to_string()),
+        );
+        assert_eq!(result, Some("DEFAULT".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_platform_field_none_when_not_found() {
+        let content = make_content(None, None, None, HashMap::new());
+        let config = Config::default();
+
+        // Should return None when field is not found at any layer and no default
+        let result = resolve_platform_field(&content, "confluence", &config, "space", None);
+        assert_eq!(result, None);
     }
 }

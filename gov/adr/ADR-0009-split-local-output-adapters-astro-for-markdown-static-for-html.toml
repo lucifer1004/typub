@@ -1,5 +1,6 @@
+#:schema ../schema/adr.schema.json
+
 [govctl]
-schema = 1
 id = "ADR-0009"
 title = "split local output adapters: astro for markdown, static for html"
 status = "accepted"

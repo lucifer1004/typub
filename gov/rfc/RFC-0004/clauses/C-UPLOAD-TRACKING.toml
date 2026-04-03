@@ -1,0 +1,80 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-UPLOAD-TRACKING"
+title = "Asset Upload Tracking"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The system MUST persist asset upload records in local storage to enable caching and deduplication.
+
+**Two-index model:**
+The system MUST maintain two logical indices:
+1. **Content index:** `(storage_config_id, content_hash, extension)` → `(remote_key, remote_url)`. This enables cross-path deduplication for files with identical content and extension.
+2. **Path index:** `(local_path, storage_config_id)` → `(content_hash, extension)`. This tracks the last-uploaded state for each local path.
+
+**Record fields:**
+Each upload record MUST include at minimum:
+- Local asset path (relative to content directory).
+- Content hash of the uploaded file (SHA-256, lowercase hex, 64 characters).
+- Normalized extension (lowercase, alphanumeric only, or empty string).
+- Remote object key.
+- Public URL of the uploaded asset.
+- Upload timestamp.
+- Storage configuration identifier (as defined in [[RFC-0004:C-STORAGE-CONFIG]]).
+
+**Caching semantics:**
+Before uploading an asset, the system MUST:
+1. Compute the content hash of the local file.
+2. Compute the normalized extension (see below).
+3. Check the content index for `(storage_config_id, content_hash, extension)`:
+   - If found, reuse the existing `remote_url` without uploading. Update the path index.
+   - If not found, proceed to upload.
+4. After successful upload, atomically persist to both indices.
+
+**Per-asset atomicity:**
+Each successful asset upload MUST be persisted atomically and independently. A failure uploading asset N MUST NOT roll back records for assets 1 through N-1.
+
+This enables efficient retry: on retry, already-uploaded assets are skipped via the content index lookup.
+
+**Extension normalization:**
+The extension MUST be normalized as follows:
+1. Extract the file extension from the original filename (characters after the last `.`).
+2. Convert to lowercase.
+3. Remove all characters not matching `[a-z0-9]`.
+4. If the result is empty (no extension, or all characters removed), use empty string.
+
+Examples:
+- `image.PNG` → `png`
+- `photo.JPEG` → `jpeg`
+- `data.tar.gz` → `gz`
+- `README` → `` (empty)
+- `file.MP3!` → `mp3`
+- `weird.???` → `` (empty, all invalid)
+
+**Object key format:**
+The remote object key MUST be constructed as:
+- If extension is non-empty: `{content_hash}.{extension}`
+- If extension is empty: `{content_hash}`
+
+Where:
+- `content_hash` is the lowercase hex-encoded SHA-256 hash of the file content (64 characters).
+- `extension` is the normalized extension (lowercase alphanumeric only).
+
+Examples:
+- `a1b2c3d4...64chars.png`
+- `e5f6a7b8...64chars.jpg`
+- `f9a8b7c6...64chars` (no extension)
+
+This format is purely content-addressable. Identical content with identical normalized extension MUST produce the same remote object key, regardless of original filename or path.
+
+**Overwrite semantics:**
+Because object keys are derived from content hash, the key itself proves content identity. If the remote object already exists with the same key:
+1. The upload operation SHOULD succeed idempotently (overwrite or no-op).
+2. The system MUST treat `AlreadyExists`, `PreconditionFailed`, or equivalent responses as success.
+3. No remote content verification is required; the content-addressable key guarantees equivalence.
+
+**Rationale:** Including extension in the content index key ensures that identical bytes with different file types (for example, a file served as both `.bin` and `.dat`) are stored separately, preserving MIME type inference from extension. The two-index model separates concerns: content deduplication uses hash+extension lookup, while path tracking enables efficient change detection. Per-asset persistence avoids redundant uploads on retry without requiring cleanup of partial remote state. Content-addressable keys eliminate the need for remote checksum verification."""

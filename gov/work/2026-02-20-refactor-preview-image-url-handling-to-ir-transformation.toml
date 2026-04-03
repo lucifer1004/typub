@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-20-001"
 title = "Refactor preview image URL handling to IR transformation"
 status = "done"

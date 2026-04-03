@@ -1,0 +1,24 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-MATH-MODEL"
+title = "Math must use explicit inline/block nodes"
+kind = "normative"
+status = "active"
+since = "0.2.0"
+
+[content]
+text = """
+Math MUST be represented by explicit inline and block math node variants. Implementations MUST NOT infer block math from structural heuristics such as a paragraph containing a single SVG fragment.
+
+Math nodes MUST remain semantically distinct from non-math SVG nodes. Implementations MUST NOT classify generic SVG graphics as math for pipeline convenience.
+
+Math nodes MAY carry canonical source. When canonical source is present, it MUST include explicit source kind (`Typst` or `LaTeX`) and source text.
+
+Math nodes MUST carry at least one of:
+1. Canonical source.
+2. Rendered payload.
+
+Rendered math payloads MAY be carried as optional derived cache/enrich data, but only if they satisfy [[RFC-0009:C-SEMANTIC-BOUNDARY]] (optional, droppable, and non-semantic for equivalence/validation).
+
+Binary rendered payloads (for example PNG) MUST be represented through asset references resolved via `Document.assets`, not as inline strategy-specific transport encodings in semantic math nodes."""

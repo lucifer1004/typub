@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-DETERMINISM",
-  "title": "Deterministic normalization requirements",
-  "kind": "normative",
-  "status": "active",
-  "text": "IR production and serialization MUST be deterministic for identical inputs and configuration.\n\nImplementations MUST canonicalize ordered collections where semantic order is not input-dependent, including passthrough attribute maps and style sets.\n\nFor IR v2, a style set is the value carried by inline styled content to represent one or more text styles. Canonicalization requirements for style sets are:\n1. Deduplicate styles by style identity.\n2. Serialize styles in this canonical order: `Bold`, `Italic`, `Strikethrough`, `Underline`, `Mark`, `Superscript`, `Subscript`, `Kbd`.\n3. Preserve equivalence such that semantically identical style sets produce byte-identical conformance serialization.\n\nNon-deterministic map iteration in conformance output is prohibited.",
-  "since": "0.2.0"
-}

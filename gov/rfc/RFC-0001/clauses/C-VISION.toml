@@ -1,0 +1,31 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-VISION"
+title = "Product Vision"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+Typub is intended to be treated as a writing system first and a distribution system second.
+
+Vision pillars:
+1. Typst-first authoring
+   - Typst is the primary source format.
+   - Markdown support exists for interoperability, not as the design center.
+
+2. Local-first ownership
+   - Content, metadata, assets, and publish status remain local project artifacts.
+   - Platform integrations are adapters, not sources of truth.
+
+3. Multi-platform by composition
+   - A single source post can be transformed and published to multiple targets through adapter boundaries.
+   - Platform divergence is expected and should be isolated behind adapter contracts.
+
+4. Deterministic pipeline
+   - Rendering, transformation, and publish steps should remain auditable and reproducible from repository state.
+
+Rationale:
+This direction aligns typub with long-lived technical writing workflows where files, version control, and portability matter more than SaaS-native editing UX."""

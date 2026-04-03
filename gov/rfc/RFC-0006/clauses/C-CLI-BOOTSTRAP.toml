@@ -1,0 +1,26 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-CLI-BOOTSTRAP"
+title = "CLI Bootstrap Hook"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The CLI MUST initialize adapter availability before command dispatch.
+
+Bootstrap MUST:
+1. Construct the first-party adapter registry from configured platforms.
+2. Ensure platform capability lookup is available for selected targets.
+3. Pass the resulting registry into pipeline execution.
+
+Implementations MAY support additional extension bootstrap hooks (for example registrar-based extension crates), but such hooks are OPTIONAL in this RFC revision.
+
+When extensions are enabled, bootstrap MUST preserve first-party behavior for unchanged platform IDs.
+
+The CLI MUST operate correctly when only first-party adapters are present.
+
+**Rationale:**
+This reflects the current production path and keeps extension wiring as an optional, non-blocking capability."""

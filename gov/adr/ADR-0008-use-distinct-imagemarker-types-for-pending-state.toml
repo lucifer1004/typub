@@ -1,5 +1,6 @@
+#:schema ../schema/adr.schema.json
+
 [govctl]
-schema = 1
 id = "ADR-0008"
 title = "Use distinct ImageMarker types for pending state"
 status = "accepted"

@@ -1,0 +1,95 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-LIFECYCLE-TRANSITIONS"
+title = "Lifecycle Transitions"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+State transitions MUST follow platform-specific rules based on the platform type.
+
+**Platform Classification:**
+
+Platforms are classified into two categories:
+
+1. **API-based platforms**: Platforms with remote APIs (Hashnode, Dev.to, Ghost, WordPress, Confluence, Notion)
+2. **Local output platforms**: Platforms that produce local files or clipboard output (Astro, Xiaohongshu, Copypaste)
+
+---
+
+## Local Output Platform Rules
+
+For local output platforms, the lifecycle decision is trivial:
+
+- The `published` configuration MUST be ignored.
+- The implementation MUST always write/update the local output.
+- No draft/publish lifecycle tracking is applicable.
+- The implementation MAY store a status row for change detection (content_hash).
+
+---
+
+## API-based Platform Rules
+
+For API-based platforms, the implementation MUST apply the following decision logic.
+
+**Precondition check:**
+
+Before applying the decision table, the implementation MUST determine:
+1. `has_remote_object`: Whether `platform_id` is present in the status row
+2. `remote_status`: The stored lifecycle state ("draft" or "published")
+3. `desired_published`: The resolved `published` configuration value per [RFC-0005:C-RESOLUTION-ORDER](../rfc/RFC-0005.md#rfc-0005c-resolution-order)
+4. `draft_support`: The platform's declared `DraftSupport` capability
+
+**Data integrity guard:**
+
+If `has_remote_object = true` and `remote_status` is not one of `{"draft", "published"}`:
+- The implementation MUST fail with a diagnostic error.
+- The error message MUST indicate the invalid `remote_status` value and the affected content/platform.
+- The implementation MUST NOT proceed with any API operation.
+
+This guard ensures corrupted or incomplete status data does not cause undefined behavior.
+
+**Decision Table (API-based platforms only):**
+
+| has_remote_object | remote_status | desired_published | DraftSupport | Action |
+|-------------------|---------------|-------------------|--------------|--------|
+| false | - | true | Any | Create as published |
+| false | - | false | StatusField/SeparateObjects | Create as draft |
+| false | - | false | None | Create as published (ignore config) |
+| true | "published" | true | Any | Update existing published content |
+| true | "published" | false | StatusField { reversible: true } | Update status to draft |
+| true | "published" | false | StatusField { reversible: false } | Warn: cannot unpublish; update content only |
+| true | "published" | false | SeparateObjects | Warn: cannot unpublish; update content only |
+| true | "published" | false | None | Update published content (ignore config) |
+| true | "draft" | true | StatusField | Update status to published |
+| true | "draft" | true | SeparateObjects | Execute publishDraft mutation |
+| true | "draft" | true | None | N/A (None never creates draft) |
+| true | "draft" | false | StatusField/SeparateObjects | Update existing draft content |
+| true | "draft" | false | None | N/A (None never creates draft) |
+
+---
+
+## DraftSupport-specific Behaviors
+
+**DraftSupport::None (API-based):**
+- The `published` configuration MUST be ignored.
+- Content MUST always be created/updated as published.
+- The implementation MUST store `remote_status = "published"` after each operation.
+
+**DraftSupport::StatusField:**
+- If `reversible` is true: Both draft-to-publish and publish-to-draft transitions are permitted.
+- If `reversible` is false: Only draft-to-publish is permitted; publish-to-draft MUST log a warning and update content without changing status.
+
+**DraftSupport::SeparateObjects:**
+- Draft-to-publish: MUST use platform-specific "publish draft" mutation.
+- After successful publish, the implementation MUST:
+  - Update `platform_id` to the new published object ID.
+  - Update `remote_status` to "published".
+  - Update `url` to the public URL.
+- Publish-to-draft: MUST NOT be supported; MUST log a warning and update content without changing status.
+
+**Rationale:**
+Separating local output from API-based platforms eliminates data model confusion. The data integrity guard ensures corrupted status rows cause immediate, diagnosable failures rather than silent misbehavior."""

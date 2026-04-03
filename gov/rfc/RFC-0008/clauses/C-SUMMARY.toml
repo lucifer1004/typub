@@ -1,0 +1,21 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SUMMARY"
+title = "Summary"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+This RFC is deprecated and retained only for historical reference of the pre-v2 IR model.
+
+**Replacement:** [RFC-0009](../rfc/RFC-0009.md) defines the active semantic document IR baseline.
+
+This deprecated RFC previously specified:
+- Block-level element types (`HtmlElement`)
+- Inline fragment types (`InlineFragment`)
+- Legacy list and table auxiliary models
+
+New implementation and governance work MUST target RFC-0009 instead of RFC-0008."""

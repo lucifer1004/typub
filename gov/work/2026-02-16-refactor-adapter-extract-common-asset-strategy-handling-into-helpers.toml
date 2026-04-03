@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-16-001"
 title = "refactor(adapter): extract common asset strategy handling into helpers"
 status = "done"

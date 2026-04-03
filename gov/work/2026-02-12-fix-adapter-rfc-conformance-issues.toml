@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-009"
 title = "Fix adapter RFC conformance issues"
 status = "done"

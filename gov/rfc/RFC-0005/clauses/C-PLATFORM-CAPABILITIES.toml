@@ -1,0 +1,37 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-PLATFORM-CAPABILITIES"
+title = "Platform Capabilities"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+This clause documents the draft support capabilities of each platform adapter.
+
+**API-based platforms:**
+
+| Platform   | DraftSupport                      | Notes                                                    |
+|------------|-----------------------------------|----------------------------------------------------------|
+| Hashnode   | SeparateObjects                   | Draft and Post are different objects with different IDs  |
+| Dev.to     | StatusField { reversible: true }  | Same endpoint, toggle `published` field                  |
+| Ghost      | StatusField { reversible: true }  | Same endpoint, toggle `status` field                     |
+| WordPress  | StatusField { reversible: true }  | Same endpoint, toggle `status` field                     |
+| Confluence | StatusField { reversible: true }  | Uses `?status=draft` and publish via blueprint endpoint  |
+| Notion     | None                              | No draft concept in API                                  |
+
+**Local output platforms:**
+
+| Platform    | DraftSupport | Notes                    |
+|-------------|--------------|--------------------------|
+| Astro       | None         | Local file output        |
+| Xiaohongshu | None         | Local file output        |
+| Copypaste   | None         | Clipboard output         |
+
+**Platform-specific notes:**
+
+- **Hashnode**: Requires `publishDraft` mutation for draft-to-publish. Draft IDs become invalid after publishing.
+- **Confluence**: Drafts accessed via `?status=draft` query parameter. Publish via `PUT /wiki/rest/api/content/blueprint/instance/{draftId}`.
+- **Notion**: Pages are created directly; no draft workflow in the API."""

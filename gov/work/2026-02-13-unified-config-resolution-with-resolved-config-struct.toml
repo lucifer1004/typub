@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-003"
 title = "Unified config resolution with ResolvedConfig struct"
 status = "done"
@@ -62,13 +63,11 @@ category = "fixed"
 [[content.acceptance_criteria]]
 text = "Remove standalone `resolve_*` functions, use `ResolvedConfig`"
 status = "done"
-notes = "Pipeline and adapters use ResolvedConfig. Added themes::load_theme for theme ID + registry lookup."
 category = "changed"
 
 [[content.acceptance_criteria]]
 text = "Pipeline and adapters use ResolvedConfig instead of ad-hoc resolution"
 status = "done"
-notes = "PublishContext now has resolved: ResolvedConfig, set by pipeline at Stage 1. Adapters access via ctx.resolved()."
 category = "changed"
 
 [[content.acceptance_criteria]]

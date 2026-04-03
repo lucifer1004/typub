@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-SHARED-TYPES",
-  "title": "Shared Adapter Types Crate",
-  "kind": "normative",
-  "status": "active",
-  "text": "A new crate `typub-adapters-core` MUST be created to hold shared adapter abstractions.\n\nThis crate MUST export:\n- `PlatformAdapter` trait (moved from `src/adapters/mod.rs`)\n- `AdapterPayload` struct\n- `PublishContext` struct\n- `RenderConfig` struct\n- `OutputFormat` enum\n- `AdapterCapability` struct (with `Cow<'static, str>` fields per [RFC-0006:C-REGISTRAR-API](../rfc/RFC-0006.md#rfc-0006c-registrar-api))\n- `AdapterRegistrar` struct and `AdapterFactory` type alias per [RFC-0006:C-REGISTRAR-API](../rfc/RFC-0006.md#rfc-0006c-registrar-api)\n\nThis crate MUST re-export from dependencies:\n- From `typub-core`: `AssetStrategy`, `MathRendering`, `MathDelimiters`, `DraftSupport`, `CapabilitySupport`, `CapabilityGapBehavior`\n- From semantic IR crate (`typub-html` at present): document IR surface required by adapters, including `Document`, `Block`, and `Inline` (or equivalent top-level semantic IR types defined by current RFC baseline)\n\nThis crate MUST NOT depend on:\n- Main `typub` crate (no circular dependency)\n- Any adapter implementation crate\n\n**Rationale:**\nA shared types crate provides a stable interface that both the main crate and adapter crates depend on. This avoids circular dependencies and enables third-party adapters to compile against a minimal dependency set. Re-exporting semantic document IR types (instead of legacy HTML-structured node vectors) aligns adapter boundaries with semantic IR v2 and reduces duplicated migration logic.",
-  "since": "0.1.0"
-}

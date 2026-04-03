@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-21-002"
 title = "Rename TransformRule to SerializeRule and simplify code_highlight"
 status = "done"

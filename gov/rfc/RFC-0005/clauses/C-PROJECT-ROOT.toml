@@ -1,0 +1,30 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-PROJECT-ROOT"
+title = "Project Root Definition"
+kind = "normative"
+status = "active"
+since = "0.2.0"
+
+[content]
+text = """
+The **project root** is the directory containing `typub.toml`.
+
+All relative paths stored in the status database (`status.db`) MUST be resolved relative to the project root.
+
+The system MUST reject paths that resolve outside the project root with a descriptive error.
+
+**Path normalization for storage:**
+When persisting paths to the status database:
+1. Absolute paths MUST be converted to relative paths (relative to project root).
+2. If the path cannot be expressed as relative to the project root (i.e., the asset is outside the project tree), the system MUST reject the operation with an error.
+3. Relative paths MUST use forward slashes (`/`) as path separators, regardless of operating system.
+4. Relative paths MUST NOT begin with `./` or contain `..` components after normalization.
+
+**Path resolution on read:**
+When reading paths from the status database:
+1. Relative paths MUST be resolved against the project root to obtain absolute paths for file operations.
+2. The resolved path MUST be validated to exist within the project root.
+
+**Rationale:** Storing relative paths enables project portability — the entire project directory (including `typub.toml`, content, and `.typub/status.db`) can be moved, synced, or shared across machines without breaking path references."""

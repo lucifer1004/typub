@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-22-001"
 title = "allow user-defined typst preamble hooks"
 status = "done"

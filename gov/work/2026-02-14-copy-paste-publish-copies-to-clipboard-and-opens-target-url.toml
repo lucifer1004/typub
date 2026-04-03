@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-14-001"
 title = "copy-paste publish copies to clipboard and opens target URL"
 status = "done"

@@ -1,5 +1,6 @@
+#:schema ../schema/adr.schema.json
+
 [govctl]
-schema = 1
 id = "ADR-0012"
 title = "Unify SVG types to inline-only representation"
 status = "accepted"

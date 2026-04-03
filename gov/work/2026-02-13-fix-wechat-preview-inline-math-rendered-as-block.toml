@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-011"
 title = "fix wechat preview inline math rendered as block"
 status = "done"

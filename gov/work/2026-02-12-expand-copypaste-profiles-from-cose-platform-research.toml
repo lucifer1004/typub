@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-002"
 title = "expand copypaste profiles from cose platform research"
 status = "done"

@@ -1,0 +1,96 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-STATUS-TRACKING"
+title = "Status Tracking"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The status database tracks publish results and remote state.
+
+**Schema:**
+
+```sql
+CREATE TABLE IF NOT EXISTS platform_status (
+    slug TEXT NOT NULL,
+    platform TEXT NOT NULL,
+    published INTEGER NOT NULL,
+    url TEXT,
+    platform_id TEXT,
+    published_at TEXT,
+    content_hash TEXT,
+    remote_status TEXT,
+    PRIMARY KEY (slug, platform)
+);
+```
+
+---
+
+## Row Persistence Policy
+
+**API-based platforms:**
+The implementation MUST store a status row for each content item created or updated on an API-based platform. This includes both draft creation/updates and published content creation/updates.
+
+**Local output platforms:**
+The implementation MAY store a status row for change detection purposes. This is OPTIONAL; implementations that do not need content_hash-based change detection are not required to store rows for local output platforms.
+
+---
+
+## Platform-specific Field Semantics
+
+| Field | API-based platforms | Local output platforms |
+|-------|---------------------|------------------------|
+| `platform_id` | Remote object identifier (MUST be set) | NULL (no remote object) |
+| `remote_status` | "draft" or "published" (MUST be set) | NULL (lifecycle not applicable) |
+| `url` | Public URL or draft URL | Local output path or NULL |
+| `content_hash` | Content hash for change detection | Content hash for change detection |
+
+---
+
+## PlatformStatus struct
+
+```rust
+pub struct PlatformStatus {
+    pub published: bool,
+    pub last_publish: Option<PublishResult>,
+    pub content_hash: Option<String>,
+    /// Remote lifecycle state (API-based platforms only).
+    /// - Some("draft"): Content exists as draft
+    /// - Some("published"): Content exists as published
+    /// - None: Local output platform (lifecycle not applicable)
+    pub remote_status: Option<String>,
+}
+```
+
+---
+
+## Persistence Requirements
+
+### API-based Platforms
+
+After each successful operation (create or update, draft or published), the implementation MUST store:
+- `platform_id`: The remote object identifier
+- `remote_status`: "draft" or "published" matching the actual remote state
+- `url`: The public URL (for published) or platform-specific draft URL (for draft)
+- `content_hash`: Hash of the content at time of operation
+
+For `DraftSupport::SeparateObjects`, after a draft-to-publish transition:
+- The implementation MUST update `platform_id` to the new published object ID.
+- The implementation MUST update `remote_status` to "published".
+- The implementation MUST update `url` to the public URL.
+
+### Local Output Platforms
+
+If the implementation chooses to store a status row:
+- `platform_id`: MUST be NULL
+- `remote_status`: MUST be NULL
+- `url`: MAY be the local output path
+- `content_hash`: Hash of the content for change detection
+
+---
+
+**Rationale:**
+API-based platforms require state tracking for correct lifecycle transitions. The row persistence policy explicitly covers both draft and published operations to avoid ambiguity. Local output platforms have no remote state; row storage is optional and only useful for content_hash-based change detection."""

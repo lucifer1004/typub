@@ -1,0 +1,30 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-ASSET-LOCATION"
+title = "Asset Location Constraints"
+kind = "normative"
+status = "active"
+since = "0.2.1"
+
+[content]
+text = """
+All assets referenced in content MUST be located within the project root as defined in [[RFC-0005:C-PROJECT-ROOT]].
+
+**Validation:**
+Before processing an asset, the system MUST verify that:
+1. The asset path resolves to a location within the project root.
+2. The asset file exists and is readable.
+
+If an asset path resolves outside the project root, the system MUST fail with an error that:
+- Identifies the offending asset path.
+- States that assets must be within the project directory.
+- Suggests moving the asset into the project or using a symlink within the project tree.
+
+**Storage:**
+Per [[RFC-0005:C-PROJECT-ROOT]], asset paths stored in the status database MUST be relative to the project root. This enables project portability.
+
+**Rationale:** Constraining assets to the project tree ensures:
+1. The entire project can be moved, synced, or version-controlled as a unit.
+2. Relative paths in the status database remain valid across machines.
+3. No accidental references to system files or files in unrelated directories."""

@@ -124,14 +124,15 @@ pub async fn publish_single_platform(
     helpers::ensure_node_policy_declared(platform_id)?;
 
     // Stage 2 (Render)
-    let rendered = stages::render(adapter, content, platform_id, ctx, renderer).await?;
+    let rendered = stages::render(adapter, content, platform_id, ctx, renderer, config).await?;
     if should_dump(debug_stage, PipelineStage::Render) {
         dump_stage(2, "Render", &rendered);
     }
 
     // Set content info with rendered paths for adapter context
-    let content_info = crate::adapters_impl::content_info_with_platform(content, platform_id)
-        .with_rendered_paths(rendered.paths.clone());
+    let content_info =
+        crate::adapters_impl::content_info_with_platform(content, platform_id, config)
+            .with_rendered_paths(rendered.paths.clone());
     ctx.set_content_info(content_info);
 
     // Stage 3 (Parse)
@@ -222,14 +223,15 @@ pub async fn dry_run_single_platform(
     helpers::ensure_node_policy_declared(platform_id)?;
 
     // Stage 2 (Render)
-    let rendered = stages::render(adapter, content, platform_id, ctx, renderer).await?;
+    let rendered = stages::render(adapter, content, platform_id, ctx, renderer, config).await?;
     if should_dump(debug_stage, PipelineStage::Render) {
         dump_stage(2, "Render", &rendered);
     }
 
     // Set content info with rendered paths for adapter context
-    let content_info = crate::adapters_impl::content_info_with_platform(content, platform_id)
-        .with_rendered_paths(rendered.paths.clone());
+    let content_info =
+        crate::adapters_impl::content_info_with_platform(content, platform_id, config)
+            .with_rendered_paths(rendered.paths.clone());
     ctx.set_content_info(content_info);
 
     // Stage 3 (Parse)
@@ -322,14 +324,15 @@ pub async fn preview_single_platform(
     helpers::ensure_node_policy_declared(platform_id)?;
 
     // Stage 2 (Render)
-    let rendered = stages::render(adapter, content, platform_id, ctx, renderer).await?;
+    let rendered = stages::render(adapter, content, platform_id, ctx, renderer, config).await?;
     if should_dump(debug_stage, PipelineStage::Render) {
         dump_stage(2, "Render", &rendered);
     }
 
     // Set content info with rendered paths for adapter context
-    let content_info = crate::adapters_impl::content_info_with_platform(content, platform_id)
-        .with_rendered_paths(rendered.paths.clone());
+    let content_info =
+        crate::adapters_impl::content_info_with_platform(content, platform_id, config)
+            .with_rendered_paths(rendered.paths.clone());
     ctx.set_content_info(content_info);
 
     // Stage 3 (Parse)

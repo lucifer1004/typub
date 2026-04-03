@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-021"
 title = "TUI: local platform status and platform-aware preview"
 status = "done"

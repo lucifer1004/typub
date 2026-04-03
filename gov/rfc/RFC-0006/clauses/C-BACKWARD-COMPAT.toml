@@ -1,0 +1,39 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-BACKWARD-COMPAT"
+title = "Backward Compatibility"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The adapter extension API MUST NOT introduce breaking changes to:
+
+1. **Configuration semantics:** Existing `typub.toml` platform configurations MUST continue to work without modification.
+
+2. **CLI behavior:** Existing CLI commands (`publish`, `build`, `preview`) MUST produce semantically equivalent results for built-in platforms.
+
+   **Equivalence contract:** Two outputs are semantically equivalent if they match on:
+   - Exit code (success vs failure).
+   - Published content body (ignoring whitespace normalization).
+   - Asset URLs or references (same assets resolved).
+   - Status file updates (same platform status recorded).
+
+   Differences in log output, formatting, and non-functional metadata (timestamps, tool version) are permitted.
+
+3. **PlatformAdapter trait:** Required trait methods MUST NOT be removed or have their signatures changed in incompatible ways. New methods with default implementations MAY be added.
+
+4. **Pipeline contract:** The publish pipeline stages defined in [[RFC-0002]] MUST NOT be modified.
+
+5. **Extension isolation:** The presence of an extension adapter MUST NOT alter the output for platforms that do not use that extension. An extension that registers platform ID "foo" MUST NOT affect the behavior of platform ID "bar".
+
+Error messages for unknown platforms MUST include:
+- The platform ID that was not found.
+- Guidance that registration may be missing (e.g., "not registered" or "may need to be registered").
+
+The exact wording of error messages is not normative.
+
+**Rationale:**
+Users rely on stable configuration and CLI behavior. Breaking changes would force migration effort and risk regressions in production workflows. The equivalence contract provides a testable definition for parity verification."""

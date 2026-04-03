@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-SUMMARY",
-  "title": "Summary",
-  "kind": "informative",
-  "status": "active",
-  "text": "This RFC specifies the extraction of built-in adapters from the main `typub` crate into separate workspace subcrates.\n\n**Scope:**\n- Defines the target workspace layout with adapter subcrates.\n- Specifies the shared adapter types crate (`typub-adapters-core`).\n- Specifies crate boundaries and dependency rules.\n- Specifies feature gates for optional adapter inclusion.\n\n**Out of Scope:**\n- Third-party adapter crates (covered by [[RFC-0006]]).\n- Runtime plugin loading.\n- Migration path from current layout (covered by work items).\n\n**Rationale:**\nThe current monolithic layout has several drawbacks:\n1. All adapters share dependencies, even when only a subset is needed (e.g., Ghost requires JWT crates that others do not).\n2. Adding adapters requires modifying core files (`Adapter` enum, registry factory array).\n3. Compile times scale with total adapter count rather than enabled adapters.\n4. Testing adapters in isolation is difficult.\n\nExtracting adapters into subcrates enables:\n- Feature-gated inclusion for smaller binaries and faster compiles.\n- Cleaner separation of concerns.\n- First-party and third-party adapters follow the same patterns.\n- Independent testing of each adapter.\n\n**References:**\n- [[RFC-0006]] — adapter extension API (defines `AdapterRegistrar`, `External` variant)\n- [[ADR-0002]] — shared types in `typub-core`\n- [[ADR-0003]] — extraction of `typub-html` subcrate",
-  "since": "0.1.0"
-}

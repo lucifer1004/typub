@@ -47,7 +47,7 @@ async-trait = "0.1"
 chrono = { version = "0.4", features = ["serde"] }
 clap = { version = "4", features = ["derive"] }
 comfy-table = "7"
-comrak = { version = "0.50", default-features = false }
+comrak = { version = "0.51", default-features = false }
 crossterm = "0.29"
 css-inline = "0.20"
 dirs = "6"
@@ -65,11 +65,11 @@ open = "5"
 owo-colors = "4"
 ratatui = { version = "0.30" }
 regex = "1"
-relative-path = "1"
+relative-path = "2"
 reqwest = { version = "0.13", features = ["json", "multipart"] }
 rust-s3 = { version = "0.37", default-features = false, features = ["tokio-rustls-tls"] }
-rusqlite = { version = "0.38", features = ["bundled"] }
-scraper = "0.25"
+rusqlite = { version = "0.39", features = ["bundled"] }
+scraper = "0.26"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
@@ -83,7 +83,7 @@ axum = "0.8"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 toml = "1"
-tylax = "0.2"
+tylax = "0.3"
 url = "2"
 urlencoding = "2"
 usvg = "0.47"

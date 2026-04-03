@@ -1,0 +1,70 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-PIPELINE-INTEGRATION"
+title = "Pipeline Integration"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+External asset upload MUST occur during the Materialize stage (Stage 7) as defined in [[RFC-0002:C-PIPELINE-STAGES]].
+
+**Scope:** This clause applies to both `External` and `Upload` asset strategies. Both strategies require deferred asset processing after specialization.
+
+**Semantic IR-centric design:**
+Per [[RFC-0009:C-DOCUMENT-ROOT]] and [[RFC-0009:C-ASSET-REFERENCE]], the publish pipeline maintains a semantic document IR root from Parse through Materialize. Content nodes MUST reference assets by stable asset identifiers. Materialize MUST resolve those identifiers via the document asset index and strategy context, not by replacing inline string placeholders.
+
+**Stage ordering:**
+1. The Specialize stage (Stage 5) MUST produce payload/state containing:
+   - Semantic IR with asset references by stable identifiers.
+   - Pending asset set derived from referenced asset identifiers.
+   - Effective asset strategy configuration.
+2. The Materialize stage (Stage 7) MUST:
+   - Upload assets to storage (external S3 for `External`, platform-native for `Upload`) when required.
+   - Resolve each referenced asset identifier to final delivery metadata (for example remote URL variants) in document asset index and/or specialization context.
+3. The Serialize stage (Stage 8) MUST convert resolved semantic IR to target format.
+4. The Publish stage (Stage 9) MUST receive payload with all required asset references resolved per target policy.
+
+**Shared infrastructure:**
+Implementations SHOULD provide shared utilities for:
+1. Collecting referenced asset identifiers and building pending asset sets during Specialize.
+2. Resolving asset URLs/variants during Materialize.
+3. Serializing resolved semantic IR during Serialize.
+
+**Per-asset processing:**
+For each referenced asset identifier, the system MUST:
+1. Resolve source metadata from the asset index.
+2. For `External` strategy:
+   a. Compute content hash (SHA-256, lowercase hex, 64 characters).
+   b. Compute normalized extension per [[RFC-0004:C-UPLOAD-TRACKING]].
+   c. Check content index for cache hit; upload if not found.
+3. For `Upload` strategy:
+   a. Upload to platform-native storage API.
+4. On successful upload, persist tracking records as appropriate.
+5. Record resolved delivery data so serialization can emit target-consumable references.
+
+The system MAY process assets in any order, including in parallel, provided all required resolutions are completed before Serialize.
+
+**Failure handling:**
+If an asset upload fails during Materialize:
+1. The system MUST NOT proceed to Serialize.
+2. The system MUST surface a descriptive error identifying the failed asset (by identifier and source path when available).
+3. Successfully uploaded assets from the current batch MUST remain in tracking records.
+4. Successfully uploaded assets MAY remain in remote storage.
+
+**Idempotency:**
+Retry of a failed publish operation MUST be safe and efficient. The system MUST:
+1. Skip upload for assets already present in tracking records (for `External`, content index hit).
+2. Handle remote `AlreadyExists` or overwrite responses as success per [[RFC-0004:C-UPLOAD-TRACKING]].
+
+The system is not required to maintain or resume from any particular ordering across retries.
+
+**Preview flow:**
+For preview operations that do not require remote upload:
+1. Materialize MAY resolve asset identifiers to local preview URLs or project-relative references in preview sidecar/context.
+2. Preview-only URLs MUST NOT be committed into IR conformance-surface fields (including persisted `Document.assets` variants used for publish conformance).
+3. Serialize MAY emit preview-compatible references directly from preview sidecar/context or unresolved source metadata when target policy permits.
+
+**Rationale:** Identifier/index-based processing preserves semantic IR purity, avoids string-collision classes of bugs, and keeps materialization deterministic and adapter-agnostic."""

@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-027"
 title = "Refactor math rendering: unify SVG types and cleanup"
 status = "done"

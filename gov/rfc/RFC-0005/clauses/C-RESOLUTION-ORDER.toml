@@ -1,0 +1,83 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-RESOLUTION-ORDER"
+title = "Resolution Order"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+For any configuration key, the implementation MUST resolve values using a 5-level fallback chain:
+
+1. `meta.toml` → `[platforms.<platform_id>].<key>` — per-content platform-specific
+2. `meta.toml` → `<key>` — per-content default
+3. `typub.toml` → `[platforms.<platform_id>].<key>` — global platform-specific
+4. `typub.toml` → `<key>` — global default
+5. Adapter-defined default value
+
+The first non-null value found MUST be used. If no value is found at any level, the adapter-defined default MUST apply.
+
+---
+
+## Resolution Algorithm
+
+```rust
+fn resolve<T>(
+    content_meta: &Meta,
+    platform_id: &str,
+    global_config: &Config,
+    adapter_default: T,
+    key: impl Fn(&PlatformConfig) -> Option<T>,
+    global_key: impl Fn(&Config) -> Option<T>,
+    content_key: impl Fn(&Meta) -> Option<T>,
+) -> T {
+    // Layer 1: per-content platform-specific
+    content_meta.platforms.get(platform_id).and_then(&key)
+        // Layer 2: per-content default
+        .or_else(|| content_key(content_meta))
+        // Layer 3: global platform-specific
+        .or_else(|| global_config.platforms.get(platform_id).and_then(&key))
+        // Layer 4: global default
+        .or_else(|| global_key(global_config))
+        // Layer 5: adapter default
+        .unwrap_or(adapter_default)
+}
+```
+
+---
+
+## Example: Resolving `published` for Hashnode
+
+Given:
+- `meta.toml`: no `[platforms.hashnode]` section, `published = false` at top level
+- `typub.toml`: `[platforms.hashnode].published = true`, no global `published`
+- Adapter default: `true`
+
+Resolution:
+1. Check `meta.toml[platforms.hashnode].published` → not found
+2. Check `meta.toml.published` → **found: `false`** → use this value
+
+Result: `published = false`
+
+---
+
+## Example: Resolving `published` for Dev.to
+
+Given:
+- `meta.toml`: no relevant settings
+- `typub.toml`: `[platforms.devto].published = false`, `published = true` at top level
+- Adapter default: `true`
+
+Resolution:
+1. Check `meta.toml[platforms.devto].published` → not found
+2. Check `meta.toml.published` → not found
+3. Check `typub.toml[platforms.devto].published` → **found: `false`** → use this value
+
+Result: `published = false`
+
+---
+
+**Rationale:**
+The 5-level resolution order follows the principle of specificity: more specific configurations override more general ones. Per-content settings always take precedence over global settings, and platform-specific settings take precedence over general settings within the same scope."""

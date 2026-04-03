@@ -1,0 +1,64 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-CONFIG-LAYERS"
+title = "Configuration Layers"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+typub MUST support a three-layer configuration system:
+
+1. **Global configuration** (`typub.toml`): Project-wide defaults that apply to all content items unless overridden.
+
+2. **Per-content configuration** (`meta.toml`): Content-specific settings that override global defaults for that content item.
+
+3. **Platform-specific configuration**: Both global and per-content configurations MAY include platform-specific sections.
+
+---
+
+## Configuration File Locations
+
+- **Global configuration**: `typub.toml` at the project root.
+- **Per-content configuration**: `meta.toml` within each content directory.
+
+The directory containing `typub.toml` defines the **project root**. See [[RFC-0005:C-PROJECT-ROOT]] for path resolution semantics.
+
+---
+
+## Configuration Structure
+
+**Global configuration (`typub.toml`):**
+
+```toml
+# Global defaults (layer 4)
+published = true
+
+# Global platform-specific (layer 3)
+[platforms.hashnode]
+published = false
+
+[platforms.devto]
+published = true
+```
+
+**Per-content configuration (`meta.toml`):**
+
+```toml
+title = "My Post"
+created = "2026-01-15"
+
+# Per-content default (layer 2)
+published = false
+
+# Per-content platform-specific (layer 1)
+[platforms.hashnode]
+published = true
+```
+
+---
+
+**Rationale:**
+This layered approach allows users to set sensible defaults while retaining fine-grained control. The three-layer system (global, per-content, platform-specific) combined with nested platform sections creates a 5-level resolution chain that covers all practical use cases without excessive complexity."""

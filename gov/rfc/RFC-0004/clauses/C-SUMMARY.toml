@@ -1,0 +1,27 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SUMMARY"
+title = "Summary"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+[[RFC-0004]] defines the normative contract for external asset storage in typub, extending the asset strategy system defined in [[RFC-0002]].
+
+This RFC specifies:
+- The `External` asset strategy variant for S3-compatible object storage.
+- Configuration requirements for external storage backends.
+- Asset upload tracking and caching semantics.
+- Integration with the publish pipeline's Materialize stage.
+
+This RFC does not define:
+- Specific storage provider implementations (AWS S3, Cloudflare R2, MinIO).
+- Image optimization or transformation logic.
+- Asset garbage collection strategies.
+
+**Scope:** This specification applies when an adapter declares `External` as its asset strategy and external storage is configured.
+
+**Rationale:** Platforms like HashNode and Dev.to strip or ignore embedded data URIs and cannot access local file paths. External object storage provides publicly accessible URLs that work universally across publishing platforms."""

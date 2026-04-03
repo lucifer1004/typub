@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-WORKSPACE-LAYOUT",
-  "title": "Workspace Layout",
-  "kind": "normative",
-  "status": "active",
-  "text": "The workspace MUST include the following crates:\n\n- `typub` — main CLI binary\n- `typub-core` — capability types (existing)\n- `typub-html` — HTML parsing/serialization (existing)\n- `typub-adapters-core` — shared adapter abstractions (new)\n\nAdapter crates MUST follow the naming convention `typub-adapter-{platform_id}`.\n\nAdapter crates SHOULD be placed under `crates/adapters/` to group related crates:\n\n```\ncrates/\n├── typub-core/\n├── typub-html/\n├── typub-adapters-core/\n└── adapters/\n    ├── typub-adapter-ghost/\n    ├── typub-adapter-notion/\n    └── ...\n```\n\nThe workspace `Cargo.toml` MUST list all adapter crates as members.\n\nNew first-party adapters MAY be added without modifying this RFC, provided they follow the naming convention and placement guidelines above.\n\n**Rationale:**\nConsistent naming enables tooling and documentation automation. The `crates/adapters/` subdirectory groups related crates without polluting the top-level. Pattern-based rules avoid RFC churn when adding new adapters.",
-  "since": "0.1.0"
-}

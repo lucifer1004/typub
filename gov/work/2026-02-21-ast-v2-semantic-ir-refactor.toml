@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-21-004"
 title = "ast v2 semantic ir refactor"
 status = "done"

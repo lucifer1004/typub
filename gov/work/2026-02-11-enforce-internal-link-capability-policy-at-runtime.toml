@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-11-009"
 title = "enforce internal-link capability policy at runtime"
 status = "done"

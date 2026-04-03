@@ -1,0 +1,66 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-NESTED-LISTS"
+title = "Nested Lists"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+List elements MUST support arbitrary nesting depth through recursive `ListItem` structure.
+
+**List item model:**
+
+```rust
+pub struct ListItem {
+    /// Inline content of this item
+    pub fragments: Vec<InlineFragment>,
+    /// Nested list items (empty for leaf items)
+    pub children: Vec<ListItem>,
+    /// Hint for serializer when nesting different list types
+    pub list_type: Option<ListType>,
+}
+```
+
+**Nesting semantics:**
+
+1. An item with `children.is_empty()` is a leaf item with no nested list
+2. An item with non-empty `children` contains a nested list
+3. `list_type` SHOULD indicate the type of nested list (for mixed nesting)
+4. Mixed nesting (bullet inside numbered, or vice versa) MUST be supported
+
+**Task list model:**
+
+```rust
+pub struct TaskItem {
+    pub fragments: Vec<InlineFragment>,
+    pub children: Vec<TaskItem>,
+    pub checked: bool,
+}
+```
+
+Task lists differ from regular lists:
+- Each item has a checkbox state (`checked`)
+- Tasks can nest within tasks
+- Platform-specific rendering (GitHub-style `- [ ]`, Notion to-do blocks)
+
+**Definition list model:**
+
+```rust
+pub struct DefinitionItem {
+    pub term: Vec<InlineFragment>,       // <dt>
+    pub definition: Vec<InlineFragment>, // <dd>
+}
+```
+
+**Migration path:**
+
+| Legacy | New | Conversion |
+|--------|-----|------------|
+| `Vec<Vec<InlineFragment>>` | `Vec<ListItem>` | Map each `Vec<InlineFragment>` to `ListItem { fragments, children: vec![], list_type: None }` |
+| `Vec<ListItem>` | `Vec<Vec<InlineFragment>>` | Flatten, losing nested structure (for legacy adapters) |
+
+**Rationale:**
+Real-world documents frequently use nested lists (outlines, procedures with sub-steps). The previous flat model (`Vec<Vec<InlineFragment>>`) lost nesting structure during parsing, forcing adapters to guess at indentation. A recursive `ListItem` type mirrors HTML's `<li>` semantics where each `<li>` may contain nested `<ul>` or `<ol>` elements. The `list_type` hint helps serializers like Markdown correctly render mixed-type nested lists."""

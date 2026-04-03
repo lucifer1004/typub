@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-028"
 title = "upgrade Notion API to 2025-09-03 with math rendering"
 status = "done"

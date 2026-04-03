@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-20-002"
 title = "add subtitle and coverimage taxonomy attributes"
 status = "cancelled"

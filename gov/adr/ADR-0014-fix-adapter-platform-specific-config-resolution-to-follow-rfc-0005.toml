@@ -1,0 +1,72 @@
+#:schema ../schema/adr.schema.json
+
+[govctl]
+id = "ADR-0014"
+title = "Fix adapter platform-specific config resolution to follow RFC-0005"
+status = "proposed"
+date = "2026-04-04"
+refs = ["RFC-0005"]
+
+[content]
+context = """
+Configuration fields like `confluence.space`, `confluence.parent_id`, `xiaohongshu.subtitle`, `astro.slug`, etc. are platform-specific fields that adapters read to customize their behavior per content item.
+
+### Problem Statement
+
+The current implementation of `content_info_with_platform()` in `adapters_impl.rs` only populates `ContentInfo.platform_extra` from the post's `meta.toml` platform-specific section (Layer 1). This means global configuration values from `typub.toml` (Layer 3) are completely ignored.
+
+For example, if a user sets:
+```toml
+# typub.toml
+[platforms.confluence]
+space = "TEAM"
+parent_id = "123456"
+```
+
+And in `meta.toml`:
+```toml
+[platforms.confluence]
+# empty - expects to use global config
+```
+
+The adapter would not see the `space` or `parent_id` values because they were only read from post-level config.
+
+### Constraints
+
+- Must follow [[RFC-0005:C-RESOLUTION-ORDER]] 4-layer resolution
+- Must not break existing adapters that use `get_platform_str()`
+- Must handle the case where the same key exists at both post and global levels (post wins)"""
+decision = """
+Add a new `resolve_platform_field()` function in `resolved_config.rs` that implements the 4-layer resolution order for platform-specific string fields:
+
+1. `meta.toml[platforms.<platform>].{field}` — per-content platform-specific
+2. (Skipped for platform-specific fields - no per-content default)
+3. `typub.toml[platforms.<platform>].{field}` — global platform-specific
+4. (Skipped for platform-specific fields - no global default)
+5. Caller-provided default
+
+Modify `content_info_with_platform()` to:
+1. Collect all unique keys from both post-level and global-level platform config
+2. Resolve each key using `resolve_platform_field()`
+3. Populate `platform_extra` with the resolved values
+
+This approach:
+- Maintains backward compatibility: adapters continue to use `get_platform_str()`
+- Follows RFC-0005: implements proper 4-layer resolution
+- Is extensible: works for any platform-specific field without adapter changes"""
+consequences = """
+### Positive
+
+- Platform-specific fields now properly follow the RFC-0005 resolution order
+- Users can set global defaults in `typub.toml` and override per-post in `meta.toml`
+- No changes required to adapter code - they continue using `get_platform_str()`
+- Consistent behavior across all adapters (Confluence, Xiaohongshu, Astro, Static, WordPress)
+
+### Negative
+
+- `content_info_with_platform()` now requires a `Config` parameter (breaking change for external callers)
+- Slightly more complex key collection logic compared to the previous simple extraction
+
+### Neutral
+
+- Existing tests continue to pass without modification (backward compatible behavior for cases where only Layer 1 was used)"""

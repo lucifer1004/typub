@@ -1,5 +1,6 @@
+#:schema ../schema/adr.schema.json
+
 [govctl]
-schema = 1
 id = "ADR-0013"
 title = "AST v2 big-bang migration strategy"
 status = "accepted"

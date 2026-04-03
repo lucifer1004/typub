@@ -1,0 +1,21 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-RFC-0006-COMPAT"
+title = "RFC-0006 Compatibility"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+This RFC MUST be compatible with [RFC-0006](../rfc/RFC-0006.md) (adapter extension API).
+
+Specifically:
+1. The `AdapterRegistrar` defined in [RFC-0006:C-REGISTRAR-API](../rfc/RFC-0006.md#rfc-0006c-registrar-api) MUST be implemented in `typub-adapters-core`.
+2. Each adapter crate's `register()` entrypoint (when provided) MUST use the same `AdapterRegistrar` API surface as extension adapters.
+3. Runtime adapter execution MUST be based on `PlatformAdapter` trait-object semantics, whether registry construction is registrar-based or factory-table-based.
+4. First-party and extension adapter wiring MUST preserve stable platform-ID behavior and MUST NOT alter semantics for unrelated platform IDs.
+
+**Rationale:**
+Compatibility is defined by shared adapter contracts and runtime behavior, not by a single mandatory bootstrap implementation shape."""

@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-15-007"
 title = "migrate tui default and extract typub-engine"
 status = "done"

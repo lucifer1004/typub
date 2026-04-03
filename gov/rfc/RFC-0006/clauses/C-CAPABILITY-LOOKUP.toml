@@ -1,0 +1,26 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-CAPABILITY-LOOKUP"
+title = "Capability Lookup Order"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The `adapter_capability(platform_id: &str)` function in the main runtime path MUST resolve capabilities in the following order:
+
+1. Built-in API adapter capabilities (from `BUILTIN_ADAPTERS` static table, matched by `id` field)
+2. Copy-paste profile capabilities (from `copypaste::find_profile()` matched by platform ID)
+
+The `platform_id` parameter is the platform identifier (for example, `ghost`, `notion`, `wechat`).
+
+The first match MUST be returned. If no match is found in any source, the function MUST return `None`.
+
+The lookup MUST NOT modify global state.
+
+Implementations MAY provide additional extension capability sources in alternate bootstrap paths, but those paths MUST preserve deterministic precedence and MUST NOT change built-in capability semantics for unchanged platform IDs.
+
+**Rationale:**
+This reflects the current runtime architecture, where first-party capabilities are resolved from static capability tables and copy-paste profiles. It keeps capability lookup deterministic while leaving room for future extension bootstrap modes."""

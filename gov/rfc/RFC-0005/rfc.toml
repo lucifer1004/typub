@@ -1,0 +1,51 @@
+#:schema ../../schema/rfc.schema.json
+
+[govctl]
+id = "RFC-0005"
+title = "configuration hierarchy and post lifecycle"
+version = "0.2.2"
+status = "normative"
+phase = "impl"
+owners = ["@lucifer1004"]
+created = "2026-02-12"
+updated = "2026-02-23"
+signature = "e9edeec4a0803fff73e4823de7d9e459ae78c838c835731a482c36e027e6bb85"
+
+[[sections]]
+title = "Summary"
+clauses = ["clauses/C-SUMMARY.toml"]
+
+[[sections]]
+title = "Specification"
+clauses = [
+    "clauses/C-CONFIG-LAYERS.toml",
+    "clauses/C-RESOLUTION-ORDER.toml",
+    "clauses/C-DRAFT-SUPPORT.toml",
+    "clauses/C-LIFECYCLE-TRANSITIONS.toml",
+    "clauses/C-STATUS-TRACKING.toml",
+    "clauses/C-PLATFORM-CAPABILITIES.toml",
+    "clauses/C-PROJECT-ROOT.toml",
+    "clauses/C-RENDER-PREAMBLE.toml",
+]
+
+[[changelog]]
+version = "0.2.2"
+date = "2026-02-23"
+notes = "Add Typst preamble resolution and merge semantics"
+added = ["Define optional preamble key with 5-layer resolution and adapter-preserving append behavior in Render stage"]
+
+[[changelog]]
+version = "0.2.1"
+date = "2026-02-22"
+notes = "Terminology consistency for global config file"
+added = ["Replace stale config.toml references with typub.toml in C-RESOLUTION-ORDER"]
+
+[[changelog]]
+version = "0.2.0"
+date = "2026-02-13"
+notes = "Add C-PROJECT-ROOT clause and rename config.toml to typub.toml"
+
+[[changelog]]
+version = "0.1.0"
+date = "2026-02-12"
+notes = "Initial draft"

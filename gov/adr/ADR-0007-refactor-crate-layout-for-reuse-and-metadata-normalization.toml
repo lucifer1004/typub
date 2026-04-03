@@ -1,5 +1,6 @@
+#:schema ../schema/adr.schema.json
+
 [govctl]
-schema = 1
 id = "ADR-0007"
 title = "refactor crate layout for reuse and metadata normalization"
 status = "accepted"

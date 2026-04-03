@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-19-006"
 title = "feat(cli): implement true dry-run mode with mock asset upload"
 status = "done"

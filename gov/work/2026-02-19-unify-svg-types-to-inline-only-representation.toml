@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-19-002"
 title = "Unify SVG types to inline-only representation"
 status = "done"

@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-14-008"
 title = "Write RFC for adapter extension mechanism"
 status = "cancelled"

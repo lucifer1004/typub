@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-025"
 title = "fix confluence attachment update on republish"
 status = "done"

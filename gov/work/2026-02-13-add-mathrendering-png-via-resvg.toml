@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-026"
 title = "Add MathRendering::Png via resvg"
 status = "done"

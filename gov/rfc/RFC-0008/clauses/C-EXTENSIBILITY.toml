@@ -1,0 +1,59 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-EXTENSIBILITY"
+title = "Extensibility"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The IR model MUST be extensible for future element types without breaking existing adapters.
+
+**Adding new block elements:**
+
+When adding a new `HtmlElement` variant:
+1. Update `HtmlElement` enum in `typub-html/src/types.rs`
+2. Add parsing logic in `typub-html/src/parse.rs`
+3. Add serialization logic in all adapters (MAY start with fallback to text extraction or `RawHtml`)
+4. Add tests for parse/serialize round-trip
+5. Document the variant in this RFC via amendment
+
+**Adding new inline fragments:**
+
+When adding a new `InlineFragment` variant:
+1. Update `InlineFragment` enum in `typub-html/src/types.rs`
+2. Add parsing logic in `typub-html/src/parse.rs` (inline element handlers)
+3. Update `inline_fragments_text()` helper for text extraction
+4. Update `inline_fragments_has_content()` for presence detection
+5. Update `inline_fragments_to_html()` for HTML output
+6. Update all adapters' inline fragment handlers
+7. Ensure recursive variants follow the nesting pattern of existing variants
+
+**Fallback behavior:**
+
+Adapters MUST gracefully handle unknown variants:
+- Block-level unknown → `RawHtml(String)` or skip with warning
+- Inline-level unknown → extract text content via `inline_fragments_text()`
+- Never panic on unknown variants
+
+**Backward compatibility:**
+
+- New variants MUST NOT change the semantics of existing variants
+- Breaking changes to variant fields require:
+  1. RFC amendment with migration guide
+  2. Conversion helpers for legacy format
+  3. Crate version bump per semver
+
+**Extending auxiliary types:**
+
+When adding new auxiliary types (`ListItem`, `TaskItem`, etc.):
+1. Define the struct with clear field documentation
+2. Implement `PartialEq`, `Clone`, `Debug` for testability
+3. Implement `serde::Serialize` if needed for debug output
+4. Add builder functions in `builders.rs` for testing
+5. Update all relevant `HtmlElement` variants to use the new type
+
+**Rationale:**
+Content publishing is an evolving domain. New platforms may require new content types (callouts, embeds, interactive elements). The IR must accommodate growth while maintaining stability for existing adapters. Graceful degradation ensures the system remains functional even when new features are added."""

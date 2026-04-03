@@ -1,0 +1,49 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-DRAFT-SUPPORT"
+title = "Draft Support Capability"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+Each platform adapter MUST declare its draft support capability using the `DraftSupport` enum:
+
+```rust
+pub enum DraftSupport {
+    /// Platform has no draft concept. Content is always published immediately.
+    None,
+
+    /// Same object with a status field that can be toggled.
+    /// `reversible` indicates whether publish -> draft transition is supported.
+    StatusField { reversible: bool },
+
+    /// Draft and published content are separate objects with different IDs.
+    /// Transition from draft to published requires a platform-specific mutation.
+    SeparateObjects,
+}
+```
+
+The `AdapterCapability` struct MUST include a `draft_support` field:
+
+```rust
+pub struct AdapterCapability {
+    pub id: &'static str,
+    pub name: &'static str,
+    pub tags: CapabilitySupport,
+    pub categories: CapabilitySupport,
+    pub internal_links: CapabilitySupport,
+    pub draft_support: DraftSupport,  // NEW
+    pub notes: &'static str,
+}
+```
+
+**Rationale:**
+Different platforms have fundamentally different models for draft content:
+- Some platforms (Dev.to, Ghost, WordPress, Confluence) use a status field on the same object
+- Some platforms (Hashnode) maintain separate draft and published objects
+- Some platforms (Notion) have no draft concept at all
+
+Declaring this capability allows the pipeline to handle transitions correctly."""

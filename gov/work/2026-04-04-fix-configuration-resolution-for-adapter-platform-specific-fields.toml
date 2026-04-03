@@ -1,0 +1,31 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-04-04-001"
+title = "Fix configuration resolution for adapter platform-specific fields"
+status = "done"
+created = "2026-04-04"
+started = "2026-04-04"
+completed = "2026-04-04"
+refs = ["ADR-0014"]
+
+[content]
+description = "Fix the configuration loading strategy to ensure platform-specific fields in adapters follow the RFC-0005 4-layer resolution order. Currently, fields like confluence.space, confluence.parent_id, xiaohongshu.subtitle, etc. only check post-level platform config (Layer 1), bypassing Layers 2-4. This work item tracks the systematic fix across all affected adapters."
+
+[[content.journal]]
+date = "2026-04-04"
+content = "Implemented fix for configuration resolution. Added resolve_platform_field function in resolved_config.rs that implements the 4-layer resolution order for platform-specific fields. Modified content_info_with_platform to use this resolution and updated all callers."
+
+[[content.journal]]
+date = "2026-04-04"
+content = "All tests pass. Fixed pre-existing ghost adapter compilation issue by running cargo update. Ready for closure."
+
+[[content.acceptance_criteria]]
+text = "resolve_platform_field implements 4-layer resolution for platform-specific fields"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "All 64 typub-engine tests pass including new resolve_platform_field tests"
+status = "done"
+category = "chore"

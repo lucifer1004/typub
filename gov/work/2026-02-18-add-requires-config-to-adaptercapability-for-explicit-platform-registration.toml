@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-18-001"
 title = "add requires_config to AdapterCapability for explicit platform registration"
 status = "done"

@@ -1,0 +1,31 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-BUILTIN-MIGRATION"
+title = "Built-in Adapter Migration"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+Built-in adapters MUST provide a stable creation and capability surface suitable for centralized registry construction.
+
+At minimum, each first-party adapter crate MUST expose:
+- a factory entrypoint (`create(config) -> Box<dyn PlatformAdapter>` or equivalent), and
+- a canonical capability declaration (`CAPABILITY` or equivalent).
+
+The main runtime registry MAY be constructed via:
+1. a centralized built-in factory table, or
+2. a registrar-based assembly path,
+provided externally observable behavior is equivalent.
+
+Built-in adapter registration semantics MUST preserve:
+- API adapters are active only when their config section is present and `enabled = true`.
+- Copy-paste profiles are active unless explicitly disabled.
+- User-defined `type = "manual"` platforms are mapped to copy-paste adapters.
+
+If multiple construction paths exist, tests MUST verify they are behaviorally equivalent for first-party adapters.
+
+**Rationale:**
+This codifies current behavior while keeping room for future registrar-first consolidation without forcing an intermediate architecture step."""

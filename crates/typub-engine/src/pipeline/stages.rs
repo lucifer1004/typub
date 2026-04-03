@@ -12,9 +12,11 @@ pub async fn render(
     platform_id: &str,
     ctx: &PublishContext,
     renderer: &Renderer<'_>,
+    config: &typub_config::Config,
 ) -> Result<RenderedOutput> {
     let format = adapter.required_format();
-    let content_info = crate::adapters_impl::content_info_with_platform(content, platform_id);
+    let content_info =
+        crate::adapters_impl::content_info_with_platform(content, platform_id, config);
     let mut render_config = adapter.render_config(&content_info);
     let user_preamble = ctx
         .resolved()

@@ -1,0 +1,56 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-TABLE-CELLS"
+title = "Table Cells"
+kind = "normative"
+status = "active"
+since = "0.2.0"
+
+[content]
+text = """
+Table cells MUST support layout control through colspan, rowspan, and alignment.
+
+**TableCell definition:**
+
+```rust
+pub struct TableCell {
+    /// Inline content of the cell
+    pub fragments: Vec<InlineFragment>,
+    /// Number of columns this cell spans (default 1)
+    pub colspan: u32,
+    /// Number of rows this cell spans (default 1)
+    pub rowspan: u32,
+    /// Text alignment within the cell
+    pub align: Option<TextAlign>,
+}
+
+pub enum TextAlign {
+    Left,
+    Center,
+    Right,
+}
+```
+
+**Default values:**
+- `colspan`: MUST default to 1 (single column)
+- `rowspan`: MUST default to 1 (single row)
+- `align`: MUST default to `None` (inherit from table or left)
+
+**HTML attributes mapping:**
+
+| HTML Attribute | Field |
+|---------------|-------|
+| `colspan="N"` | `colspan: N` |
+| `rowspan="N"` | `rowspan: N` |
+| `align="left/center/right"` | `align: Some(...)` |
+| `style="text-align:..."` | `align: Some(...)` |
+
+**Adapter handling:**
+- **Markdown**: Standard Markdown does not support colspan/rowspan. Adapters SHOULD fall back to single cells or use HTML `<table>` syntax.
+- **Notion**: Notion tables do not support cell spanning. Adapters SHOULD flatten or split merged cells.
+- **Confluence**: Full support via `colspan`/`rowspan` attributes in storage format.
+- **HTML**: Full support via native attributes.
+
+**Rationale:**
+Complex tables in technical documentation often require merged cells. The previous model (`Vec<Vec<InlineFragment>>`) had no way to represent this, resulting in data loss. The `TableCell` struct preserves HTML table capabilities while providing sensible defaults for simple tables."""

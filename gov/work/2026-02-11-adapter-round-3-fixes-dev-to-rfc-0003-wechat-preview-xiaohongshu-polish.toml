@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-11-020"
 title = "adapter round-3 fixes: Dev.to RFC-0003, WeChat preview, Xiaohongshu, polish"
 status = "done"

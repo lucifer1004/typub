@@ -1,0 +1,29 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-REQUIRED-TESTS"
+title = "Required Tests"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The implementation MUST include the following test categories:
+
+**Negative tests:**
+1. Duplicate registration: `register_factory` and `register_capability` MUST return an error when the same platform ID is registered twice.
+2. Empty ID: `register_factory` and `register_capability` MUST return an error when `platform_id` is empty.
+3. Capability precedence: Tests MUST verify that runtime-registered capabilities take precedence over built-in capabilities for the same platform ID.
+
+**Parity tests:**
+4. For each built-in adapter, a test MUST verify that the registrar-based path produces semantically equivalent output to the legacy path (if the legacy path still exists during transition). Equivalence is defined per [[RFC-0006:C-BACKWARD-COMPAT]].
+
+**Isolation tests:**
+5. Tests MUST verify that registering an extension adapter for platform "foo" does not alter the output of `publish`, `build`, or `preview` for platform "bar".
+
+**Override warning tests:**
+6. Tests MUST verify that overriding a built-in capability emits a warning unless `suppress_capability_override_warning = true` is set.
+
+**Rationale:**
+Explicit test requirements ensure the implementation is verifiable and reduce the risk of regressions or undefined behavior at edge cases."""

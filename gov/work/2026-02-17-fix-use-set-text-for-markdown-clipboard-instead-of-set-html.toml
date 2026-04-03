@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-17-006"
 title = "fix: use set_text for Markdown clipboard instead of set_html"
 status = "done"

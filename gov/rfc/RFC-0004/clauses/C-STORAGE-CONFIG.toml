@@ -1,0 +1,73 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-STORAGE-CONFIG"
+title = "Storage Configuration"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+External storage configuration MUST support both global and per-platform scopes, with deterministic precedence rules.
+
+**Precedence ladder:**
+When resolving a configuration field, the system MUST apply the following precedence order (highest to lowest):
+1. Platform-specific environment variable (for example, `HASHNODE_S3_BUCKET`).
+2. Platform-specific configuration file value.
+3. Global environment variable (for example, `S3_BUCKET`).
+4. Global configuration file value.
+
+The first non-empty value in this order wins. The system MUST NOT merge partial values from different levels for a single field.
+
+**Global configuration:**
+The system MUST support a global storage configuration that applies to all platforms using the `External` strategy.
+
+**Per-platform override:**
+A platform MAY override specific storage configuration fields. Platform-specific values take precedence over global values at the same source level (environment or file).
+
+**Required configuration fields:**
+The storage configuration MUST include at minimum:
+- Storage type identifier (for example, "s3" for S3-compatible storage).
+- Bucket or container name.
+- Public URL prefix for constructing accessible URLs.
+
+**Optional configuration fields:**
+- Endpoint URL (for S3-compatible services). If absent, the system MUST use empty string for identifier computation.
+- Region (for example, "us-east-1"). If absent, the system MUST use empty string for identifier computation.
+
+**Credential fields:**
+The storage configuration MUST support:
+- Access key identifier.
+- Secret access key.
+
+Credential values MUST NOT be included in the storage configuration identifier used for cache invalidation.
+
+**Storage configuration identifier:**
+The system MUST compute a deterministic storage configuration identifier by:
+1. Collecting these fields: `type`, `endpoint`, `bucket`, `region`, `public_url_prefix`.
+2. Normalizing each field:
+   - `type`: lowercase, trimmed.
+   - `endpoint`: if absent, use empty string. Otherwise: parse as URL; lowercase the scheme and host only; preserve path case; remove trailing slash from path; remove default port (`:443` for https, `:80` for http).
+   - `bucket`: as-is (case-sensitive per S3 spec).
+   - `region`: lowercase, trimmed. If absent, use empty string.
+   - `public_url_prefix`: parse as URL; lowercase the scheme and host only; preserve path case; remove trailing slash from path.
+3. Concatenating as: `{type}|{endpoint}|{bucket}|{region}|{public_url_prefix}`.
+4. Computing SHA-256 hash of the concatenated string (UTF-8 encoded).
+5. Using the full 64 hex characters as the identifier.
+
+Examples:
+- Input: `type=s3, endpoint=https://S3.us-east-1.amazonaws.com/MyPath/, bucket=my-bucket, region=us-east-1, public_url_prefix=https://CDN.example.com/Assets/`
+- Normalized: `s3|https://s3.us-east-1.amazonaws.com/MyPath|my-bucket|us-east-1|https://cdn.example.com/Assets`
+- Identifier: full 64-char SHA-256 hex
+
+- Input: `type=s3, endpoint=(absent), bucket=my-bucket, region=(absent), public_url_prefix=https://cdn.example.com/`
+- Normalized: `s3||my-bucket||https://cdn.example.com`
+- Identifier: full 64-char SHA-256 hex of that string
+
+**Validation:**
+The system MUST validate storage configuration before attempting any upload. If required fields are missing or invalid, the system MUST fail with a descriptive error before the Materialize stage.
+
+If an adapter uses the `External` strategy but no storage configuration is present, the system MUST fail with a configuration error rather than falling back to another strategy.
+
+**Rationale:** A single precedence ladder eliminates ambiguity when environment variables and file values conflict at different scopes. Lowercasing only the host (not path) preserves case-sensitive path semantics per RFC 3986. Using the full SHA-256 hash eliminates collision risk for safety-critical cache keys. Explicit empty-string handling for absent optional fields ensures cross-implementation determinism. Excluding secrets from the identifier avoids cache invalidation on credential rotation."""

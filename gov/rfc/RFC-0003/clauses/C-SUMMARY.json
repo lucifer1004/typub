@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-SUMMARY",
-  "title": "Summary",
-  "kind": "informative",
-  "status": "active",
-  "text": "[[RFC-0003]] defines update and republish semantics for typub and complements [[RFC-0002]].\n\nThis RFC specifies:\n- how the system decides create vs update for a post+platform key,\n- idempotency guarantees for repeated publish attempts,\n- conflict and retry behavior when remote state diverges,\n- status tracking requirements for successful republish outcomes.\n\nThis RFC does not define platform-specific API payload details. Adapter-specific mapping remains implementation-specific as long as it satisfies the normative behavior here.",
-  "since": "0.1.0"
-}

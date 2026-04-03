@@ -1,0 +1,52 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-MIGRATION"
+title = "Migration"
+kind = "normative"
+status = "deprecated"
+since = "0.2.0"
+
+[content]
+text = """
+Implementations MUST provide a migration path from legacy flat list model to recursive list model.
+
+**Phase 1: Add new types (non-breaking)**
+
+1. Add `ListItem`, `TaskItem`, `DefinitionItem`, `TableCell` structs to `types.rs`
+2. Add new `HtmlElement` variants (`TaskList`, `DefinitionList`, `Admonition`, `Footnote`)
+3. Add new `InlineFragment` variants (`Underline`, `Mark`, `Superscript`, `Subscript`, `Kbd`, `LineBreak`, `FootnoteRef`)
+4. Implement conversion helpers:
+   - `fn list_items_from_flat(items: Vec<Vec<InlineFragment>>) -> Vec<ListItem>`
+   - `fn flat_from_list_items(items: Vec<ListItem>) -> Vec<Vec<InlineFragment>>` (for legacy adapters)
+
+**Phase 2: Update parser**
+
+1. Modify `parse_bullet_list` to detect nested `<ul>/<ol>` within `<li>` and create `ListItem` with children
+2. Modify `parse_numbered_list` similarly
+3. Add `parse_task_list` for checkbox inputs
+4. Add `parse_definition_list` for `<dl>` elements
+5. Update `parse_table` to extract `colspan`/`rowspan`/`align` attributes
+
+**Phase 3: Update serializers**
+
+Each adapter MUST handle new variants:
+- **Notion**: Flatten nested lists to sibling items (platform limitation)
+- **Confluence/HTML**: Full nested list support
+- **Markdown**: Indentation-based nesting
+- **Other adapters**: Fallback to text extraction via `inline_fragments_text()`
+
+**Phase 4: Remove deprecated (breaking)**
+
+After all adapters are updated:
+1. Change `BulletList.items` type from `Vec<Vec<InlineFragment>>` to `Vec<ListItem>`
+2. Change `NumberedList.items` type similarly
+3. Remove conversion helpers
+4. Bump crate version major (if semver)
+
+**Backward compatibility guarantee:**
+
+Implementations MUST provide `flat_from_list_items()` helper until Phase 4 is complete, allowing legacy adapters to continue working during migration.
+
+**Rationale:**
+A phased migration allows adapters to be updated incrementally without breaking the entire system. The conversion helpers provide a bridge between old and new models, ensuring no functionality is lost during transition."""

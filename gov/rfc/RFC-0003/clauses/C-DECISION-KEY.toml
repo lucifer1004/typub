@@ -1,0 +1,20 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-DECISION-KEY"
+title = "Create-vs-Update Decision Key"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The system MUST determine create-vs-update behavior per post+platform key, where post+platform key means (post slug, adapter identifier).
+
+Decision order:
+1. If a previously published remote identifier exists in local status for the post+platform key, the publish attempt MUST execute as an update path using that identifier.
+2. If no remote identifier exists, the adapter MAY resolve an update target via a deterministic platform-native lookup key (for example slug, title, or database-specific key).
+3. Cached URL MAY be used only as a non-authoritative hint. Cached URL alone MUST NOT be treated as identity.
+4. If no update target is resolved, the publish attempt MAY proceed to create only after duplicate precheck according to [[RFC-0003:C-CONFLICTS]].
+
+The decision key semantics in this RFC MUST remain consistent with status semantics in [[RFC-0002:C-FAILURE-SEMANTICS]]."""

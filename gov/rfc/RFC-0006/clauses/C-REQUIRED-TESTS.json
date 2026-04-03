@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-REQUIRED-TESTS",
-  "title": "Required Tests",
-  "kind": "normative",
-  "status": "active",
-  "text": "The implementation MUST include the following test categories:\n\n**Negative tests:**\n1. Duplicate registration: `register_factory` and `register_capability` MUST return an error when the same platform ID is registered twice.\n2. Empty ID: `register_factory` and `register_capability` MUST return an error when `platform_id` is empty.\n3. Capability precedence: Tests MUST verify that runtime-registered capabilities take precedence over built-in capabilities for the same platform ID.\n\n**Parity tests:**\n4. For each built-in adapter, a test MUST verify that the registrar-based path produces semantically equivalent output to the legacy path (if the legacy path still exists during transition). Equivalence is defined per [[RFC-0006:C-BACKWARD-COMPAT]].\n\n**Isolation tests:**\n5. Tests MUST verify that registering an extension adapter for platform \"foo\" does not alter the output of `publish`, `build`, or `preview` for platform \"bar\".\n\n**Override warning tests:**\n6. Tests MUST verify that overriding a built-in capability emits a warning unless `suppress_capability_override_warning = true` is set.\n\n**Rationale:**\nExplicit test requirements ensure the implementation is verifiable and reduce the risk of regressions or undefined behavior at edge cases.",
-  "since": "0.1.0"
-}

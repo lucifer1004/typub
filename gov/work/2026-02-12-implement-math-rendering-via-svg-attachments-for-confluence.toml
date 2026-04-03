@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-026"
 title = "implement math rendering via svg attachments for confluence"
 status = "done"

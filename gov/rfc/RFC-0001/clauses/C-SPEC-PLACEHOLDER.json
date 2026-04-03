@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-SPEC-PLACEHOLDER",
-  "title": "Specification Scope Note",
-  "kind": "informative",
-  "status": "active",
-  "text": "This section intentionally contains no normative clauses in [[RFC-0001]].\n\nNormative requirements (MUST/SHOULD/MAY) will be specified in follow-up RFCs that cover concrete behavior and contracts.",
-  "since": "0.1.0"
-}

@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-EXTERNAL-VARIANT",
-  "title": "External Adapter Variant",
-  "kind": "normative",
-  "status": "active",
-  "text": "The adapter registry MUST store adapter instances as trait objects (`Box<dyn PlatformAdapter>`) keyed by platform ID.\n\nA dedicated `Adapter` enum with an `External` variant is NOT required by this RFC.\n\nImplementations MAY introduce wrapper enums internally, but externally visible behavior MUST remain:\n1. Factory-created adapters are registered under stable platform IDs.\n2. All `PlatformAdapter` methods are invoked through the trait boundary.\n3. Adapter selection and execution semantics remain equivalent to direct trait-object dispatch.\n\n**Rationale:**\nThe current implementation already uses trait-object dispatch directly in the registry. Requiring an additional wrapper enum would add indirection without changing behavior.",
-  "since": "0.1.0"
-}

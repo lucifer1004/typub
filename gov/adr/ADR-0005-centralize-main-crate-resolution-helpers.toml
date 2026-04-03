@@ -1,5 +1,6 @@
+#:schema ../schema/adr.schema.json
+
 [govctl]
-schema = 1
 id = "ADR-0005"
 title = "centralize main-crate resolution helpers"
 status = "accepted"

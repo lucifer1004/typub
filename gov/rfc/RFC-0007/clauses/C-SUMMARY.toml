@@ -1,0 +1,37 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SUMMARY"
+title = "Summary"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+This RFC specifies the extraction of built-in adapters from the main `typub` crate into separate workspace subcrates.
+
+**Scope:**
+- Defines the target workspace layout with adapter subcrates.
+- Specifies the shared adapter types crate (`typub-adapters-core`).
+- Specifies crate boundaries and dependency rules.
+- Specifies feature gates for optional adapter inclusion.
+
+**Out of Scope:**
+- Third-party adapter crates (covered by [[RFC-0006]]).
+- Runtime plugin loading.
+- Migration path from current layout (covered by work items).
+
+**Rationale:**
+The current monolithic layout has several drawbacks:
+1. All adapters share dependencies, even when only a subset is needed (e.g., Ghost requires JWT crates that others do not).
+2. Adding adapters requires modifying core files (`Adapter` enum, registry factory array).
+3. Compile times scale with total adapter count rather than enabled adapters.
+4. Testing adapters in isolation is difficult.
+
+Extracting adapters into subcrates enables:
+- Feature-gated inclusion for smaller binaries and faster compiles.
+- Cleaner separation of concerns.
+- First-party and third-party adapters follow the same patterns.
+- Independent testing of each adapter.
+"""

@@ -1,0 +1,29 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-ERROR-SEMANTICS"
+title = "Error Semantics"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The system MUST provide clear, actionable error messages for external storage failures.
+
+**Configuration errors:**
+When storage configuration is missing or invalid, the error MUST:
+- Identify which configuration field is missing or invalid.
+- Indicate whether the error is at global or platform-specific scope.
+- Suggest corrective action (for example, "set S3_ACCESS_KEY_ID environment variable or add access_key_id to storage configuration").
+
+**Upload errors:**
+When an asset upload fails, the error MUST:
+- Identify the local asset path that failed.
+- Include the underlying storage service error message.
+- Indicate whether the failure is retryable (for example, network timeout vs. access denied).
+
+**Credential errors:**
+When storage credentials are rejected, the error MUST NOT expose credential values. The error SHOULD indicate which credential source was used (environment variable or configuration file).
+
+**Rationale:** Clear error messages reduce debugging time and prevent users from publishing with broken images."""

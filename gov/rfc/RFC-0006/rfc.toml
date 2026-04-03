@@ -1,0 +1,43 @@
+#:schema ../../schema/rfc.schema.json
+
+[govctl]
+id = "RFC-0006"
+title = "adapter extension API"
+version = "0.1.1"
+status = "normative"
+phase = "impl"
+owners = ["@lucifer1004"]
+created = "2026-02-14"
+updated = "2026-02-22"
+refs = ["RFC-0002"]
+signature = "70e4a7d32fd997be57090136526b13d71c34e752c2ae75f75a647d47e920f2ce"
+
+[[sections]]
+title = "Summary"
+clauses = ["clauses/C-SUMMARY.toml"]
+
+[[sections]]
+title = "Specification"
+clauses = [
+    "clauses/C-REGISTRAR-API.toml",
+    "clauses/C-CAPABILITY-LOOKUP.toml",
+    "clauses/C-EXTERNAL-VARIANT.toml",
+    "clauses/C-BUILTIN-MIGRATION.toml",
+    "clauses/C-BACKWARD-COMPAT.toml",
+    "clauses/C-CLI-BOOTSTRAP.toml",
+    "clauses/C-REQUIRED-TESTS.toml",
+]
+
+[[changelog]]
+version = "0.1.1"
+date = "2026-02-22"
+notes = "Align adapter extension clauses with current runtime architecture"
+added = [
+    "Replace External-enum and mandatory registrar bootstrap wording with trait-object registry semantics",
+    "Update capability lookup and built-in migration clauses to current implementation model",
+]
+
+[[changelog]]
+version = "0.1.0"
+date = "2026-02-14"
+notes = "Initial draft"

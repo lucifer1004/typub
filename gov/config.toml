@@ -6,21 +6,10 @@ default_owner = "@lucifer1004"
 [paths]
 gov_root = "gov"
 docs_output = "docs"
-# Commands directory for AI IDEs (Claude Desktop, Cursor, Windsurf, etc.)
-# Default: ".claude/commands"
-# For Cursor: ".cursor/commands"
-# For Windsurf: ".windsurf/commands"
-# commands_dir = ".claude/commands"
+agent_dir = ".agents"
 
 [schema]
-version = 1
-
-# [work_item]
-# ID strategy for work items (default: sequential)
-# - sequential: WI-YYYY-MM-DD-NNN (solo projects)
-# - author-hash: WI-YYYY-MM-DD-{hash}-NNN (multi-person teams, uses git email)
-# - random: WI-YYYY-MM-DD-{rand} (simple uniqueness)
-# id_strategy = "author-hash"
+version = 2
 
 [source_scan]
 enabled = true

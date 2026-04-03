@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-11-019"
 title = "adapter layer round-2 cleanup: Stage 5 materialize, DRY, and code smells"
 status = "done"

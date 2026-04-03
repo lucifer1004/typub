@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-20-003"
 title = "fix admonition to support block-level content including nested lists"
 status = "done"

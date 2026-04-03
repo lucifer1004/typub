@@ -1,0 +1,84 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-BLOCK-ELEMENTS"
+title = "Block Elements"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The `HtmlElement` enum MUST represent all block-level content structures from HTML input.
+
+**Required block element variants:**
+
+| Variant | Fields | Purpose |
+|---------|--------|---------|
+| `Heading` | `level: u8`, `fragments`, `attrs`, `anchor: Option<String>` | h1-h6 headings with optional anchor ID |
+| `Paragraph` | `fragments`, `attrs` | Text paragraphs |
+| `CodeBlock` | `code`, `highlighted`, `language`, `attrs`, `filename`, `highlight_lines` | Fenced code with optional highlighting |
+| `BulletList` | `items: Vec<ListItem>`, `attrs` | Unordered list (recursive items) |
+| `NumberedList` | `items: Vec<ListItem>`, `attrs`, `start: u32` | Ordered list with optional start number |
+| `TaskList` | `items: Vec<TaskItem>`, `attrs` | Checkbox list |
+| `DefinitionList` | `items: Vec<DefinitionItem>`, `attrs` | Definition list (dl/dt/dd) |
+| `Table` | `headers: Vec<TableCell>`, `rows: Vec<Vec<TableCell>>`, `attrs` | Tables with enhanced cells |
+| `Divider` | `attrs` | Horizontal rule |
+| `Quote` | `fragments`, `attrs`, `cite` | Blockquote with optional citation |
+| `RawHtml` | `String` | Pass-through HTML |
+| `Admonition` | `kind`, `title`, `children: Vec<HtmlElement>`, `attrs` | Callout blocks (note, warning, tip) with block-level content |
+| `Details` | `summary: Option<Vec<InlineFragment>>`, `children: Vec<HtmlElement>`, `attrs`, `open: bool` | Disclosure widget with optional summary and block-level content |
+| `Footnote` | `id`, `fragments` | Footnote definition |
+
+**Auxiliary types:**
+
+```rust
+pub struct ListItem {
+    pub fragments: Vec<InlineFragment>,
+    pub children: Vec<ListItem>,
+    pub list_type: Option<ListType>,  // hint for nested different-typed lists
+}
+
+pub struct TaskItem {
+    pub fragments: Vec<InlineFragment>,
+    pub children: Vec<TaskItem>,
+    pub checked: bool,
+}
+
+pub struct DefinitionItem {
+    pub term: Vec<InlineFragment>,
+    pub definition: Vec<InlineFragment>,
+}
+
+pub struct TableCell {
+    pub fragments: Vec<InlineFragment>,
+    pub colspan: u32,
+    pub rowspan: u32,
+    pub align: Option<TextAlign>,
+}
+
+pub enum ListType { Bullet, Numbered, Task }
+pub enum AdmonitionKind { Note, Tip, Warning, Danger, Info, Custom(String) }
+pub enum TextAlign { Left, Center, Right }
+```
+
+**Rationale:**
+Block-level elements define document structure. The recursive `ListItem` enables arbitrary nesting depth, matching HTML's `<li>` semantics. `TaskItem` separates checkbox lists for platforms with native support. `TableCell` provides layout control. Preserving HTML attributes enables platform-specific rendering features.
+
+**Image representation:**
+Per [[ADR-0011](../adr/ADR-0011.md)], images are always represented as inline fragments (`InlineFragment::Image` or `InlineFragment::ImageMarker`). A standalone `<img>` element at block level parses as a `Paragraph` containing a single image fragment. This unifies image handling and separates content representation (IR) from presentation concerns (adapters decide block vs inline rendering).
+
+**SVG representation:**
+Per [[ADR-0012](../adr/ADR-0012.md)], SVG elements are always represented as inline fragments (`InlineFragment::Svg`). A block-level SVG wrapper (`div.typst-svg-block`) parses as a `Paragraph` containing a single SVG fragment. This unifies SVG handling with the image pattern and maintains consistency in the IR design.
+
+**Admonition content:**
+The `Admonition` variant uses `children: Vec<HtmlElement>` instead of `fragments: Vec<InlineFragment>` to support block-level content inside callouts. This enables callouts to contain paragraphs, lists, code blocks, and even nested callouts. This matches GitHub/GitLab behavior where alerts can contain any markdown block, and Notion callouts can contain any block type.
+
+**Details content:**
+The `Details` variant represents HTML `<details>` disclosure widgets with an optional `<summary>` element. The `summary` field contains inline content, while `children` contains block-level content (any `HtmlElement`). The `open` boolean tracks whether the details should be expanded by default. This enables collapsible content sections that can contain complex block-level content including paragraphs, lists, code blocks, and nested details. Adapters map this to platform-specific representations: Notion uses callout blocks with folder icons, Markdown renders as raw HTML (no native Markdown equivalent), and other platforms may use toggle/expand components.
+
+*Since: v0.1.0*
+
+*Changed: v0.3.0 — Admonition.fragments changed to children: `Vec<HtmlElement>` for block-level content support*
+
+*Changed: v0.4.0 — Added Details variant for HTML disclosure widget support*"""

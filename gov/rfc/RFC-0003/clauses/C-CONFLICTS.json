@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-CONFLICTS",
-  "title": "Conflict and Retry Policy",
-  "kind": "normative",
-  "status": "active",
-  "text": "When remote state diverges from local assumptions during update, the adapter MUST surface a conflict-class error unless a fallback-to-create path is explicitly supported by the adapter behavior and duplicate precheck passes.\n\nConflict examples include:\n- missing remote object for stored remote identifier,\n- remote version/precondition mismatch,\n- immutable-state rejection by target platform,\n- duplicate-create candidate detected during create precheck.\n\nDuplicate-create rule:\n- If update target cannot be resolved and create precheck indicates an equivalent remote object already exists, the operation MUST fail with conflict-class error.\n- In this case, the adapter MUST NOT create a new remote object.\n\nRetry policy:\n- Callers MAY retry transient failures.\n- Callers SHOULD NOT blindly retry deterministic conflict errors without changing local or remote state.\n- If fallback-to-create is used after update miss, the operation MUST be observable in logs as an update->create transition.",
-  "since": "0.1.0"
-}

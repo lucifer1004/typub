@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-11-012"
 title = "name RFC-0002 pipeline stages"
 status = "done"

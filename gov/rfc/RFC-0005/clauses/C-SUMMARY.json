@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-SUMMARY",
-  "title": "Summary",
-  "kind": "informative",
-  "status": "active",
-  "text": "This RFC defines the configuration hierarchy and post lifecycle management for typub.\n\n**Scope:**\n- Three-layer configuration system (global, per-content, platform-specific) with 5-level resolution\n- Resolution order for configuration values\n- Draft/publish lifecycle states and transitions\n- Platform capability declarations for lifecycle support\n- Status tracking schema for remote state\n\n**Out of scope:**\n- Platform-specific API details (covered by adapter implementations)\n- Content rendering pipeline (covered by [RFC-0002](../rfc/RFC-0002.md))\n\n**Rationale:**\nAs typub supports more platforms with varying draft/publish capabilities, a unified abstraction is needed to:\n1. Allow per-content override of global settings\n2. Declare platform capabilities in a type-safe manner\n3. Track remote lifecycle state for correct transition handling\n4. Provide consistent behavior across platforms with different API models",
-  "since": "0.1.0"
-}

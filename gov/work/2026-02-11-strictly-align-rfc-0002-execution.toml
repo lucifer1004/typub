@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-11-006"
 title = "strictly align RFC-0002 execution"
 status = "done"

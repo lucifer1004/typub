@@ -1,0 +1,54 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-URL-CONSTRUCTION"
+title = "URL Construction"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The system MUST construct public URLs deterministically from the configured prefix and object key.
+
+**Prefix normalization:**
+The system MUST normalize `public_url_prefix` before use:
+1. Parse as URL.
+2. Lowercase the scheme and host only; preserve path case.
+3. Remove any trailing `/` characters from the path.
+4. The normalized prefix is stored and used for all URL construction.
+
+**URL join algorithm:**
+Given the normalized `public_url_prefix` and `object_key`, the public URL MUST be: `{public_url_prefix}/{object_key}`.
+
+**Object key construction:**
+The object key MUST be constructed per [[RFC-0004:C-UPLOAD-TRACKING]]:
+- If normalized extension is non-empty: `{content_hash}.{extension}`
+- If normalized extension is empty: `{content_hash}`
+
+Where:
+- `content_hash`: lowercase hex-encoded SHA-256 (64 characters).
+- `extension`: normalized extension per [[RFC-0004:C-UPLOAD-TRACKING]] (lowercase alphanumeric only).
+
+The object key requires no percent-encoding because it contains only hex characters, dots, and lowercase alphanumerics.
+
+**Examples:**
+
+| Original filename | Normalized extension | Object key |
+|---|---|---|
+| `image.PNG` | `png` | `a1b2...64chars.png` |
+| `photo.JPEG` | `jpeg` | `a1b2...64chars.jpeg` |
+| `README` | (empty) | `a1b2...64chars` |
+| `data.tar.gz` | `gz` | `a1b2...64chars.gz` |
+| `file.???` | (empty) | `a1b2...64chars` |
+
+**Full URL example:**
+- `public_url_prefix` (configured): `https://CDN.example.com/Assets/`
+- `public_url_prefix` (normalized): `https://cdn.example.com/Assets`
+- Content hash: `a1b2c3d4e5f6...` (64 chars)
+- Original filename: `my image.png`
+- Normalized extension: `png`
+- Object key: `a1b2c3d4e5f6...64chars.png`
+- Public URL: `https://cdn.example.com/Assets/a1b2c3d4e5f6...64chars.png`
+
+**Rationale:** Normalizing only the scheme and host (not path) preserves case-sensitive path semantics per RFC 3986. Using only safe characters in object keys avoids encoding complexity and URL parsing issues. Explicit handling of empty extension ensures consistent behavior for extensionless files."""

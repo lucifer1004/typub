@@ -1,0 +1,25 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-ADAPTER-BOUNDARY"
+title = "Adapter Boundary Contract"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+For this RFC, an adapter is the platform-specific integration component that translates shared pipeline output into target-specific publish API requests and responses.
+
+Each adapter implementation MUST declare:
+- required input/output format expectations,
+- asset strategy behavior,
+- capability surface (for example tags/categories/internal-links support),
+- unsupported behavior per capability gap (warn+degrade or hard error).
+
+Capability declarations SHOULD be available in a machine-readable or centrally documented form.
+
+Shared pipeline logic MUST remain platform-agnostic where practical.
+Adapter code MUST encapsulate platform-specific API calls and target-specific output shaping.
+
+An adapter MUST NOT bypass status tracking writes on successful publish."""

@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-17-001"
 title = "add upload support for PNG math"
 status = "done"

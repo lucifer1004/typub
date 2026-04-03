@@ -1,0 +1,26 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SUMMARY"
+title = "Summary"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+Typub is a local-first, Typst-first CMS intended for writers who want plain files, deterministic rendering, and multi-platform publishing without surrendering ownership to a hosted editor.
+
+This RFC establishes the project vision and boundaries for [[RFC-0001]]. It is intentionally informative and does not define normative protocol or API requirements.
+
+Scope for [[RFC-0001]]:
+- Define the high-level product identity and target user workflow.
+- Define the principles that guide future normative RFCs.
+- Define explicit non-goals to prevent accidental scope creep.
+
+Out of scope for [[RFC-0001]]:
+- Adapter-specific API contracts.
+- Storage and schema contracts.
+- Detailed CLI or renderer behavior guarantees.
+
+This RFC is vision-only by design. Normative requirements will be introduced in subsequent RFCs."""

@@ -1,0 +1,25 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SUMMARY"
+title = "Summary"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+This RFC specifies an adapter extension API that enables third-party adapters to be registered and used by the typub CLI without modifying core source code.
+
+**Scope:**
+- Defines the `AdapterRegistrar` API for runtime registration of adapter factories and capabilities.
+- Specifies capability lookup order when multiple sources provide capabilities.
+- Specifies backward compatibility constraints for existing built-in adapters and configurations.
+
+**Out of Scope:**
+- Dynamic library plugin loading (deferred to a future RFC).
+- Data-driven adapters via manifest/template (deferred to a future RFC).
+
+**Rationale:**
+The current adapter architecture requires editing multiple core files (`Adapter` enum, factory array, `adapters.toml`) to add new adapters. This creates friction for third-party integrations and makes the codebase harder to maintain. A registration-based API decouples adapter creation from core dispatch logic, enabling extension crates to inject adapters at startup.
+"""

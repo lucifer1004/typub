@@ -1,0 +1,29 @@
+#:schema ../../schema/rfc.schema.json
+
+[govctl]
+id = "RFC-0003"
+title = "update and republish semantics"
+version = "0.1.0"
+status = "normative"
+phase = "impl"
+owners = ["@lucifer1004"]
+created = "2026-02-11"
+updated = "2026-02-11"
+
+[[sections]]
+title = "Summary"
+clauses = ["clauses/C-SUMMARY.toml"]
+
+[[sections]]
+title = "Specification"
+clauses = [
+    "clauses/C-DECISION-KEY.toml",
+    "clauses/C-IDEMPOTENCY.toml",
+    "clauses/C-CONFLICTS.toml",
+    "clauses/C-STATUS.toml",
+]
+
+[[changelog]]
+version = "0.1.0"
+date = "2026-02-11"
+notes = "Initial draft"

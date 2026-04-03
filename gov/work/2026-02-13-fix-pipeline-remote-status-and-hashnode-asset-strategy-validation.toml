@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-025"
 title = "fix pipeline remote_status and hashnode asset strategy validation"
 status = "done"

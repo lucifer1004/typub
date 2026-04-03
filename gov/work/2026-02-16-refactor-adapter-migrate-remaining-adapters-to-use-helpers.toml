@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-16-003"
 title = "refactor(adapter): migrate remaining adapters to use helpers"
 status = "done"

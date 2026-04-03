@@ -1,0 +1,18 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-STATUS"
+title = "Republish Status Semantics"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+On successful create or update, status persistence MUST satisfy [[RFC-0002:C-FAILURE-SEMANTICS]] and additionally meet the following republish rules:
+
+- The persisted post+platform record MUST represent the latest successful publish outcome.
+- If a remote identifier changes because of update->create fallback, local status MUST be replaced with the new identifier atomically.
+- If remote publish succeeds but local status persistence fails, the operation MUST fail and MUST include reconciliation guidance consistent with [[RFC-0002:C-FAILURE-SEMANTICS]].
+
+A successful republish record MAY omit URL when target platform does not provide one."""

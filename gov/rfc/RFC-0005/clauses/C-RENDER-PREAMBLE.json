@@ -1,8 +1,0 @@
-{
-  "clause_id": "C-RENDER-PREAMBLE",
-  "title": "Typst Render Preamble Resolution and Merge",
-  "kind": "normative",
-  "status": "active",
-  "text": "typub MUST support an optional `preamble` configuration key for Typst render wrapper injection.\n\nThe `preamble` key MUST resolve using the standard 5-level resolution order defined in [RFC-0005:C-RESOLUTION-ORDER](../rfc/RFC-0005.md#rfc-0005c-resolution-order):\n\n1. `meta.toml[platforms.<platform_id>].preamble`\n2. `meta.toml.preamble`\n3. `typub.toml[platforms.<platform_id>].preamble`\n4. `typub.toml.preamble`\n5. Adapter-defined default (render config default)\n\nResolution semantics MUST use nullable presence (`Option<String>` equivalent):\n- Missing value at a layer MUST be treated as `None` and fall through.\n- Present value at a layer MUST be treated as `Some(value)` and stop fallback.\n\nDuring Render stage wrapper assembly, implementations MUST preserve adapter-specific preamble behavior and append resolved user preamble after adapter preamble when present:\n\n`final_preamble = adapter_preamble + \"\\n\\n\" + user_preamble`\n\nIf no user preamble is resolved, adapter preamble MUST remain unchanged.\n\nRationale:\n- Preserves existing platform-specific preamble contracts (for example Confluence and Xiaohongshu).\n- Keeps user customization aligned with the unified configuration resolution model.",
-  "since": "0.2.2"
-}

@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-27-002"
 title = "test: add test case for footnote sorting with double-digit IDs"
 status = "done"

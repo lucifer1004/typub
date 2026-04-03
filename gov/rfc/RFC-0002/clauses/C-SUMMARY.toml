@@ -1,0 +1,20 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SUMMARY"
+title = "Summary"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+[[RFC-0002]] defines the normative contract for typub's publish pipeline, grounded in product intent from [[RFC-0001]].
+
+This RFC specifies:
+- The required pipeline stages and their ordering.
+- The contract between shared pipeline logic and platform adapters.
+- Failure handling and status persistence semantics during publish.
+
+This RFC does not define platform-specific API details. Those belong to adapter-specific RFCs/ADRs.
+Update and republish semantics are out of scope for this draft and will be defined in a follow-up RFC."""

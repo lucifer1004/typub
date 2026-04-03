@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-15-005"
 title = "refactor main crate renderer and pipeline layout"
 status = "done"

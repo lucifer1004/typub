@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-13-010"
 title = "TOML-driven adapter capabilities with short_code SSOT"
 status = "done"

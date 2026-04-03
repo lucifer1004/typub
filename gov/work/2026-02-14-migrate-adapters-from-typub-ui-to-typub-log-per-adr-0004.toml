@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-14-011"
 title = "migrate adapters from typub-ui to typub-log per ADR-0004"
 status = "done"

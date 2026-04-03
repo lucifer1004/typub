@@ -1,4 +1,4 @@
-# AGENTS.md - Agent Guide for typub
+# Agent Guide for typub
 
 This guide defines the default working rules for agents in this repository.
 
@@ -77,12 +77,6 @@ govctl rfc show <RFC-ID>
 govctl clause show <RFC-ID>:<CLAUSE-ID>
 govctl adr show <ADR-ID>
 ```
-
-### Governance Modeling Rules for AST Refactor
-
-- Migration strategy decisions belong in ADRs, not RFC clauses.
-- For AST v2 migration, keep policy in ADR-0013 and enforce semantics in RFC-0009 clauses.
-- When retiring an RFC line, run `govctl rfc deprecate <RFC-ID>` and update `C-SUMMARY` to point to the replacement RFC.
 
 ## Local Notes Boundary
 

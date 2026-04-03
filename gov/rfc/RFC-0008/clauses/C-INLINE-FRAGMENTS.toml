@@ -1,0 +1,67 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-INLINE-FRAGMENTS"
+title = "Inline Fragments"
+kind = "normative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+The `InlineFragment` enum MUST represent all inline-level content within text flow.
+
+**Required inline fragment variants:**
+
+| Variant | Fields | Purpose |
+|---------|--------|---------|
+| `Text` | `String` | Plain text |
+| `Styled` | `style: TextStyle`, `fragments: Vec<InlineFragment>` | Unified styling (recursive) |
+| `InlineCode` | `String` | Inline code span |
+| `Link` | `fragments`, `href`, `title` | Hyperlink with nested content |
+| `Svg` | `svg_content`, `math_src` | Inline SVG (math equations) |
+| `Image` | `src`, `alt`, `attrs`, `title` | Resolved inline image |
+| `ImageMarker` | `path`, `alt`, `attrs` | Pending inline image |
+| `LineBreak` | - | Hard line break (`<br>`) |
+| `SoftBreak` | - | Soft break (markdown: two trailing spaces) |
+| `FootnoteRef` | `id` | Footnote reference |
+
+**TextStyle enum:**
+
+```rust
+pub enum TextStyle {
+    Bold,
+    Italic,
+    Strikethrough,
+    Underline,
+    Mark,
+    Superscript,
+    Subscript,
+    Kbd,
+}
+```
+
+**Recursion rule:**
+The `Styled` variant MUST contain nested `Vec<InlineFragment>` to support arbitrary nesting depth. Multiple styles can be nested (e.g., bold + italic).
+
+**Convenience constructors:**
+Implementations SHOULD provide helper constructors for ergonomic fragment creation:
+- `InlineFragment::bold(fragments)` → `Styled { style: TextStyle::Bold, fragments }`
+- `InlineFragment::italic(fragments)` → `Styled { style: TextStyle::Italic, fragments }`
+- Similar helpers for other styles
+
+**Image inside link:**
+The model MUST support `<a href="..."><img src="..."/></a>` since `Link.fragments` can contain `Image` as an `InlineFragment` variant.
+
+**Text extraction:**
+The IR MUST support extracting plain text from any `InlineFragment` for purposes such as:
+- Building table of contents
+- Search indexing
+- Alt text generation
+
+**Rationale:**
+Unifying the eight styling variants into a single `Styled` variant with `TextStyle` enum reduces code duplication in pattern matching, improves extensibility for new styles, and maintains the same recursive nesting capability. The convenience constructors preserve ergonomics while centralizing styling logic. This matches common document model patterns (e.g., ProseMirror marks, Slate.js leaf annotations) where styling is orthogonal to content structure. The marker pattern (`ImageMarker`) enables deferred asset resolution per [[RFC-0004:C-PIPELINE-INTEGRATION]].
+
+*Since: v0.1.0*
+
+*Changed: v0.3.0 — Unified 8 separate styling variants into Styled { style: TextStyle, fragments }*"""

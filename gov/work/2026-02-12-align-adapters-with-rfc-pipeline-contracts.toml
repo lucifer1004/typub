@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-12-014"
 title = "Align adapters with RFC pipeline contracts"
 status = "done"

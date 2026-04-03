@@ -22,17 +22,32 @@ pub fn content_info_from(content: &Content) -> ContentInfo {
     )
 }
 
-pub fn content_info_with_platform(content: &Content, platform_id: &str) -> ContentInfo {
-    // Extract string values from platform extra config
-    let platform_extra = content
-        .platform_config(platform_id)
-        .map(|cfg| {
-            cfg.extra
-                .iter()
-                .filter_map(|(k, v)| v.as_str().map(|s| (k.clone(), s.to_string())))
-                .collect()
+pub fn content_info_with_platform(
+    content: &Content,
+    platform_id: &str,
+    config: &Config,
+) -> ContentInfo {
+    // Collect all unique keys from both post-level and global-level platform config
+    let mut all_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
+
+    // Keys from post-level platform config
+    if let Some(post_cfg) = content.platform_config(platform_id) {
+        all_keys.extend(post_cfg.extra.keys().cloned());
+    }
+
+    // Keys from global platform config
+    if let Some(global_cfg) = config.platforms.get(platform_id) {
+        all_keys.extend(global_cfg.extra.keys().cloned());
+    }
+
+    // Resolve each key using proper 4-layer resolution
+    let platform_extra: std::collections::HashMap<String, String> = all_keys
+        .into_iter()
+        .filter_map(|key| {
+            crate::resolved_config::resolve_platform_field(content, platform_id, config, &key, None)
+                .map(|value| (key, value))
         })
-        .unwrap_or_default();
+        .collect();
 
     ContentInfo::with_platform_extra(
         content.meta.title.clone(),

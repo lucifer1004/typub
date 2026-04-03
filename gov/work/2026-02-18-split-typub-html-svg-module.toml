@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-18-005"
 title = "Split typub-html/svg module"
 status = "done"

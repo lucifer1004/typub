@@ -1,5 +1,6 @@
+#:schema ../schema/work.schema.json
+
 [govctl]
-schema = 1
 id = "WI-2026-02-11-016"
 title = "implement rfc-0003 update-republish semantics"
 status = "done"

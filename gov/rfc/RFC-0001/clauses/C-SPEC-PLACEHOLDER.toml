@@ -1,0 +1,14 @@
+#:schema ../../../schema/clause.schema.json
+
+[govctl]
+id = "C-SPEC-PLACEHOLDER"
+title = "Specification Scope Note"
+kind = "informative"
+status = "active"
+since = "0.1.0"
+
+[content]
+text = """
+This section intentionally contains no normative clauses in [[RFC-0001]].
+
+Normative requirements (MUST/SHOULD/MAY) will be specified in follow-up RFCs that cover concrete behavior and contracts."""
