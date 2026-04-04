@@ -27,6 +27,7 @@ pub struct ConfluenceAdapter {
     client: Client,
     base_url: String,
     default_space: String,
+    default_parent_id: Option<String>,
     api_key: Option<String>,
     email: Option<String>,
     fallback_theme: Theme,
@@ -66,8 +67,10 @@ impl ConfluenceAdapter {
             .and_then(|c| c.get_str("base_url"))
             .unwrap_or_else(|| "https://confluence.atlassian.net".to_string());
 
+        // Support both 'space' (new standard) and 'default_space' (legacy) for backward compatibility
         let default_space = platform_config
-            .and_then(|c| c.get_str("default_space"))
+            .and_then(|c| c.get_str("space"))
+            .or_else(|| platform_config.and_then(|c| c.get_str("default_space")))
             .unwrap_or_else(|| "DOCS".to_string());
 
         let api_key = platform_config
@@ -86,10 +89,14 @@ impl ConfluenceAdapter {
         let latex_math_app_id = platform_config.and_then(|c| c.get_str("latex_math_app_id"));
         let latex_math_env_id = platform_config.and_then(|c| c.get_str("latex_math_env_id"));
 
+        // Default parent page ID for new pages (can be overridden per-post)
+        let default_parent_id = platform_config.and_then(|c| c.get_str("parent_id"));
+
         Ok(Self {
             client: Client::new(),
             base_url,
             default_space,
+            default_parent_id,
             api_key,
             email,
             fallback_theme,
@@ -125,6 +132,7 @@ impl ConfluenceAdapter {
             client: Client::new(),
             base_url: base_url.to_string(),
             default_space: default_space.to_string(),
+            default_parent_id: None,
             api_key: None,
             email: None,
             fallback_theme,
@@ -493,7 +501,9 @@ impl PlatformAdapter for ConfluenceAdapter {
         let space = content_info
             .get_platform_str("space")
             .unwrap_or_else(|| self.default_space.clone());
-        let parent_id = content_info.get_platform_str("parent_id");
+        let parent_id = content_info
+            .get_platform_str("parent_id")
+            .or_else(|| self.default_parent_id.clone());
 
         let published = ctx.published();
         let status = if published { "current" } else { "draft" };

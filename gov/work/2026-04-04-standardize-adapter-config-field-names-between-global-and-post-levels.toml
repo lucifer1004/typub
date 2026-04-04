@@ -1,0 +1,27 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-04-04-002"
+title = "Standardize adapter config field names between global and post levels"
+status = "done"
+created = "2026-04-04"
+started = "2026-04-04"
+completed = "2026-04-04"
+
+[content]
+description = "Fix Confluence adapter config field naming inconsistency. Global config uses 'default_space' while post config uses 'space'. Also add global config support for 'parent_id'. Full audit shows these are the only naming issues in the codebase."
+
+[[content.acceptance_criteria]]
+text = "Confluence global config reads 'space' (with 'default_space' fallback) instead of only 'default_space'"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "Confluence supports 'parent_id' at global level (typub.toml) with post-level override"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "All existing tests pass, including new tests for config field resolution"
+status = "done"
+category = "chore"

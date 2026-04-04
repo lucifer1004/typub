@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - StorageConfig correctly merges global and per-platform config (WI-2026-02-13-003)
 - FootnoteId changed to numeric type for correct sorting (WI-2026-02-27-001)
 - resolve_platform_field implements 4-layer resolution for platform-specific fields (WI-2026-04-04-001)
+- Confluence global config reads 'space' (with 'default_space' fallback) instead of only 'default_space' (WI-2026-04-04-002)
+- Confluence supports 'parent_id' at global level (typub.toml) with post-level override (WI-2026-04-04-002)
 
 ## [0.1.0] - 2026-02-23
 
