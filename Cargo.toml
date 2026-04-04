@@ -184,5 +184,5 @@ typub-adapters-core.workspace = true
 typub-html.workspace = true
 wiremock.workspace = true
 
-[release.package]
+[package.metadata.release]
 pre-release-commit-message = "chore: release typub {{version}}"

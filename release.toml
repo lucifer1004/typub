@@ -70,9 +70,7 @@ tag-message = "chore({{crate_name}}): release {{version}}"
 push = true
 push-remote = "origin"
 
-# Don't verify registry access during dry-run
-# This allows testing release process without crates.io access
-verify = false
+verify = true
 
 # =============================================================================
 # Publishing Order (Automatic)
