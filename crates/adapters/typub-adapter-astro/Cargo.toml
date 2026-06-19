@@ -1,14 +1,14 @@
 [package]
 name = "typub-adapter-astro"
 description = "Astro Content Collection adapter for typub - outputs Markdown with YAML frontmatter"
-version = "0.1.1"
+version = "0.1.2"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 
 [features]
-default = []
+default = ["s3"]
 s3 = ["typub-adapters-core/s3", "typub-storage/s3"]
 
 [dependencies]

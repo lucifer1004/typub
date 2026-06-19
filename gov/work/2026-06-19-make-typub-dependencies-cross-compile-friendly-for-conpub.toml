@@ -9,19 +9,19 @@ started = "2026-06-19"
 completed = "2026-06-19"
 
 [content]
-description = "Make typub's default publishing dependency graph avoid aws-lc/rust-s3 so downstream tools like conpub can cross-compile cleanly, while retaining S3 external storage as an explicit feature."
+description = "Restore full default S3/external asset support for typub and published typub subcrates while keeping S3 optional for downstream consumers such as conpub that explicitly opt out with default-features = false."
 
 [[content.acceptance_criteria]]
-text = "Default typub-engine dependency tree does not include aws-lc-sys or rust-s3"
+text = "typub and published typub subcrates default to full S3/external asset support"
 status = "done"
 category = "fixed"
 
 [[content.acceptance_criteria]]
-text = "fmt, clippy -D warnings, and workspace tests pass before publishing"
+text = "Downstream consumers can use default-features = false to avoid rust-s3/aws-lc-sys"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "fmt, clippy -D warnings, workspace tests, and publish dry-runs pass before release"
 status = "done"
 category = "chore"
-
-[[content.acceptance_criteria]]
-text = "S3 external storage remains available behind an explicit s3 feature"
-status = "done"
-category = "fixed"

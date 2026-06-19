@@ -1,6 +1,6 @@
 [package]
 name = "typub-engine"
-version = "0.1.2"
+version = "0.1.3"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -8,7 +8,7 @@ homepage.workspace = true
 description = "Build engine for typub (pipeline, rendering, assets, project)."
 
 [features]
-default = []
+default = ["s3"]
 s3 = [
     "typub-adapters-core/s3",
     "typub-adapter-astro/s3",

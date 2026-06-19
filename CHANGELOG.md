@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-06-19
+
 ### Fixed
 
-- Default typub-engine dependency tree does not include aws-lc-sys or rust-s3 (WI-2026-06-19-001)
-- S3 external storage remains available behind an explicit s3 feature (WI-2026-06-19-001)
+- typub and published typub subcrates default to full S3/external asset support (WI-2026-06-19-001)
+- Downstream consumers can use default-features = false to avoid rust-s3/aws-lc-sys (WI-2026-06-19-001)
 
 ## [0.1.1] - 2026-04-04
 

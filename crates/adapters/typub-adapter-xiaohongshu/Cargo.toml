@@ -1,14 +1,14 @@
 [package]
 name = "typub-adapter-xiaohongshu"
 description = "Xiaohongshu (小红书) adapter for typub - generates slide images"
-version = "0.1.1"
+version = "0.1.2"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 
 [features]
-default = []
+default = ["s3"]
 s3 = ["typub-adapters-core/s3", "typub-storage/s3"]
 
 [dependencies]

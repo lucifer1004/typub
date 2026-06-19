@@ -1,6 +1,6 @@
 [package]
 name = "typub-adapter-confluence"
-version = "0.1.3"
+version = "0.1.4"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -8,7 +8,7 @@ homepage.workspace = true
 description = "Confluence adapter for typub publishing"
 
 [features]
-default = []
+default = ["s3"]
 s3 = ["typub-adapters-core/s3", "typub-storage/s3"]
 
 [dependencies]
