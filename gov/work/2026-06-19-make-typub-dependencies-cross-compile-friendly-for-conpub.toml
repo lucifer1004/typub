@@ -1,0 +1,27 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-06-19-001"
+title = "Make typub dependencies cross-compile friendly for conpub"
+status = "done"
+created = "2026-06-19"
+started = "2026-06-19"
+completed = "2026-06-19"
+
+[content]
+description = "Make typub's default publishing dependency graph avoid aws-lc/rust-s3 so downstream tools like conpub can cross-compile cleanly, while retaining S3 external storage as an explicit feature."
+
+[[content.acceptance_criteria]]
+text = "Default typub-engine dependency tree does not include aws-lc-sys or rust-s3"
+status = "done"
+category = "fixed"
+
+[[content.acceptance_criteria]]
+text = "fmt, clippy -D warnings, and workspace tests pass before publishing"
+status = "done"
+category = "chore"
+
+[[content.acceptance_criteria]]
+text = "S3 external storage remains available behind an explicit s3 feature"
+status = "done"
+category = "fixed"

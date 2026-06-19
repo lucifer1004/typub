@@ -52,12 +52,12 @@ Modify `content_info_with_platform()` to:
 
 This approach:
 - Maintains backward compatibility: adapters continue to use `get_platform_str()`
-- Follows RFC-0005: implements proper 4-layer resolution
+- Follows [[RFC-0005]]: implements proper 4-layer resolution
 - Is extensible: works for any platform-specific field without adapter changes"""
 consequences = """
 ### Positive
 
-- Platform-specific fields now properly follow the RFC-0005 resolution order
+- Platform-specific fields now properly follow the [[RFC-0005]] resolution order
 - Users can set global defaults in `typub.toml` and override per-post in `meta.toml`
 - No changes required to adapter code - they continue using `get_platform_str()`
 - Consistent behavior across all adapters (Confluence, Xiaohongshu, Astro, Static, WordPress)

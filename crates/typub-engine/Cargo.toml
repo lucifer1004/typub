@@ -1,11 +1,28 @@
 [package]
 name = "typub-engine"
-version = "0.1.1"
+version = "0.1.2"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 description = "Build engine for typub (pipeline, rendering, assets, project)."
+
+[features]
+default = []
+s3 = [
+    "typub-adapters-core/s3",
+    "typub-adapter-astro/s3",
+    "typub-adapter-confluence/s3",
+    "typub-adapter-copypaste/s3",
+    "typub-adapter-devto/s3",
+    "typub-adapter-ghost/s3",
+    "typub-adapter-hashnode/s3",
+    "typub-adapter-notion/s3",
+    "typub-adapter-static/s3",
+    "typub-adapter-wordpress/s3",
+    "typub-adapter-xiaohongshu/s3",
+    "typub-storage/s3",
+]
 
 [dependencies]
 anyhow.workspace = true

@@ -2,22 +2,36 @@
 //!
 //! Per [[RFC-0004:C-UPLOAD-TRACKING]].
 
-use anyhow::{Context, Result};
+#[cfg(feature = "s3")]
+use anyhow::Context;
+use anyhow::Result;
+#[cfg(feature = "s3")]
 use s3::creds::Credentials;
+#[cfg(feature = "s3")]
 use s3::{Bucket, Region};
 use sha2::{Digest, Sha256};
 use std::path::Path;
 use typub_config::StorageConfig;
 
+#[cfg(feature = "s3")]
 use crate::mime_type_from_path;
 
 /// S3-compatible storage client
 /// Per [[RFC-0004:C-UPLOAD-TRACKING]]
+#[cfg(feature = "s3")]
 pub struct S3Storage {
     bucket: Box<Bucket>,
     url_prefix: String,
     config_id: String,
 }
+
+/// S3-compatible storage client.
+///
+/// The default typub-storage build keeps status tracking and local asset
+/// utilities available without compiling the S3 HTTP stack. Enable the `s3`
+/// feature to perform external storage uploads.
+#[cfg(not(feature = "s3"))]
+pub struct S3Storage;
 
 /// Result of an asset upload
 #[derive(Debug, Clone)]
@@ -34,6 +48,7 @@ pub struct UploadResult {
 
 impl S3Storage {
     /// Create a new S3Storage client from config
+    #[cfg(feature = "s3")]
     pub fn new(config: &StorageConfig) -> Result<Self> {
         config.validate()?;
 
@@ -98,18 +113,39 @@ impl S3Storage {
         })
     }
 
+    /// Create a new S3Storage client from config.
+    #[cfg(not(feature = "s3"))]
+    pub fn new(_config: &StorageConfig) -> Result<Self> {
+        anyhow::bail!("typub-storage was built without the `s3` feature")
+    }
+
     /// Get the storage configuration identifier
+    #[cfg(feature = "s3")]
     pub fn config_id(&self) -> &str {
         &self.config_id
     }
 
+    /// Get the storage configuration identifier.
+    #[cfg(not(feature = "s3"))]
+    pub fn config_id(&self) -> &str {
+        ""
+    }
+
     /// Get the URL prefix
+    #[cfg(feature = "s3")]
     pub fn url_prefix(&self) -> &str {
         &self.url_prefix
     }
 
+    /// Get the URL prefix.
+    #[cfg(not(feature = "s3"))]
+    pub fn url_prefix(&self) -> &str {
+        ""
+    }
+
     /// Upload an asset to S3
     /// Per [[RFC-0004:C-UPLOAD-TRACKING]] and [[RFC-0004:C-URL-CONSTRUCTION]]
+    #[cfg(feature = "s3")]
     pub async fn upload(&self, local_path: &Path, data: &[u8]) -> Result<UploadResult> {
         let content_hash = Self::compute_hash(data);
         let extension = Self::normalize_extension(local_path);
@@ -150,13 +186,26 @@ impl S3Storage {
         })
     }
 
+    /// Upload an asset to S3.
+    #[cfg(not(feature = "s3"))]
+    pub async fn upload(&self, _local_path: &Path, _data: &[u8]) -> Result<UploadResult> {
+        anyhow::bail!("typub-storage was built without the `s3` feature")
+    }
+
     /// Check if an object exists in S3
+    #[cfg(feature = "s3")]
     pub async fn exists(&self, key: &str) -> Result<bool> {
         match self.bucket.head_object(key).await {
             Ok(_) => Ok(true),
             Err(s3::error::S3Error::HttpFailWithBody(404, _)) => Ok(false),
             Err(e) => Err(e).context(format!("Failed to check if object '{}' exists", key)),
         }
+    }
+
+    /// Check if an object exists in S3.
+    #[cfg(not(feature = "s3"))]
+    pub async fn exists(&self, _key: &str) -> Result<bool> {
+        anyhow::bail!("typub-storage was built without the `s3` feature")
     }
 
     /// Compute SHA-256 hash of data (lowercase hex, 64 chars)

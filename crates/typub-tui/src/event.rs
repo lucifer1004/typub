@@ -90,10 +90,8 @@ fn handle_view_keys(app: &mut App<'_>, code: KeyCode) {
                 app.cycle_sort_field();
             }
         }
-        KeyCode::Char('S') => {
-            if app.view == View::PostList {
-                app.toggle_sort_order();
-            }
+        KeyCode::Char('S') if app.view == View::PostList => {
+            app.toggle_sort_order();
         }
         _ => {}
     }

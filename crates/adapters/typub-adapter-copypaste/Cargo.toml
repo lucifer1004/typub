@@ -1,12 +1,16 @@
 [package]
 name = "typub-adapter-copypaste"
 description = "Generic copy-paste adapter for typub multi-platform publishing"
-version = "0.1.0"
+version = "0.1.1"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 build = "build.rs"
+
+[features]
+default = []
+s3 = ["typub-adapters-core/s3", "typub-storage/s3"]
 
 [dependencies]
 typub-adapters-core.workspace = true
