@@ -4969,7 +4969,7 @@ dependencies = [
 
 [[package]]
 name = "typub-assets-ast"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "tempfile",
@@ -5057,7 +5057,7 @@ dependencies = [
 
 [[package]]
 name = "typub-html"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "enumset",
@@ -5095,7 +5095,7 @@ dependencies = [
 
 [[package]]
 name = "typub-markdown"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "comrak",
@@ -5110,7 +5110,7 @@ dependencies = [
 
 [[package]]
 name = "typub-passes"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "resvg",
