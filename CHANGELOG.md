@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Publish and dry-run and preview pipelines all reject a pending upload asset whose local path is missing before provision_target runs, naming the original reference and the resolved path (WI-2026-07-06-001)
 - Confluence attachment errors distinguish local read failures from remote rejections (status and body included for remote) (WI-2026-07-06-001)
 - Missing Confluence credentials produce one error naming every missing field and its lookup chain (WI-2026-07-06-001)
+- update_page sends ancestors with the planned parent id whenever the payload carries one, so title-adopted pages move under the planned parent on the same publish (WI-2026-07-07-001)
+- update_page without a planned parent sends no ancestors key and leaves the remote parent untouched (WI-2026-07-07-001)
+- wiremock coverage proves both shapes at the request-body level (expect(1) on a body_partial_json ancestors match; negative body match for the parentless update) (WI-2026-07-07-001)
 
 ## [0.1.3] - 2026-06-19
 
