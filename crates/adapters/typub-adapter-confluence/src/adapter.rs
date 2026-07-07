@@ -145,15 +145,21 @@ impl ConfluenceAdapter {
     }
 
     fn get_auth(&self) -> Result<(&str, &str)> {
-        let token = self
-            .api_key
-            .as_ref()
-            .ok_or_else(|| anyhow::anyhow!("CONFLUENCE_API_KEY not set"))?;
-        let email = self
-            .email
-            .as_ref()
-            .ok_or_else(|| anyhow::anyhow!("CONFLUENCE_EMAIL not set"))?;
-        Ok((email, token))
+        match (self.email.as_ref(), self.api_key.as_ref()) {
+            (Some(email), Some(token)) => Ok((email, token)),
+            (email, token) => {
+                let mut missing = Vec::new();
+                if token.is_none() {
+                    missing.push(
+                        "api_key (platforms.confluence.api_key or CONFLUENCE_API_KEY env var)",
+                    );
+                }
+                if email.is_none() {
+                    missing.push("email (platforms.confluence.email or CONFLUENCE_EMAIL env var)");
+                }
+                anyhow::bail!("Confluence credentials missing: {}", missing.join("; "))
+            }
+        }
     }
 
     /// Get configured LaTeX Math app ID.
@@ -300,8 +306,12 @@ impl ConfluenceAdapter {
             .and_then(|n| n.to_str())
             .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?;
 
-        let file_data = std::fs::read(file_path)
-            .with_context(|| format!("Failed to read file: {}", file_path.display()))?;
+        let file_data = std::fs::read(file_path).with_context(|| {
+            format!(
+                "Failed to read staged asset '{}' (local file, nothing was sent to Confluence)",
+                file_path.display()
+            )
+        })?;
 
         let mime_type = mime_type_from_path(file_path);
 
@@ -324,12 +334,17 @@ impl ConfluenceAdapter {
             .multipart(form)
             .send()
             .await
-            .context("Failed to upload attachment")?;
+            .with_context(|| format!("Confluence attachment request failed for '{file_name}'"))?;
 
         if !response.status().is_success() {
             let status = response.status();
             let body = response.text().await.unwrap_or_default();
-            anyhow::bail!("Confluence attachment upload error ({}): {}", status, body);
+            anyhow::bail!(
+                "Confluence rejected attachment '{}' ({}): {}",
+                file_name,
+                status,
+                body
+            );
         }
 
         let upload: AttachmentResponse = response
@@ -469,15 +484,17 @@ impl PlatformAdapter for ConfluenceAdapter {
     }
 
     fn validate_config(&self, _config: &typub_config::PlatformConfig) -> Result<()> {
+        // Report every missing credential at once; the lookup chain is the
+        // platform config field first, then the environment variable.
+        let mut missing = Vec::new();
         if self.api_key.is_none() {
-            anyhow::bail!(
-                "CONFLUENCE_API_KEY not set (configure confluence.api_key or set CONFLUENCE_API_KEY env var)"
-            );
+            missing.push("api_key (platforms.confluence.api_key or CONFLUENCE_API_KEY env var)");
         }
         if self.email.is_none() {
-            anyhow::bail!(
-                "CONFLUENCE_EMAIL not set (configure confluence.email or set CONFLUENCE_EMAIL env var)"
-            );
+            missing.push("email (platforms.confluence.email or CONFLUENCE_EMAIL env var)");
+        }
+        if !missing.is_empty() {
+            anyhow::bail!("Confluence credentials missing: {}", missing.join("; "));
         }
         Ok(())
     }
@@ -634,7 +651,8 @@ impl PlatformAdapter for ConfluenceAdapter {
                     .await
                     .with_context(|| {
                         format!(
-                            "Failed to upload Confluence attachment '{}'",
+                            "attachment '{}' (staged at '{}')",
+                            asset.original_ref,
                             asset.local_path.display()
                         )
                     })?;
@@ -810,5 +828,90 @@ mod tests {
         let labels = ConfluenceAdapter::normalize_labels(&[long_label]);
         assert_eq!(labels.len(), 1);
         assert_eq!(labels[0].len(), 255);
+    }
+
+    #[test]
+    fn test_missing_credentials_reported_once_naming_both() -> Result<()> {
+        let adapter = ConfluenceAdapter::new_for_test();
+        let msg = match adapter.get_auth() {
+            Ok(_) => anyhow::bail!("credentials unexpectedly present"),
+            Err(err) => err.to_string(),
+        };
+        assert!(msg.contains("api_key"), "names api_key: {msg}");
+        assert!(msg.contains("email"), "names email: {msg}");
+        assert!(msg.contains("CONFLUENCE_API_KEY"), "names env chain: {msg}");
+        Ok(())
+    }
+
+    fn adapter_with_credentials(base_url: &str) -> ConfluenceAdapter {
+        let mut adapter = ConfluenceAdapter::new_for_test_with(
+            base_url,
+            "DOCS",
+            AssetStrategy::Upload,
+            MathRendering::Latex,
+        );
+        adapter.api_key = Some("token".to_string());
+        adapter.email = Some("user@example.com".to_string());
+        adapter
+    }
+
+    #[tokio::test]
+    async fn test_upload_attachment_missing_local_file_is_a_local_error() -> Result<()> {
+        let adapter = adapter_with_credentials("http://127.0.0.1:9");
+        let msg = match adapter
+            .upload_attachment("42", Path::new("/nonexistent/dir/figure.png"))
+            .await
+        {
+            Ok(_) => anyhow::bail!("upload of a missing file unexpectedly succeeded"),
+            Err(err) => format!("{err:#}"),
+        };
+        assert!(
+            msg.contains("Failed to read staged asset"),
+            "local domain: {msg}"
+        );
+        assert!(
+            msg.contains("/nonexistent/dir/figure.png"),
+            "names path: {msg}"
+        );
+        assert!(
+            !msg.contains("Confluence rejected"),
+            "not a remote error: {msg}"
+        );
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn test_upload_attachment_remote_rejection_names_file_status_body() -> Result<()> {
+        use wiremock::matchers::{method, path};
+        use wiremock::{Mock, MockServer, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(method("PUT"))
+            .and(path("/wiki/rest/api/content/42/child/attachment"))
+            .respond_with(ResponseTemplate::new(403).set_body_string("attachment quota exceeded"))
+            .mount(&server)
+            .await;
+
+        let dir = std::env::temp_dir().join("typub-confluence-attach-test");
+        std::fs::create_dir_all(&dir)?;
+        let file = dir.join("figure.png");
+        std::fs::write(&file, b"png")?;
+
+        let adapter = adapter_with_credentials(&server.uri());
+        let msg = match adapter.upload_attachment("42", &file).await {
+            Ok(_) => anyhow::bail!("rejected upload unexpectedly succeeded"),
+            Err(err) => format!("{err:#}"),
+        };
+        assert!(
+            msg.contains("Confluence rejected attachment 'figure.png'"),
+            "{msg}"
+        );
+        assert!(msg.contains("403"), "carries status: {msg}");
+        assert!(
+            msg.contains("attachment quota exceeded"),
+            "carries body: {msg}"
+        );
+        std::fs::remove_file(&file).ok();
+        Ok(())
     }
 }

@@ -154,6 +154,11 @@ pub async fn publish_single_platform(
         dump_stage(5, "Specialize", &payload);
     }
 
+    // Specialize→Provision boundary: a pending upload asset missing locally
+    // must fail here, before any remote identity is created
+    // ([[RFC-0002:C-FAILURE-SEMANTICS]]).
+    payload.assets.validate_local_sources()?;
+
     // Stage 6 (Provision, optional): find/create remote target identity.
     let payload = adapter.provision_target(payload, ctx).await?;
     if should_dump(debug_stage, PipelineStage::Provision) {
@@ -251,6 +256,11 @@ pub async fn dry_run_single_platform(
     if should_dump(debug_stage, PipelineStage::Specialize) {
         dump_stage(5, "Specialize", &payload);
     }
+
+    // Specialize→Provision boundary: dry-run must also fail on missing local
+    // assets before provision, which may create remote identity (see note
+    // below) — the validation itself is local-only and side-effect free.
+    payload.assets.validate_local_sources()?;
 
     // Stage 6 (Provision): Execute normally.
     // Most adapters' provision_target is no-op or read-only (e.g., Notion schema fetch).
@@ -360,6 +370,8 @@ pub async fn preview_single_platform(
             // For External asset strategy, run stages 6-7 to upload and resolve assets.
             // Per [[RFC-0004:C-EXTERNAL-STRATEGY]], external assets must be materialized
             // before preview to populate asset variants with actual URLs.
+            // Missing local assets must fail before the remote stages.
+            payload.assets.validate_local_sources()?;
             // Stage 6 (Provision, optional): no-op for copypaste adapters
             let payload = adapter.provision_target(payload, ctx).await?;
             if should_dump(debug_stage, PipelineStage::Provision) {

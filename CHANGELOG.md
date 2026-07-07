@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Publish and dry-run and preview pipelines all reject a pending upload asset whose local path is missing before provision_target runs, naming the original reference and the resolved path (WI-2026-07-06-001)
+- Confluence attachment errors distinguish local read failures from remote rejections (status and body included for remote) (WI-2026-07-06-001)
+- Missing Confluence credentials produce one error naming every missing field and its lookup chain (WI-2026-07-06-001)
+
 ## [0.1.3] - 2026-06-19
 
 ### Fixed

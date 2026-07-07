@@ -98,6 +98,28 @@ impl DeferredAssets {
     pub fn is_resolved(&self) -> bool {
         self.pending.assets.len() == self.resolved.len()
     }
+
+    /// Validate that every asset pending deferred upload exists as a local file.
+    ///
+    /// Intended for the Specialize→Provision boundary: a missing staged asset
+    /// must fail before any remote side effect (page creation, uploads), per
+    /// [[RFC-0002:C-FAILURE-SEMANTICS]]. Strategies that do not defer upload
+    /// resolve their assets during Specialize and are not gated here.
+    pub fn validate_local_sources(&self) -> anyhow::Result<()> {
+        if !self.needs_materialize() {
+            return Ok(());
+        }
+        for asset in &self.pending.assets {
+            if !asset.local_path.is_file() {
+                anyhow::bail!(
+                    "pending asset '{}' is missing at '{}'; aborting before any remote write",
+                    asset.original_ref,
+                    asset.local_path.display()
+                );
+            }
+        }
+        Ok(())
+    }
 }
 
 impl Default for DeferredAssets {
@@ -266,6 +288,69 @@ mod tests {
         da.resolved
             .insert(1, "https://cdn.example.com/b.jpg".to_string());
         assert!(da.is_resolved());
+    }
+
+    #[test]
+    fn test_validate_local_sources_missing_asset_fails_with_ref_and_path() -> anyhow::Result<()> {
+        let pending = PendingAssetList {
+            assets: vec![PendingAsset {
+                index: 0,
+                local_path: PathBuf::from("/nonexistent/dir/figure.png"),
+                original_ref: "assets/figure.png".to_string(),
+            }],
+        };
+        let da = DeferredAssets::new(pending, AssetStrategy::Upload);
+        let msg = match da.validate_local_sources() {
+            Ok(()) => anyhow::bail!("missing asset unexpectedly validated"),
+            Err(err) => err.to_string(),
+        };
+        assert!(
+            msg.contains("assets/figure.png"),
+            "names the reference: {msg}"
+        );
+        assert!(
+            msg.contains("/nonexistent/dir/figure.png"),
+            "names the path: {msg}"
+        );
+        assert!(
+            !msg.to_lowercase().contains("upload"),
+            "not misnamed as an upload failure: {msg}"
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn test_validate_local_sources_existing_asset_passes() -> anyhow::Result<()> {
+        let dir = std::env::temp_dir().join("typub-deferred-validate-test");
+        std::fs::create_dir_all(&dir)?;
+        let file = dir.join("ok.png");
+        std::fs::write(&file, b"png")?;
+        let pending = PendingAssetList {
+            assets: vec![PendingAsset {
+                index: 0,
+                local_path: file.clone(),
+                original_ref: "assets/ok.png".to_string(),
+            }],
+        };
+        let da = DeferredAssets::new(pending, AssetStrategy::Upload);
+        da.validate_local_sources()?;
+        std::fs::remove_file(&file).ok();
+        Ok(())
+    }
+
+    #[test]
+    fn test_validate_local_sources_skips_non_deferred_strategies() -> anyhow::Result<()> {
+        let pending = PendingAssetList {
+            assets: vec![PendingAsset {
+                index: 0,
+                local_path: PathBuf::from("/nonexistent/dir/figure.png"),
+                original_ref: "assets/figure.png".to_string(),
+            }],
+        };
+        let da = DeferredAssets::new(pending, AssetStrategy::Embed);
+        // Embed strategy resolves assets at specialize; not gated here.
+        da.validate_local_sources()?;
+        Ok(())
     }
 
     #[test]

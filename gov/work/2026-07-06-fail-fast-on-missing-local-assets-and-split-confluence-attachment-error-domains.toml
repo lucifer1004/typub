@@ -1,0 +1,33 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-07-06-001"
+title = "fail fast on missing local assets and split confluence attachment error domains"
+status = "done"
+created = "2026-07-06"
+started = "2026-07-06"
+completed = "2026-07-06"
+refs = ["RFC-0002"]
+
+[content]
+description = "A conpub publish with a document referencing an asset absent from the stage created a remote Confluence page stub, then failed in Materialize with an error labeled as a remote upload failure while the true cause was a local fs::read miss. Fix inside the existing [[RFC-0002]] stage contract: (1) engine-level fail-fast gate validating pending asset local paths after Specialize and before Provision — failing at the stage 5/6 boundary is order-equivalent per [[RFC-0002:C-PIPELINE-STAGES]], no amendment needed; (2) confluence adapter separates local staged-asset read errors from remote Confluence rejection errors; (3) confluence auth validation reports api_key and email together with the real lookup chain."
+
+[[content.acceptance_criteria]]
+text = "Publish and dry-run and preview pipelines all reject a pending upload asset whose local path is missing before provision_target runs, naming the original reference and the resolved path"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Confluence attachment errors distinguish local read failures from remote rejections (status and body included for remote)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Missing Confluence credentials produce one error naming every missing field and its lookup chain"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "cargo test, fmt, clippy green; govctl check passes"
+status = "done"
+category = "chore"
