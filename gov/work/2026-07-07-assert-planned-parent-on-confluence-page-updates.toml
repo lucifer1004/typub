@@ -1,0 +1,32 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-07-07-001"
+title = "assert planned parent on confluence page updates"
+status = "done"
+created = "2026-07-07"
+started = "2026-07-07"
+completed = "2026-07-07"
+
+[content]
+description = "A Confluence page adopted by title during provision kept its pre-adoption parent: update_page carried no ancestors, so a document moved to a new position in the local hierarchy was content-updated in place but never reparented (observed live: a report moved under a new section page stayed a direct child of the old parent until a manual API move). Fix: UpdatePageRequest gains an optional ancestors field and update_page asserts the planned parent on every update; None leaves the parent untouched, matching create_page semantics."
+
+[[content.acceptance_criteria]]
+text = "update_page sends ancestors with the planned parent id whenever the payload carries one, so title-adopted pages move under the planned parent on the same publish"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "update_page without a planned parent sends no ancestors key and leaves the remote parent untouched"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "wiremock coverage proves both shapes at the request-body level (expect(1) on a body_partial_json ancestors match; negative body match for the parentless update)"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "workspace fmt, clippy -D warnings, and test --locked pass with bare exit codes"
+status = "done"
+category = "chore"

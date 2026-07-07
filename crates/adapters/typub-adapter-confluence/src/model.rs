@@ -21,6 +21,8 @@ pub struct UpdatePageRequest {
     pub body: PageBody,
     pub version: PageVersion,
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub ancestors: Option<Vec<Ancestor>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub status: Option<String>,
 }
 

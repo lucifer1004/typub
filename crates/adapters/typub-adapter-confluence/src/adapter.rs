@@ -366,10 +366,14 @@ impl ConfluenceAdapter {
         title: &str,
         content: &str,
         version: u32,
+        parent_id: Option<&str>,
         status: &str,
     ) -> Result<()> {
         let (email, token) = self.get_auth()?;
 
+        // Ancestors are asserted on every update so a page adopted by title
+        // during provision moves under the planned parent instead of keeping
+        // whatever parent it had before adoption.
         let request = UpdatePageRequest {
             page_type: "page".to_string(),
             title: title.to_string(),
@@ -382,6 +386,7 @@ impl ConfluenceAdapter {
             version: PageVersion {
                 number: version + 1,
             },
+            ancestors: parent_id.map(|id| vec![Ancestor { id: id.to_string() }]),
             status: Some(status.to_string()),
         };
 
@@ -734,6 +739,7 @@ impl PlatformAdapter for ConfluenceAdapter {
             &payload.title,
             &payload.confluence_body,
             payload.version,
+            payload.parent_id.as_deref(),
             &payload.status,
         )
         .await?;
@@ -877,6 +883,57 @@ mod tests {
             !msg.contains("Confluence rejected"),
             "not a remote error: {msg}"
         );
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn test_update_page_asserts_planned_parent_in_ancestors() -> Result<()> {
+        use wiremock::matchers::{body_partial_json, method, path};
+        use wiremock::{Mock, MockServer, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(method("PUT"))
+            .and(path("/wiki/rest/api/content/42"))
+            .and(body_partial_json(serde_json::json!({
+                "ancestors": [{ "id": "777" }]
+            })))
+            .respond_with(ResponseTemplate::new(200).set_body_string("{}"))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let adapter = adapter_with_credentials(&server.uri());
+        adapter
+            .update_page(
+                "42",
+                "Adopted Page",
+                "<p>body</p>",
+                3,
+                Some("777"),
+                "current",
+            )
+            .await?;
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn test_update_page_without_parent_sends_no_ancestors() -> Result<()> {
+        use wiremock::matchers::{method, path};
+        use wiremock::{Mock, MockServer, Request, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(method("PUT"))
+            .and(path("/wiki/rest/api/content/42"))
+            .and(|request: &Request| !String::from_utf8_lossy(&request.body).contains("ancestors"))
+            .respond_with(ResponseTemplate::new(200).set_body_string("{}"))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let adapter = adapter_with_credentials(&server.uri());
+        adapter
+            .update_page("42", "Rootless Page", "<p>body</p>", 3, None, "current")
+            .await?;
         Ok(())
     }
 
