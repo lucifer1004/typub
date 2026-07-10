@@ -717,13 +717,7 @@ fn block_to_ast<'a>(
                 AdmonitionKind::Custom(_) => AlertType::Note,
             };
             let title_text = title.as_ref().map(|t| inlines_text(t));
-            let output_title = title_text.and_then(|t| {
-                if t == kind.default_title() {
-                    None
-                } else {
-                    Some(t)
-                }
-            });
+            let output_title = title_text.filter(|t| t != kind.default_title());
             let node = arena.alloc(
                 NodeValue::Alert(Box::new(NodeAlert {
                     alert_type,
