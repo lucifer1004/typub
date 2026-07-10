@@ -17,8 +17,11 @@ fn ensure_english_locale() {
 }
 use std::collections::HashMap;
 use std::path::PathBuf;
-use typub_adapters_core::{OutputFormat, ResolvedConfigDefaults};
-use typub_engine::adapters::{Document, PlatformAdapter, PublishContext};
+use typub_adapters_core::{
+    AdapterContext, ContentInfo, DefaultMetadataService, MetadataService, OutputFormat,
+    ResolvedConfigDefaults,
+};
+use typub_engine::adapters::{Document, PlatformAdapter};
 use typub_engine::content::{Content, ContentFormat, ContentMeta};
 use typub_engine::renderer::RenderedOutput;
 use typub_engine::resolved_config::ResolvedConfig;
@@ -77,13 +80,43 @@ fn make_test_document(rendered: &RenderedOutput) -> Document {
     typub_html::parse_html_document(html).expect("parse html")
 }
 
-/// Build a `PublishContext` with resolved config for a given platform.
+struct PreviewContext {
+    resolved: ResolvedConfig,
+    content_info: ContentInfo,
+}
+
+impl AdapterContext for PreviewContext {
+    fn get_platform_id(&self, _slug: &str, _platform: &str) -> anyhow::Result<Option<String>> {
+        Ok(None)
+    }
+
+    fn normalize_terms(&self, terms: &[String]) -> Vec<String> {
+        DefaultMetadataService.normalize_terms(terms)
+    }
+
+    fn published(&self) -> bool {
+        self.resolved.published
+    }
+
+    fn storage_config(&self) -> Option<&typub_config::StorageConfig> {
+        self.resolved.storage.as_ref()
+    }
+
+    fn theme_id(&self) -> Option<&str> {
+        self.resolved.theme_id.as_deref()
+    }
+
+    fn content_info(&self) -> &ContentInfo {
+        &self.content_info
+    }
+}
+
+/// Build an in-memory adapter context with resolved config for a given platform.
 fn make_test_ctx(
     content: &Content,
     platform_id: &str,
     config: &typub_config::Config,
-) -> PublishContext {
-    let mut ctx = PublishContext::new(config).expect("create context");
+) -> PreviewContext {
     let resolved = ResolvedConfig::resolve(
         content,
         platform_id,
@@ -91,9 +124,10 @@ fn make_test_ctx(
         ResolvedConfigDefaults::default(),
     )
     .expect("resolve config");
-    ctx.set_resolved(resolved);
-    ctx.set_content_info(typub_engine::content_info_from(content));
-    ctx
+    PreviewContext {
+        resolved,
+        content_info: typub_engine::content_info_from(content),
+    }
 }
 
 #[test]
