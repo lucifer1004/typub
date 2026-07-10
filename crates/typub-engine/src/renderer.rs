@@ -414,7 +414,14 @@ pub(crate) fn extract_body_html(html: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::extract_body_html;
+    use super::{Renderer, extract_body_html};
+    use crate::content::{Content, ContentFormat, ContentMeta};
+    use chrono::NaiveDate;
+    use std::collections::HashMap;
+    use std::fs;
+    use std::process::Command;
+    use typub_adapters_core::{OutputFormat, RenderConfig};
+    use typub_config::Config;
 
     #[test]
     fn test_extract_body() {
@@ -429,5 +436,62 @@ mod tests {
         let body = extract_body_html(html);
         assert!(body.contains("<h1>Hello</h1>"));
         assert!(!body.contains("DOCTYPE"));
+    }
+
+    #[tokio::test]
+    async fn markdown_frontmatter_is_not_rendered() -> anyhow::Result<()> {
+        if Command::new("typst").arg("--version").output().is_err() {
+            return Ok(());
+        }
+
+        let temp = tempfile::tempdir()?;
+        let post_dir = temp.path().join("posts/note");
+        fs::create_dir_all(&post_dir)?;
+        let content_file = post_dir.join("content.md");
+        fs::write(
+            &content_file,
+            "---\ntags: [frontmatter-only-marker]\n---\n# Visible Title\n\nVisible body.\n",
+        )?;
+
+        let config = Config {
+            content_dir: temp.path().join("posts"),
+            output_dir: temp.path().join("output"),
+            ..Config::default()
+        };
+        let content = Content {
+            path: post_dir,
+            meta: ContentMeta {
+                title: "Visible Title".to_string(),
+                created: NaiveDate::from_ymd_opt(2026, 7, 10)
+                    .ok_or_else(|| anyhow::anyhow!("invalid test date"))?,
+                updated: None,
+                tags: Vec::new(),
+                categories: Vec::new(),
+                published: None,
+                theme: None,
+                internal_link_target: None,
+                preamble: None,
+                platforms: HashMap::new(),
+            },
+            content_file,
+            source_format: ContentFormat::Markdown,
+            slides_file: None,
+            assets: Vec::new(),
+        };
+        let renderer = Renderer::new_with_root(&config, temp.path().to_path_buf());
+        let rendered = renderer
+            .render_for_platform(
+                &content,
+                "test",
+                OutputFormat::HtmlFragment,
+                &RenderConfig::default(),
+            )
+            .await?;
+        let html = rendered.html()?;
+
+        assert!(html.contains("Visible Title"));
+        assert!(html.contains("Visible body."));
+        assert!(!html.contains("frontmatter-only-marker"));
+        Ok(())
     }
 }

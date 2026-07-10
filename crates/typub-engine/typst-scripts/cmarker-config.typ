@@ -218,10 +218,12 @@
     image-as-marker: image-as-marker
   )
 
-  cmarker.render(
+  let (_, body) = cmarker.render-with-metadata(
     read(markdown-path),
     math: math-callback,
     scope: (image: image-scope),
     html: (img: img-handler,),
+    metadata-block: "frontmatter-yaml",
   )
+  body
 }

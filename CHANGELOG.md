@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - update_page sends ancestors with the planned parent id whenever the payload carries one, so title-adopted pages move under the planned parent on the same publish (WI-2026-07-07-001)
 - update_page without a planned parent sends no ancestors key and leaves the remote parent untouched (WI-2026-07-07-001)
 - wiremock coverage proves both shapes at the request-body level (expect(1) on a body_partial_json ancestors match; negative body match for the parentless update) (WI-2026-07-07-001)
+- Source inspection returns the first heading and optional string-array tags without merging them into ContentMeta (WI-2026-07-10-001)
+
+### Changed
+
+- Markdown rendering excludes a leading YAML front matter block while leaving source files unchanged (WI-2026-07-10-001)
 
 ## [0.1.3] - 2026-06-19
 

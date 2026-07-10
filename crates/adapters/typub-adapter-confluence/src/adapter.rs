@@ -998,10 +998,12 @@ mod tests {
 
         let adapter = adapter_with_credentials(&server.uri());
         let labels = vec!["rust".to_string()];
-        let error = adapter
+        let Err(error) = adapter
             .update_page(page_update("Tagged Page", None, &labels))
             .await
-            .expect_err("rejected label update should fail the publish");
+        else {
+            anyhow::bail!("rejected label update unexpectedly succeeded");
+        };
         let message = format!("{error:#}");
         assert!(
             message.contains("Confluence update page error (400"),

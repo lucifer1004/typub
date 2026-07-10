@@ -1,0 +1,28 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-07-10-001"
+title = "Expose source metadata inspection"
+status = "done"
+created = "2026-07-10"
+started = "2026-07-10"
+completed = "2026-07-10"
+refs = ["RFC-0002"]
+
+[content]
+description = "Expose a reusable source inspection API for Markdown YAML front matter and labeled Typst metadata, while keeping metadata application and precedence under caller control and excluding Markdown front matter from rendered body output."
+
+[[content.acceptance_criteria]]
+text = "Source inspection returns the first heading and optional string-array tags without merging them into ContentMeta"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Markdown rendering excludes a leading YAML front matter block while leaving source files unchanged"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Source inspection and renderer tests pass with formatting, clippy, and governance checks"
+status = "done"
+category = "chore"

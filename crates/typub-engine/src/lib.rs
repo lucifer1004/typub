@@ -10,6 +10,7 @@ pub mod project;
 pub mod renderer;
 pub mod resolved_config;
 pub mod sorting;
+pub mod source;
 
 pub use adapters::{
     AdapterContext, AdapterPayload, AdapterRegistry, CapabilityGapBehavior, CapabilitySupport,
@@ -34,4 +35,5 @@ pub use project::{
 pub use renderer::{RenderedOutput, Renderer};
 pub use resolved_config::ResolvedConfig;
 pub use sorting::{SortField, SortOrder, sort_posts};
+pub use source::{SourceInspection, SourceMetadata, inspect_source};
 pub use typub_adapters_core::OutputFormat;
