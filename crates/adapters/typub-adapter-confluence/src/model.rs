@@ -20,10 +20,22 @@ pub struct UpdatePageRequest {
     pub title: String,
     pub body: PageBody,
     pub version: PageVersion,
+    pub metadata: PageMetadata,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ancestors: Option<Vec<Ancestor>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub status: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct PageMetadata {
+    pub labels: Vec<PageLabel>,
+}
+
+#[derive(Serialize)]
+pub struct PageLabel {
+    pub prefix: String,
+    pub name: String,
 }
 
 #[derive(Serialize)]

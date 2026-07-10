@@ -59,6 +59,16 @@ pub struct ConfluencePayload {
     pub confluence_body: String,
 }
 
+struct PageUpdate<'a> {
+    page_id: &'a str,
+    title: &'a str,
+    content: &'a str,
+    version: u32,
+    parent_id: Option<&'a str>,
+    status: &'a str,
+    labels: &'a [String],
+}
+
 impl ConfluenceAdapter {
     pub fn new(config: &Config) -> Result<Self> {
         let platform_config = config.get_platform(ID);
@@ -360,15 +370,7 @@ impl ConfluenceAdapter {
         Ok(attachment.title)
     }
 
-    async fn update_page(
-        &self,
-        page_id: &str,
-        title: &str,
-        content: &str,
-        version: u32,
-        parent_id: Option<&str>,
-        status: &str,
-    ) -> Result<()> {
+    async fn update_page(&self, update: PageUpdate<'_>) -> Result<()> {
         let (email, token) = self.get_auth()?;
 
         // Ancestors are asserted on every update so a page adopted by title
@@ -376,21 +378,35 @@ impl ConfluenceAdapter {
         // whatever parent it had before adoption.
         let request = UpdatePageRequest {
             page_type: "page".to_string(),
-            title: title.to_string(),
+            title: update.title.to_string(),
             body: PageBody {
                 storage: StorageContent {
-                    value: content.to_string(),
+                    value: update.content.to_string(),
                     representation: "storage".to_string(),
                 },
             },
             version: PageVersion {
-                number: version + 1,
+                number: update.version + 1,
             },
-            ancestors: parent_id.map(|id| vec![Ancestor { id: id.to_string() }]),
-            status: Some(status.to_string()),
+            // Confluence replaces the page's labels when this field is present;
+            // an empty array therefore clears labels left by earlier publishes.
+            metadata: PageMetadata {
+                labels: update
+                    .labels
+                    .iter()
+                    .map(|name| PageLabel {
+                        prefix: "global".to_string(),
+                        name: name.clone(),
+                    })
+                    .collect(),
+            },
+            ancestors: update
+                .parent_id
+                .map(|id| vec![Ancestor { id: id.to_string() }]),
+            status: Some(update.status.to_string()),
         };
 
-        let url = format!("{}/wiki/rest/api/content/{}", self.base_url, page_id);
+        let url = format!("{}/wiki/rest/api/content/{}", self.base_url, update.page_id);
 
         let response = self
             .client
@@ -439,34 +455,6 @@ impl ConfluenceAdapter {
         labels.sort();
         labels.dedup();
         labels
-    }
-
-    async fn add_labels(&self, page_id: &str, labels: &[String]) -> Result<()> {
-        if labels.is_empty() {
-            return Ok(());
-        }
-        let (email, token) = self.get_auth()?;
-        let url = format!("{}/wiki/rest/api/content/{}/label", self.base_url, page_id);
-        let payload: Vec<serde_json::Value> = labels
-            .iter()
-            .map(|label| serde_json::json!({ "prefix": "global", "name": label }))
-            .collect();
-
-        let response = self
-            .client
-            .post(&url)
-            .basic_auth(email, Some(token))
-            .json(&payload)
-            .send()
-            .await
-            .context("Failed to apply Confluence labels")?;
-
-        if !response.status().is_success() {
-            let status = response.status();
-            let body = response.text().await.unwrap_or_default();
-            anyhow::bail!("Confluence label update error ({}): {}", status, body);
-        }
-        Ok(())
     }
 }
 
@@ -724,7 +712,7 @@ impl PlatformAdapter for ConfluenceAdapter {
         payload: AdapterPayload,
         _ctx: &dyn AdapterContext,
     ) -> Result<PublishResult> {
-        let content_info = payload.content_info.clone();
+        let labels = Self::normalize_labels(&payload.content_info.tags);
         let payload = downcast_payload::<ConfluencePayload>(payload, "Confluence")?;
 
         let action = if payload.is_update {
@@ -734,23 +722,16 @@ impl PlatformAdapter for ConfluenceAdapter {
         };
         info!("[4/4] {}", format!("{} page content...", action));
 
-        self.update_page(
-            &payload.page_id,
-            &payload.title,
-            &payload.confluence_body,
-            payload.version,
-            payload.parent_id.as_deref(),
-            &payload.status,
-        )
+        self.update_page(PageUpdate {
+            page_id: &payload.page_id,
+            title: &payload.title,
+            content: &payload.confluence_body,
+            version: payload.version,
+            parent_id: payload.parent_id.as_deref(),
+            status: &payload.status,
+            labels: &labels,
+        })
         .await?;
-
-        let labels = Self::normalize_labels(&content_info.tags);
-        if let Err(e) = self.add_labels(&payload.page_id, &labels).await {
-            warn!(
-                "Failed to sync Confluence labels for {}: {}",
-                payload.title, e
-            );
-        }
 
         let action = if payload.is_update {
             "Updated"
@@ -861,6 +842,22 @@ mod tests {
         adapter
     }
 
+    fn page_update<'a>(
+        title: &'a str,
+        parent_id: Option<&'a str>,
+        labels: &'a [String],
+    ) -> PageUpdate<'a> {
+        PageUpdate {
+            page_id: "42",
+            title,
+            content: "<p>body</p>",
+            version: 3,
+            parent_id,
+            status: "current",
+            labels,
+        }
+    }
+
     #[tokio::test]
     async fn test_upload_attachment_missing_local_file_is_a_local_error() -> Result<()> {
         let adapter = adapter_with_credentials("http://127.0.0.1:9");
@@ -904,14 +901,7 @@ mod tests {
 
         let adapter = adapter_with_credentials(&server.uri());
         adapter
-            .update_page(
-                "42",
-                "Adopted Page",
-                "<p>body</p>",
-                3,
-                Some("777"),
-                "current",
-            )
+            .update_page(page_update("Adopted Page", Some("777"), &[]))
             .await?;
         Ok(())
     }
@@ -932,8 +922,92 @@ mod tests {
 
         let adapter = adapter_with_credentials(&server.uri());
         adapter
-            .update_page("42", "Rootless Page", "<p>body</p>", 3, None, "current")
+            .update_page(page_update("Rootless Page", None, &[]))
             .await?;
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn test_update_page_replaces_labels_in_same_request() -> Result<()> {
+        use wiremock::matchers::{body_partial_json, method, path};
+        use wiremock::{Mock, MockServer, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(method("PUT"))
+            .and(path("/wiki/rest/api/content/42"))
+            .and(body_partial_json(serde_json::json!({
+                "metadata": {
+                    "labels": [
+                        { "prefix": "global", "name": "data-science" },
+                        { "prefix": "global", "name": "rust" }
+                    ]
+                }
+            })))
+            .respond_with(ResponseTemplate::new(200).set_body_string("{}"))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let adapter = adapter_with_credentials(&server.uri());
+        let labels = vec!["data-science".to_string(), "rust".to_string()];
+        adapter
+            .update_page(page_update("Tagged Page", None, &labels))
+            .await?;
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn test_update_page_sends_empty_labels_to_clear_remote_labels() -> Result<()> {
+        use wiremock::matchers::{method, path};
+        use wiremock::{Mock, MockServer, Request, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(method("PUT"))
+            .and(path("/wiki/rest/api/content/42"))
+            .and(|request: &Request| {
+                serde_json::from_slice::<serde_json::Value>(&request.body)
+                    .ok()
+                    .and_then(|body| body.pointer("/metadata/labels").cloned())
+                    .and_then(|labels| labels.as_array().cloned())
+                    .is_some_and(|labels| labels.is_empty())
+            })
+            .respond_with(ResponseTemplate::new(200).set_body_string("{}"))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let adapter = adapter_with_credentials(&server.uri());
+        adapter
+            .update_page(page_update("Untagged Page", None, &[]))
+            .await?;
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn test_update_page_label_rejection_is_an_error() -> Result<()> {
+        use wiremock::matchers::{method, path};
+        use wiremock::{Mock, MockServer, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(method("PUT"))
+            .and(path("/wiki/rest/api/content/42"))
+            .respond_with(ResponseTemplate::new(400).set_body_string("invalid labels"))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let adapter = adapter_with_credentials(&server.uri());
+        let labels = vec!["rust".to_string()];
+        let error = adapter
+            .update_page(page_update("Tagged Page", None, &labels))
+            .await
+            .expect_err("rejected label update should fail the publish");
+        let message = format!("{error:#}");
+        assert!(
+            message.contains("Confluence update page error (400"),
+            "{message}"
+        );
+        assert!(message.contains("invalid labels"), "{message}");
         Ok(())
     }
 
