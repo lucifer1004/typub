@@ -419,39 +419,15 @@ mod tests {
     use chrono::NaiveDate;
     use std::collections::HashMap;
     use std::fs;
-    use std::process::Command;
     use typub_adapters_core::{OutputFormat, RenderConfig};
     use typub_config::Config;
 
-    #[test]
-    fn test_extract_body() {
-        let html = r#"<!DOCTYPE html>
-<html>
-<head><title>Test</title></head>
-<body>
-<h1>Hello</h1>
-<p>World</p>
-</body>
-</html>"#;
-        let body = extract_body_html(html);
-        assert!(body.contains("<h1>Hello</h1>"));
-        assert!(!body.contains("DOCTYPE"));
-    }
-
-    #[tokio::test]
-    async fn markdown_frontmatter_is_not_rendered() -> anyhow::Result<()> {
-        if Command::new("typst").arg("--version").output().is_err() {
-            return Ok(());
-        }
-
+    async fn render_markdown(source: &str) -> anyhow::Result<String> {
         let temp = tempfile::tempdir()?;
         let post_dir = temp.path().join("posts/note");
         fs::create_dir_all(&post_dir)?;
         let content_file = post_dir.join("content.md");
-        fs::write(
-            &content_file,
-            "---\ntags: [frontmatter-only-marker]\n---\n# Visible Title\n\nVisible body.\n",
-        )?;
+        fs::write(&content_file, source)?;
 
         let config = Config {
             content_dir: temp.path().join("posts"),
@@ -473,7 +449,7 @@ mod tests {
                 preamble: None,
                 platforms: HashMap::new(),
             },
-            content_file,
+            content_file: content_file.clone(),
             source_format: ContentFormat::Markdown,
             slides_file: None,
             assets: Vec::new(),
@@ -487,11 +463,59 @@ mod tests {
                 &RenderConfig::default(),
             )
             .await?;
-        let html = rendered.html()?;
+        let html = rendered.html()?.to_string();
+
+        assert_eq!(fs::read_to_string(content_file)?, source);
+        Ok(html)
+    }
+
+    #[test]
+    fn test_extract_body() {
+        let html = r#"<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body>
+<h1>Hello</h1>
+<p>World</p>
+</body>
+</html>"#;
+        let body = extract_body_html(html);
+        assert!(body.contains("<h1>Hello</h1>"));
+        assert!(!body.contains("DOCTYPE"));
+    }
+
+    #[tokio::test]
+    async fn markdown_frontmatter_is_not_rendered() -> anyhow::Result<()> {
+        let html = render_markdown(
+            "---\ntags: [frontmatter-only-marker]\n---\n# Visible Title\n\nVisible body.\n",
+        )
+        .await?;
 
         assert!(html.contains("Visible Title"));
         assert!(html.contains("Visible body."));
         assert!(!html.contains("frontmatter-only-marker"));
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn markdown_dotted_frontmatter_is_not_rendered() -> anyhow::Result<()> {
+        let html = render_markdown(
+            "---\ntags: [dotted-frontmatter-marker]\n...\n# Dotted Title\n\nVisible body.\n",
+        )
+        .await?;
+
+        assert!(html.contains("Dotted Title"));
+        assert!(html.contains("Visible body."));
+        assert!(!html.contains("dotted-frontmatter-marker"));
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn markdown_thematic_break_is_not_treated_as_frontmatter() -> anyhow::Result<()> {
+        let html = render_markdown("---\n\nVisible body.\n\n---\n\nAfter break.\n").await?;
+
+        assert!(html.contains("Visible body."));
+        assert!(html.contains("After break."));
         Ok(())
     }
 }

@@ -1,0 +1,33 @@
+#:schema ../schema/work.schema.json
+
+[govctl]
+id = "WI-2026-07-10-002"
+title = "Harden source metadata test coverage"
+status = "done"
+created = "2026-07-10"
+started = "2026-07-10"
+completed = "2026-07-10"
+refs = ["RFC-0002"]
+
+[content]
+description = "Make typub source metadata and Markdown front matter behavior release-gated by deterministic real-Typst CI tests, with explicit success, failure, and boundary coverage."
+
+[[content.acceptance_criteria]]
+text = "Real Markdown and Typst source inspection tests cover absent, empty, valid, invalid, and duplicate metadata"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "Markdown renderer tests cover front matter removal and ordinary thematic breaks"
+status = "done"
+category = "added"
+
+[[content.acceptance_criteria]]
+text = "CI provisions Typst before tests and coverage on every supported runner"
+status = "done"
+category = "changed"
+
+[[content.acceptance_criteria]]
+text = "Formatting, all-feature workspace tests, clippy, and govctl checks pass"
+status = "done"
+category = "chore"

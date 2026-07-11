@@ -12,6 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: typst-community/setup-typst@v5
+        with:
+          typst-version: "0.15.0"
+          cache-dependency-path: crates/typub-engine/typst-scripts/cmarker-config.typ
+
+      - name: Verify Typst
+        run: typst --version
+
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy

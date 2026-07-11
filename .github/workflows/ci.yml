@@ -19,10 +19,17 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v6
+      - uses: typst-community/setup-typst@v5
+        with:
+          typst-version: "0.15.0"
+          cache-dependency-path: crates/typub-engine/typst-scripts/cmarker-config.typ
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
+
+      - name: Verify Typst
+        run: typst --version
 
       - name: Format
         run: cargo fmt --all -- --check
